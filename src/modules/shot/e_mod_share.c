@@ -10,6 +10,7 @@ static const char       *cnp_file = NULL;
 static Eina_Bool         cnp = EINA_FALSE;
 
 static Evas_Object * win_cp = NULL;
+int server = 0;
 
 // clean up and be done
 static void
@@ -170,11 +171,17 @@ _img_write_out_cb(void *data, int ev_type __UNUSED__, void *event)
              if (data) e_widget_disabled_set(data, 1);
              if ((o_entry) && (url_ret))
                {
-                 char *link = imgur_link_from_string(url_ret);
-                 e_widget_entry_text_set(o_entry, link);
+                 char *link;
+                 if (server == 1)
+                   {
+                     link = imgur_link_from_string(url_ret);
+                     e_widget_entry_text_set(o_entry, link);
+                     free(link);
+                   }
+                 else
+                   e_widget_entry_text_set(o_entry, url_ret);
                  e_widget_entry_select_all(o_entry);
                  e_widget_focus_set(o_entry, 1);
-                 free(link);
                  _share_done();
                }
              break;
@@ -272,8 +279,16 @@ _win_share_confirm_del(void *d __UNUSED__)
 }
 
 static void
-_win_share_confirm_yes(void *d __UNUSED__)
+_win_share_confirm_butt_1(void *d __UNUSED__)
 {
+   server = 1;
+   share_dialog_show();
+}
+
+static void
+_win_share_confirm_butt_2(void *d __UNUSED__)
+{
+   server = 2;
    share_dialog_show();
 }
 
@@ -284,9 +299,9 @@ share_confirm(void)
    cd = e_confirm_dialog_show
      (_("Confirm Share"), NULL,
       _("Are you sure you want to upload this image<ps/>"
-        "publically to imgur.com?"),
-      _("Confirm"), _("Cancel"),
-      _win_share_confirm_yes, NULL,
+        "publically to these services?"),
+      _("Imgur"), _("E.Org"),
+      _win_share_confirm_butt_1, _win_share_confirm_butt_2,
       NULL, NULL, _win_share_confirm_del, NULL);
 }
 

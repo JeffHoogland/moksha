@@ -37,5 +37,5 @@ void         delay_abort(void);
 
 
 extern Evas_Object *win;
-extern int quality;
+extern int quality, server;
 extern Eina_Rectangle crop;

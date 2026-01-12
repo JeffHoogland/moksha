@@ -4,6 +4,11 @@
 #include <fcntl.h>
 #include "e.h"
 
+#define E_ORG "https://www.enlightenment.org/shot.php"
+#define IMGUR "https://api.imgur.com/3/image"
+#define E_ORG_STRING "application/x-e-shot"
+#define IMGUR_STRING "image/png"
+
 static Ecore_Con_Url *url_up = NULL;
 
 static Eina_Bool
@@ -86,7 +91,7 @@ elm_main(int argc, char **argv)
    size_t fsize;
    Eina_Bool upload = EINA_FALSE;
    const char *rgba_file, *out_file = NULL;
-   int w, h, stride, quality, image_stride, y;
+   int w, h, stride, quality, image_stride, y, server;
    char *image_data, *src;
    char opts[256];
 
@@ -97,7 +102,8 @@ elm_main(int argc, char **argv)
    h         = atoi(argv[3]); // height in pixels
    stride    = atoi(argv[4]); // stride per line in bytes
    quality   = atoi(argv[5]); // qwuality to save out as (100 == lossless png)
-   if (argc >= 7) out_file = eina_stringshare_add(argv[6]); // out file path
+   server    = atoi(argv[6]); // imgur or e.org
+   if (argc >= 8) out_file = eina_stringshare_add(argv[7]); // out file path
    if ((w <= 0) || (w > 65535) || (h <= 0) || (h > 65535) ||
        (stride <= 0) || (stride > (65535 * 4)) ||
        (quality < 0) || (quality > 100))
@@ -178,24 +184,36 @@ elm_main(int argc, char **argv)
                                                _upload_complete_cb, NULL);
                   if ((h1) && (h2) && (h3))
                     {
-                       url_up = ecore_con_url_new
-                         ("https://api.imgur.com/3/image");
-                       if (url_up)
+                       switch (server)
                          {
-                            // why use http 1.1? proxies like squid don't
-                            // handle 1.1 posts with expect like curl uses
-                            // by default, so go to 1.0 and this all works
-                            // dandily out of the box
-                            ecore_con_url_additional_header_add(url_up, "Authorization",
-                                       "Client-ID 67aecc7e6662370");
-                            ecore_con_url_http_version_set
-                              (url_up, ECORE_CON_URL_HTTP_VERSION_1_0);
-                            ecore_con_url_post
-                              (url_up, fdata, fsize, "image/png");
-                            // need loop to run to drive the uploading
-                            elm_run();
-                         }
-                    }
+                            case 1: 
+                              url_up = ecore_con_url_new(IMGUR);
+                              if (url_up)
+                                {
+                                   ecore_con_url_additional_header_add(url_up, "Authorization",
+                                              "Client-ID 67aecc7e6662370");
+                                   ecore_con_url_http_version_set
+                                     (url_up, ECORE_CON_URL_HTTP_VERSION_1_0);
+                                   ecore_con_url_post
+                                     (url_up, fdata, fsize, IMGUR_STRING);
+                                   elm_run();
+                                }
+                              break;
+                            case 2:
+                              url_up = ecore_con_url_new(E_ORG);
+                              if (url_up)
+                                {
+                                   ecore_con_url_http_version_set
+                                   (url_up, ECORE_CON_URL_HTTP_VERSION_1_0);
+                                   ecore_con_url_post
+                                   (url_up, fdata, fsize, E_ORG_STRING);
+                                   elm_run();
+                                }
+                              break;
+                           default:
+                              break;
+                       }
+                   }
                   ecore_event_handler_del(h1);
                   ecore_event_handler_del(h2);
                   ecore_event_handler_del(h3);
