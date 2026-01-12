@@ -1,6 +1,6 @@
 #include "e_mod_main.h"
 
-static E_Confirm_Dialog *cd = NULL;
+static E_Dialog         *cd = NULL;
 static Ecore_Exe        *img_write_exe = NULL;
 static Evas_Object      *o_label = NULL;
 static Evas_Object      *o_entry = NULL;
@@ -272,37 +272,62 @@ share_dialog_show(void)
 }
 
 // confirm dialog that it's ok to share
-static void
-_win_share_confirm_del(void *d __UNUSED__)
-{
-   cd = NULL;
-}
-
-static void
-_win_share_confirm_butt_1(void *d __UNUSED__)
+ static void
+_cb_btn_one(void *data __UNUSED__, E_Dialog *dlg)
 {
    server = 1;
    share_dialog_show();
+   e_object_del(E_OBJECT(dlg));
 }
 
 static void
-_win_share_confirm_butt_2(void *d __UNUSED__)
+_cb_btn_two(void *data __UNUSED__, E_Dialog *dlg)
 {
    server = 2;
    share_dialog_show();
+   e_object_del(E_OBJECT(dlg));
+}
+
+static void
+_cb_btn_three(void *data __UNUSED__, E_Dialog *dlg)
+{
+   e_object_del(E_OBJECT(dlg));
+}
+
+static void
+_cb_dialog_del(void *data)
+{
+   if (cd == data)
+     cd = NULL;
+   if (cd) e_object_del(E_OBJECT(cd));
 }
 
 void
 share_confirm(void)
 {
+   E_Container *con;
+
    if (cd) return;
-   cd = e_confirm_dialog_show
-     (_("Confirm Share"), NULL,
+   con = e_container_current_get(e_manager_current_get());
+   cd = e_dialog_new(con, "E", "Share");
+   if (!cd) return;
+
+   e_dialog_title_set(cd, _("Confirm Share"));
+   e_dialog_text_set(cd,
       _("Are you sure you want to upload this image<ps/>"
-        "publically to these services?"),
-      _("Imgur"), _("E.Org"),
-      _win_share_confirm_butt_1, _win_share_confirm_butt_2,
-      NULL, NULL, _win_share_confirm_del, NULL);
+        "publically to these services?"));
+
+   e_dialog_button_add(cd, _("Imgur.com"), NULL,
+                       _cb_btn_one, NULL);
+
+   e_dialog_button_add(cd, _("E.org"), NULL,
+                       _cb_btn_two, NULL);
+
+   e_dialog_button_add(cd, _("Cancel"), NULL,
+                       _cb_btn_three, NULL);
+   e_object_del_attach_func_set(E_OBJECT(cd), _cb_dialog_del);
+   e_win_centered_set(cd->win, 1);
+   e_dialog_show(cd);
 }
 
 Eina_Bool

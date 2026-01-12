@@ -186,6 +186,8 @@ elm_main(int argc, char **argv)
                     {
                        switch (server)
                          {
+                            case 0:
+                              break;
                             case 1: 
                               url_up = ecore_con_url_new(IMGUR);
                               if (url_up)
