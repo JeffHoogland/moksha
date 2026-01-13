@@ -35,7 +35,7 @@ _cb_rgba_writer_done(void *data, Ecore_Thread *th __UNUSED__)
    char buf[PATH_MAX];
 
    if (rdata->outfile)
-     snprintf(buf, sizeof(buf), "%s/%s/upload '%s' %i %i %i %i %i'%s'",
+     snprintf(buf, sizeof(buf), "%s/%s/upload '%s' %i %i %i %i %i '%s'",
               e_module_dir_get(shot_module), MODULE_ARCH,
               rdata->path, rdata->w, rdata->h, rdata->stride,
               rdata->quality, rdata->server, rdata->outfile);
