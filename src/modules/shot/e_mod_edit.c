@@ -2046,7 +2046,7 @@ ui_edit(Evas_Object *window, Evas_Object *o_bg, E_Zone *zone,
    o_col1 = o = evas_object_rectangle_add(evas);
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
    evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
-   evas_object_size_hint_min_set(o, ELM_SCALE_SIZE(20), ELM_SCALE_SIZE(24));
+   evas_object_size_hint_min_set(o, ELM_SCALE_SIZE(24), ELM_SCALE_SIZE(24));
    elm_object_content_set(rad, o);
    elm_box_pack_end(bx, rad);
    evas_object_show(rad);
