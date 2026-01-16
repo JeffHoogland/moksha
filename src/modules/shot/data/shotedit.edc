@@ -417,6 +417,7 @@ collections {
   group { name: "e/modules/shot/item/box/solid";
     parts {
       part { name: "box"; type: RECT;
+        
         scale: 1;
         description { state: "default" 0.0;
           color: 255 255 255 255;
@@ -581,20 +582,22 @@ collections {
           color: 255 255 255 255;
           color_class: "color";
           image.normal: "shotedit-outline-box.png";
+          image.border: 7 7 7 7;
         }
       }
     }
   }
   group { name: "e/modules/shot/item/box/outline-box/shadow";
     data.item: "offset_x" "0";
-    data.item: "offset_y" "10";
+    data.item: "offset_y" "1";
     images.image: "shotedit-outline-box-shadow.png" COMP;
     parts {
       part { name: "shadow";
         description { state: "default" 0.0;
-          min: 50 50;
+          min: 40 40;
           color: 0 0 0 128;
           image.normal: "shotedit-outline-box-shadow.png";
+          image.border: 25 25 25 25;
         }
       }
     }
