@@ -582,7 +582,7 @@ collections {
           color: 255 255 255 255;
           color_class: "color";
           image.normal: "shotedit-outline-box.png";
-          image.border: 7 7 7 7;
+          image.border: 6 6 6 6;
         }
       }
     }
