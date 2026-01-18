@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.4.1.18166\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-10-10 18:24+0200\n"
+"POT-Creation-Date: 2026-01-18 18:44+0100\n"
 "PO-Revision-Date: 2025-01-02 03:38+0530\n"
 "Last-Translator: Saurabh Landge <pagoda94>\n"
 "Language-Team: Moksha\n"
@@ -30,7 +30,7 @@ msgstr "Moksha बद्दल"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:113
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
+#: src/modules/fileman/e_fwin.c:2587
 msgid "Close"
 msgstr "बंद"
 
@@ -43,7 +43,6 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-
 msgid ""
 "<title>Copyright &copy; 2025, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -107,7 +106,6 @@ msgstr "तुम्हाला Moksha-तून बाहेर पडाय�
 #: src/bin/e_actions.c:2496 src/bin/e_actions.c:2561 src/bin/e_actions.c:2626
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10521
 #: src/bin/e_screensaver.c:193 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:318
 msgid "Yes"
 msgstr "होय"
 
@@ -156,7 +154,7 @@ msgstr "आपण आपला संगणक हायबरनेट कर�
 #: src/bin/e_actions.c:3158 src/bin/e_actions.c:3163 src/bin/e_actions.c:3168
 #: src/bin/e_actions.c:3467 src/bin/e_actions.c:3471 src/bin/e_actions.c:3476
 #: src/bin/e_actions.c:3482 src/bin/e_actions.c:3488 src/bin/e_actions.c:3494
-#: src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_main.c:400
 msgid "Window : Actions"
 msgstr "खिडकी : कृती"
 
@@ -558,7 +556,7 @@ msgstr "खिडकी निवडा... किंवा सुरुवात
 #: src/bin/e_actions.c:3645 src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:986 src/modules/shot/e_mod_main.c:1317
+#: src/modules/shot/e_mod_main.c:384 src/modules/shot/e_mod_main.c:392
 msgid "Screen"
 msgstr "पडदा"
 
@@ -868,9 +866,9 @@ msgstr "निवडणे"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:318 src/modules/shot/e_mod_main.c:514
-#: src/modules/shot/e_mod_main.c:779 src/modules/shot/e_mod_main.c:805
-#: src/modules/shot/e_mod_main.c:1047 src/modules/xkbswitch/e_mod_config.c:587
+#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:120
+#: src/modules/shot/e_mod_share.c:267 src/modules/shot/e_mod_share.c:326
+#: src/modules/xkbswitch/e_mod_config.c:587
 msgid "Cancel"
 msgstr "रद्द करा"
 
@@ -883,7 +881,6 @@ msgid "The file data is empty."
 msgstr "फाईल डेटा रिकामा आहे."
 
 #: src/bin/e_config.c:184
-
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
@@ -892,7 +889,6 @@ msgstr ""
 "परवानग्या गमावल्या."
 
 #: src/bin/e_config.c:187
-
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
 msgstr "लेखनची तयारी करताना मेमरी संपली.<br>कृपया मेमरी मोकळी करा."
 
@@ -901,14 +897,12 @@ msgid "This is a generic error."
 msgstr "ही एक सामान्य त्रुटी आहे."
 
 #: src/bin/e_config.c:193
-
 msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
 msgstr "सेटिंग्ज फाईल खूप मोठी आहे.<br>ते खूप लहान (जास्तीत जास्त काहीशे केबी) असावे."
 
 #: src/bin/e_config.c:196
-
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
 msgstr "आपल्याकडे डिस्कवर I/O त्रुटी आहेत.<br>कदाचित ते बदलण्याची गरज आहे का?"
 
@@ -957,7 +951,6 @@ msgid "Decryption failed."
 msgstr "डिक्रिप्शन अयशस्वी झाले."
 
 #: src/bin/e_config.c:232
-
 msgid "The error is unknown to Enlightenment."
 msgstr "चूक Moksha-ला माहित नाही."
 
@@ -1012,8 +1005,8 @@ msgstr "पायाभूत"
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10790 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
-#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:519
+#: src/bin/e_module.c:839 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1022,7 +1015,7 @@ msgstr "पायाभूत"
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:586
+#: src/modules/shot/e_mod_delay.c:79 src/modules/xkbswitch/e_mod_config.c:586
 msgid "OK"
 msgstr "ठीक आहे"
 
@@ -1248,6 +1241,7 @@ msgid "Cut"
 msgstr "कापणे"
 
 #: src/bin/e_entry.c:514 src/bin/e_fm.c:9123 src/bin/e_fm.c:11650
+#: src/modules/shot/e_mod_preview.c:113
 msgid "Copy"
 msgstr "कॉपी करणे"
 
@@ -1525,7 +1519,7 @@ msgid "Eject"
 msgstr "बाहेर काढा"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
-#: src/modules/ibar/e_mod_main.c:1683
+#: src/modules/ibar/e_mod_main.c:1822
 msgid "Properties"
 msgstr "गुणधर्म (संपादन)"
 
@@ -1686,7 +1680,7 @@ msgid "Yes to all"
 msgstr "सर्वांना होय"
 
 #: src/bin/e_fm.c:10525 src/modules/xkbswitch/e_mod_config.c:402
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:633
 msgid "Warning"
 msgstr "ताकीद"
@@ -1839,7 +1833,7 @@ msgstr "इतर:"
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:215
 #: src/modules/conf_theme/e_int_config_theme.c:1434
-#: src/modules/conf_theme/e_int_config_xsettings.c:540
+#: src/modules/conf_theme/e_int_config_xsettings.c:548
 msgid "Preview"
 msgstr "पूर्वावलोकन"
 
@@ -2526,15 +2520,14 @@ msgstr "विनंती स्थिती"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:466 src/modules/ibar/e_mod_main.c:1676
+#: src/modules/ibar/e_mod_main.c:474 src/modules/ibar/e_mod_main.c:1815
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:848
+#: src/modules/connman/e_mod_main.c:459 src/modules/tasks/e_mod_main.c:848
 #: src/modules/xkbswitch/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:396
-#: src/modules/notification/e_mod_main.c:343
-#: src/modules/notification/e_mod_main.c:457
+#: src/modules/notification/e_mod_main.c:342
+#: src/modules/notification/e_mod_main.c:454
 #: src/modules/clipboard/e_mod_main.c:303
 #: src/modules/clipboard/e_mod_main.c:455 src/modules/places/e_mod_main.c:518
 msgid "Settings"
@@ -2624,7 +2617,7 @@ msgstr "आकार, स्थिती आणि कुलूप"
 #: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:990
+#: src/modules/everything/evry_view.c:1628
 msgid "All"
 msgstr "सर्व"
 
@@ -2732,7 +2725,7 @@ msgstr "मॉड्यूल सेटिंग्स"
 msgid "Load"
 msgstr "ओझे"
 
-#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:620
+#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:621
 msgid "Unload"
 msgstr "अनलोड करा"
 
@@ -3571,12 +3564,12 @@ msgstr ""
 "मॉड्यूल काढून टाका.<br><br>मॉड्यूल कॉन्फिगरेशन संवाद आपल्याला आपले निवडू देईल<br>मॉड्यूल "
 "पुन्हा एकदा."
 
-#: src/bin/e_module.c:185
+#: src/bin/e_module.c:186
 #, c-format
 msgid "Loading Module: %s"
 msgstr "लोडिंग मॉड्यूल: %s"
 
-#: src/bin/e_module.c:234
+#: src/bin/e_module.c:235
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3585,11 +3578,11 @@ msgstr ""
 "मॉड्यूलमध्ये एक त्रुटी होती ज्याचे नाव होते: %s<br>त्यात नावाचे %s कोणतेही मॉड्यूल सापडले "
 "नाही<br>मॉड्यूल शोध निर्देशिका.<br>"
 
-#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
+#: src/bin/e_module.c:238 src/bin/e_module.c:251 src/bin/e_module.c:269
 msgid "Error loading Module"
 msgstr "त्रुटी लोडिंग मॉड्यूल"
 
-#: src/bin/e_module.c:245 src/bin/e_module.c:262
+#: src/bin/e_module.c:246 src/bin/e_module.c:263
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3598,11 +3591,11 @@ msgstr ""
 "मॉड्यूलमध्ये एक त्रुटी होती ज्याचे नाव होते: %s<br>या मॉड्यूलचा पूर्ण मार्ग असा आहे:"
 "<br>%s<br>नोंदवलेली त्रुटी अशी होती:<br>%s<br>"
 
-#: src/bin/e_module.c:267
+#: src/bin/e_module.c:268
 msgid "Module does not contain all needed functions."
 msgstr "मॉड्यूलमध्ये सर्व आवश्यक कार्ये नसतात."
 
-#: src/bin/e_module.c:282
+#: src/bin/e_module.c:283
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3611,23 +3604,23 @@ msgstr ""
 "मॉड्यूल API त्रुटी<br>त्रुटी प्रारंभ मॉड्यूल: %s<br>यासाठी कमीतकमी मॉड्यूल एपीआय आवृत्ती "
 "आवश्यक आहे: %i.<br>Mokshaाने जाहिरात केलेले मॉड्यूल एपीआय असे आहे: %i.<br>"
 
-#: src/bin/e_module.c:287
+#: src/bin/e_module.c:288
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Moksha %s मॉड्यूल"
 
-#: src/bin/e_module.c:615
+#: src/bin/e_module.c:616
 msgid "What action should be taken with this module?<br>"
 msgstr "या मॉड्यूलवर काय कारवाई करावी?<br>"
 
-#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:622 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:697
 #: src/modules/clipboard/e_mod_main.c:785
 msgid "Keep"
 msgstr "ठेवा"
 
-#: src/bin/e_module.c:823
+#: src/bin/e_module.c:824
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3636,11 +3629,11 @@ msgstr ""
 "खालील मॉड्यूल मानक नाहीत<br>Moksha आणि किडे आणि क्रॅश होऊ शकतात.<br>कृपया कोणत्याही "
 "बगची माहिती देण्यापूर्वी ते काढून टाका.<br><br>मॉड्यूल यादी खालीलप्रमाणे आहे:<br><br>"
 
-#: src/bin/e_module.c:835
+#: src/bin/e_module.c:836
 msgid "Unstable module tainting"
 msgstr "अस्थिर मॉड्यूल कलंकित"
 
-#: src/bin/e_module.c:839
+#: src/bin/e_module.c:840
 msgid "I know"
 msgstr "मला माहित आहे"
 
@@ -3765,7 +3758,7 @@ msgid "Rename Shelf"
 msgstr "शेल्फचे नाव बदला"
 
 #: src/bin/e_shelf.c:2476 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1670
+#: src/modules/ibar/e_mod_main.c:468 src/modules/ibar/e_mod_main.c:1809
 msgid "Contents"
 msgstr "सामग्री[संपादन]"
 
@@ -5725,7 +5718,7 @@ msgid "Vaio"
 msgstr "Vio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:444
+#: src/modules/notification/e_mod_main.c:441
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5855,8 +5848,8 @@ msgid "Quick Launcher"
 msgstr "क्विक लॉन्चर"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:309
-#: src/modules/shot/e_mod_main.c:1288 src/modules/shot/e_mod_main.c:1317
-#: src/modules/shot/e_mod_main.c:1329
+#: src/modules/shot/e_mod_main.c:357 src/modules/shot/e_mod_main.c:384
+#: src/modules/shot/e_mod_main.c:405
 msgid "Take Screenshot"
 msgstr "स्क्रीनशॉट घ्या"
 
@@ -6077,12 +6070,10 @@ msgid "Autoscroll"
 msgstr "ऑटोस्क्रॉल"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
-
 msgid "Disable Icons in Menus"
 msgstr " मेनूमध्ये चिन्हे अक्षम करा"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-
 msgid "Smart Menu Orientation"
 msgstr " स्मार्ट मेनू ओरिएंटेशन"
 
@@ -6146,7 +6137,7 @@ msgid "Themes"
 msgstr "थीम्स (संपादन)"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:571
+#: src/modules/conf_theme/e_int_config_xsettings.c:579
 #: src/modules/everything/evry_config.c:447
 #: src/modules/everything/evry_config.c:473
 msgid "Icons"
@@ -6307,13 +6298,11 @@ msgid "e.g. Saving to disk"
 msgstr "उदा. डिस्कवर सेव्ह करणे"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:973
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "नीच"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:971
 msgid "Medium"
 msgstr "मध्यम"
 
@@ -6325,7 +6314,6 @@ msgid "%.0f s"
 msgstr "%.0f"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:969
 msgid "High"
 msgstr "उच्च"
 
@@ -6936,12 +6924,10 @@ msgid "%1.2f x"
 msgstr "%1.2f x"
 
 #: src/modules/conf_theme/e_int_config_scale.c:327
-
 msgid "Set Application DPI"
 msgstr "निवडलेला अर्ज"
 
 #: src/modules/conf_theme/e_int_config_scale.c:331
-
 msgid "Application Base DPI"
 msgstr "अर्ज"
 
@@ -7028,7 +7014,7 @@ msgid "Assign"
 msgstr "नियुक्त करा"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:434
+#: src/modules/notification/e_mod_main.c:431
 #: src/modules/clipboard/e_mod_main.c:442
 msgid "Clear"
 msgstr "साफ"
@@ -7062,24 +7048,24 @@ msgstr "Moksha थीम आयात करू शकला नाही<br>क
 msgid "Application Theme Settings"
 msgstr "अनुप्रयोग थीम सेटिंग्स"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:515
-#: src/modules/conf_theme/e_int_config_xsettings.c:559
+#: src/modules/conf_theme/e_int_config_xsettings.c:523
+#: src/modules/conf_theme/e_int_config_xsettings.c:567
 msgid "Match Moksha theme if possible"
 msgstr "शक्य असल्यास Moksha थीम जुळवा"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:524
+#: src/modules/conf_theme/e_int_config_xsettings.c:532
 msgid "Enable X Application Settings"
 msgstr "एक्स अनुप्रयोग सेटिंग्ज सक्षम करा"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:528
+#: src/modules/conf_theme/e_int_config_xsettings.c:536
 msgid "GTK Applications"
 msgstr "जीटीके अनुप्रयोग"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:563
+#: src/modules/conf_theme/e_int_config_xsettings.c:571
 msgid "Enable icon theme for applications"
 msgstr "अनुप्रयोगांसाठी आयकॉन थीम सक्षम करा"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:567
+#: src/modules/conf_theme/e_int_config_xsettings.c:575
 msgid "Enable icon theme for Moksha"
 msgstr "Mokshaासाठी आयकॉन थीम सक्षम करा"
 
@@ -8520,7 +8506,6 @@ msgid "Background"
 msgstr "पार्श्वभूमी"
 
 #: src/modules/gadman/e_mod_config.c:22
-
 msgid "Overlay (Key Toggle)"
 msgstr "होवर (की टॉगल)"
 
@@ -8563,7 +8548,6 @@ msgid "Background Options"
 msgstr "पार्श्वभूमी पर्याय"
 
 #: src/modules/gadman/e_mod_gadman.c:124
-
 msgid "Desktop Overlay"
 msgstr "डेस्कटॉप फाइल"
 
@@ -8811,29 +8795,29 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "आपण हा बार स्त्रोत हटवू इच्छित आहात याची आपल्याला खात्री आहे का?"
 
-#: src/modules/ibar/e_mod_main.c:333 src/modules/ibar/e_mod_main.c:3121
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:341 src/modules/ibar/e_mod_main.c:3267
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "IBar"
 msgstr "I-बार"
 
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1659
+#: src/modules/ibar/e_mod_main.c:457 src/modules/ibar/e_mod_main.c:1798
 msgid "Create new Icon"
 msgstr "नवीन आयकॉन तयार करा"
 
-#: src/modules/ibar/e_mod_main.c:1690
+#: src/modules/ibar/e_mod_main.c:1829
 msgid "Add to bar"
 msgstr "बारमध्ये जोडा"
 
-#: src/modules/ibar/e_mod_main.c:1696
+#: src/modules/ibar/e_mod_main.c:1835
 msgid "Remove from bar"
 msgstr "बारमधून काढून टाका"
 
-#: src/modules/ibar/e_mod_main.c:1702
+#: src/modules/ibar/e_mod_main.c:1841
 #, c-format
 msgid "Icon %s"
 msgstr "आयकॉन %s"
 
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "Focus IBar"
 msgstr "फोकस I-बार"
 
@@ -9489,251 +9473,219 @@ msgstr "प्रत्येक गोष्टीच्या खाली स
 msgid "Systray"
 msgstr "सायस्ट्रे"
 
-#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1230
-msgid "Screenshot"
-msgstr "स्क्रीनशॉट"
-
-#: src/modules/shot/e_mod_main.c:101
-msgid "Screenshot in: "
-msgstr "स्क्रीनशॉट इन: "
-
-#: src/modules/shot/e_mod_main.c:116
-msgid "Screenshot stored in"
-msgstr "स्क्रीनशॉट मध्ये संग्रहित"
-
-#: src/modules/shot/e_mod_main.c:311
-msgid "Error - Folder does not exist"
-msgstr "त्रुटी - फोल्डर अस्तित्वात नाही"
-
-#: src/modules/shot/e_mod_main.c:313
-msgid ""
-"Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
-"Take Screenshot<br><br>Would you like to set up it now?"
+#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
+msgid "Select action to take with screenshot"
 msgstr ""
-"टेक-स्क्रीनशॉट सेटिंग्जमध्ये फोल्डर बदला<br><br>मेनू-सेटिंग्स-ऑल-अॅडव्हान्स्ड-टेक "
-"स्क्रीनशॉट<br><br>आता ते सेट करायला आवडेल का?"
 
-#: src/modules/shot/e_mod_main.c:359
-msgid "Error saving screenshot file"
-msgstr "त्रुटी जतन स्क्रीनशॉट फाइल"
-
-#: src/modules/shot/e_mod_main.c:360
-#, c-format
-msgid "Path: %s"
-msgstr "मार्ग: %s"
-
-#: src/modules/shot/e_mod_main.c:420 src/modules/shot/e_mod_main.c:430
-msgid "Error - Unknown format"
-msgstr "त्रुटी - अज्ञात स्वरूप"
-
-#: src/modules/shot/e_mod_main.c:421
-msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
-msgstr "कृपया 'परिपूर्ण गुणवत्ता' वापरा<br>फक्त क्लिपबोर्डमध्ये कॉपी करण्यासाठी."
-
-#: src/modules/shot/e_mod_main.c:431
-msgid ""
-"File has an unspecified extension.<br>Please use '.jpg' or '.png' "
-"extensions<br>only as other formats are not<br>supported currently."
+#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
+msgid "Delay"
 msgstr ""
-"फाईलला अनिर्दिष्ट विस्तार आहे.<br>कृपया '.jpg' किंवा '.png' एक्सटेंशन वापरा<br>फक्त "
-"इतर फॉरमॅट जसे नसतात<br>सध्या समर्थित आहे."
 
-#: src/modules/shot/e_mod_main.c:498
-msgid "Select screenshot save location"
-msgstr "स्क्रीनशॉट सेव्ह लोकेशन निवडा"
+#: src/modules/shot/e_mod_delay.c:61
+#, fuzzy, c-format
+msgid "%1.1f sec"
+msgstr "%1.1f"
 
-#: src/modules/shot/e_mod_main.c:512 src/modules/shot/e_mod_main.c:1041
-msgid "Save"
-msgstr "बचत करणे"
+#: src/modules/shot/e_mod_edit.c:1968
+#, fuzzy
+msgid "Tools"
+msgstr "टूलटिप्स"
 
-#: src/modules/shot/e_mod_main.c:618
-#, c-format
-msgid "Uploaded %s / %s"
-msgstr "अपलोड केलेले %s / %s"
+#: src/modules/shot/e_mod_edit.c:1980
+#, fuzzy
+msgid "Select crop area"
+msgstr "एक निवडा"
 
-#: src/modules/shot/e_mod_main.c:639
-msgid "Error - Upload Failed"
-msgstr "त्रुटी - अपलोड अयशस्वी"
+#: src/modules/shot/e_mod_edit.c:1981
+#, fuzzy
+msgid "Modify objects"
+msgstr "सुधारित करा"
 
-#: src/modules/shot/e_mod_main.c:640
-#, c-format
-msgid "Upload failed with status code:<br>%i"
-msgstr "स्टेटस कोडसह अपलोड:<br>%i"
+#: src/modules/shot/e_mod_edit.c:1982
+#, fuzzy
+msgid "Delete objects"
+msgstr "डिलीट करा"
 
-#: src/modules/shot/e_mod_main.c:689
-msgid "Error - Can't create file"
-msgstr "त्रुटी - फाइल तयार करू शकत नाही"
+#: src/modules/shot/e_mod_edit.c:1991
+#, fuzzy
+msgid "Single arrow line"
+msgstr "सिंगल माउस क्लिक करा"
 
-#: src/modules/shot/e_mod_main.c:690
-#, c-format
-msgid "Cannot create temporary file '%s': %s"
-msgstr "तात्पुरती फाइल '%s' तयार करता येणार नाही : %s"
-
-#: src/modules/shot/e_mod_main.c:708
-msgid "Error - Can't open file"
-msgstr "त्रुटी - फाईल उघडू शकत नाही"
-
-#: src/modules/shot/e_mod_main.c:709
-#, c-format
-msgid "Cannot open temporary file '%s': %s"
-msgstr "तात्पुरती फाइल '%s' उघडता येणार नाही : %s"
-
-#: src/modules/shot/e_mod_main.c:717
-msgid "Error - Bad size"
-msgstr "त्रुटी - खराब आकार"
-
-#: src/modules/shot/e_mod_main.c:718
-#, c-format
-msgid "Cannot get size of file '%s'"
-msgstr "फाईल '%s'चा आकार मिळू शकत नाही"
-
-#: src/modules/shot/e_mod_main.c:728
-msgid "Error - Can't allocate memory"
-msgstr "त्रुटी - मेमरी आवंटित करू शकत नाही"
-
-#: src/modules/shot/e_mod_main.c:729
-#, c-format
-msgid "Cannot allocate memory for picture: %s"
-msgstr "चित्रासाठी मेमरी देऊ शकत नाही : %s"
-
-#: src/modules/shot/e_mod_main.c:736
-msgid "Error - Can't read picture"
-msgstr "त्रुटी - चित्र वाचता येत नाही"
-
-#: src/modules/shot/e_mod_main.c:737
-msgid "Cannot read picture"
-msgstr "चित्र वाचता येत नाही"
-
-#: src/modules/shot/e_mod_main.c:759
-msgid "Uploading screenshot"
-msgstr "स्क्रीनशॉट अपलोड करत आहे"
-
-#: src/modules/shot/e_mod_main.c:764
-msgid "Uploading ..."
-msgstr "अपलोडिंग..."
-
-#: src/modules/shot/e_mod_main.c:769
-msgid "Screenshot is available at this location:"
-msgstr "स्क्रीनशॉट या ठिकाणी उपलब्ध आहे:"
-
-#: src/modules/shot/e_mod_main.c:778
-msgid "Copy link"
-msgstr "कॉपी लिंक"
-
-#: src/modules/shot/e_mod_main.c:802
-msgid "Confirm Share"
-msgstr "शेअर ची पुष्टी करा"
-
-#: src/modules/shot/e_mod_main.c:803
-msgid ""
-"This image will be uploaded<br>to enlightenment.org. It will be publicly "
-"visible."
-msgstr "हा फोटो अपलोड केला जाईल<br>enlightenment.org. ते जाहीरपणे दिसेल."
-
-#: src/modules/shot/e_mod_main.c:805
-msgid "Confirm"
-msgstr "पुष्टी"
-
-#: src/modules/shot/e_mod_main.c:906
-msgid "Where to put Screenshot..."
-msgstr "स्क्रीनशॉट कुठे ठेवावा..."
-
-#: src/modules/shot/e_mod_main.c:958
-msgid "Quality"
-msgstr "दर्जा"
-
-#: src/modules/shot/e_mod_main.c:967
-msgid "Perfect"
-msgstr "परिपूर्ण"
-
-#: src/modules/shot/e_mod_main.c:1043
-msgid "Share"
-msgstr "सामायिक करा"
-
-#: src/modules/shot/e_mod_main.c:1045 src/modules/clipboard/e_mod_config.c:221
-#: src/modules/clipboard/e_mod_main.c:361
-#: src/modules/clipboard/e_mod_main.c:955
-#: src/modules/clipboard/e_mod_main.c:956
-#: src/modules/clipboard/e_mod_main.c:957
-msgid "Clipboard"
-msgstr "क्लिपबोर्ड"
-
-#: src/modules/shot/e_mod_main.c:1227
-#, c-format
-msgid ""
-"Select the screenshot mode... <br>Delay time is set in the Screenshot module "
-"settings<br>The current delay time: <b> %d s</b>"
+#: src/modules/shot/e_mod_edit.c:1992
+msgid "Double arrow line"
 msgstr ""
-"स्क्रीनशॉट मोड निवडा... <br>स्क्रीनशॉट मॉड्यूल सेटिंग्जमध्ये विलंब वेळ सेट केला "
-"जातो<br>सध्याचा विलंब वेळ: <b> %d एस</b>"
 
-#: src/modules/shot/e_mod_main.c:1236
-msgid "Instant shot"
-msgstr "झटपट शॉट"
+#: src/modules/shot/e_mod_edit.c:1993
+#, fuzzy
+msgid "Plain line"
+msgstr "साधे"
 
-#: src/modules/shot/e_mod_main.c:1237
-msgid "Delayed shot"
-msgstr "उशीरा शॉट"
+#: src/modules/shot/e_mod_edit.c:1994
+msgid "Solid box"
+msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1277 src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_edit.c:1996
+msgid "Malloc"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:1997
+msgid "Malloc (evil)"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:1998
+#, fuzzy
+msgid "Pointing finger"
+msgstr "पॉइंटर"
+
+#: src/modules/shot/e_mod_edit.c:1999
+msgid "Enlightenment logo"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2001
+msgid "Foot"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2002
+msgid "Silly walk"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2003
+#, fuzzy
+msgid "Box outline"
+msgstr "आराखडा:"
+
+#: src/modules/shot/e_mod_edit.c:2004
+#, fuzzy
+msgid "Circle outline"
+msgstr "वर्तुळाकार स्क्रॉलिंग"
+
+#: src/modules/shot/e_mod_edit.c:2006
+#, fuzzy
+msgid "Plain text"
+msgstr "साधे"
+
+#: src/modules/shot/e_mod_edit.c:2007
+#, fuzzy
+msgid "Text box"
+msgstr "मजकूर"
+
+#: src/modules/shot/e_mod_edit.c:2008
+msgid "Text thought bubble"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2009
+msgid "Text thought bubble 2"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2011
+msgid "Speech bubble"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2012
+msgid "Speech bubble 2"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2013
+msgid "Kaboom splat"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2014
+msgid "Pow explode"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2022
+#, fuzzy
+msgid "Color"
+msgstr "रंग (संपादन)"
+
+#: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
 msgstr "शॉट घ्या"
 
-#: src/modules/shot/e_mod_main.c:1305
+#: src/modules/shot/e_mod_main.c:374
 msgid "Shot Error"
 msgstr "शॉट त्रुटी"
 
-#: src/modules/shot/e_mod_main.c:1306
+#: src/modules/shot/e_mod_main.c:375
 msgid "Cannot initialize network"
 msgstr "नेटवर्क सुरू करू शकत नाही"
 
-#: src/modules/shot/e_mod_main.c:1335 src/modules/shot/e_mod_config.c:47
-msgid "Screenshot Settings"
-msgstr "स्क्रीनशॉट सेटिंग"
+#: src/modules/shot/e_mod_main.c:392
+#, fuzzy
+msgid "Take Screenshot with Delay"
+msgstr "स्क्रीनशॉट घ्या"
 
-#: src/modules/shot/e_mod_config.c:100
-msgid " Show the screenshot mode dialog"
-msgstr " स्क्रीनशॉट मोड संवाद दर्शवा"
+#: src/modules/shot/e_mod_preview.c:93
+msgid "Quality"
+msgstr "दर्जा"
 
-#: src/modules/shot/e_mod_config.c:103
-msgid " Screenshot guide (quality/share/save)"
-msgstr " स्क्रीनशॉट मार्गदर्शक (गुणवत्ता / सामायिक / सेव्ह)"
+#: src/modules/shot/e_mod_preview.c:109
+msgid "Save"
+msgstr "बचत करणे"
 
-#: src/modules/shot/e_mod_config.c:106
-msgid " Show notifications"
-msgstr " सूचना दाखवा"
+#: src/modules/shot/e_mod_preview.c:111
+msgid "Share"
+msgstr "सामायिक करा"
 
-#: src/modules/shot/e_mod_config.c:109
-msgid " Copy to Clipboard"
-msgstr " क्लिपबोर्डवर कॉपी करा"
+#: src/modules/shot/e_mod_save.c:204
+#, fuzzy
+msgid "Error - No Filemanager"
+msgstr "फाईलमॅनेजर"
 
-#: src/modules/shot/e_mod_config.c:112
-msgid " Launch app after screenshot"
-msgstr " स्क्रीनशॉटनंतर अॅप लाँच करा"
+#: src/modules/shot/e_mod_save.c:205
+msgid ""
+"No filemanager action and/or module was found.<br>Cannot show the location "
+"of your screenshots."
+msgstr ""
 
-#: src/modules/shot/e_mod_config.c:115
-msgid "Application for opening:"
-msgstr "उघडण्यासाठी अर्ज :"
+#: src/modules/shot/e_mod_share.c:149
+#, fuzzy, c-format
+msgid "Uploaded %i%%"
+msgstr "अपलोड केलेले %s / %s"
 
-#: src/modules/shot/e_mod_config.c:121
-msgid "Folder for saving screenshots:"
-msgstr "स्क्रीनशॉट जतन करण्यासाठी फोल्डर:"
+#: src/modules/shot/e_mod_share.c:163
+msgid "Error - Upload Failed"
+msgstr "त्रुटी - अपलोड अयशस्वी"
 
-#: src/modules/shot/e_mod_config.c:127
-msgid "Delay time [s]"
-msgstr "विलंब वेळ (संपादन)"
+#: src/modules/shot/e_mod_share.c:164
+#, fuzzy, c-format
+msgid "Upload failed with status code:<ps/>%i"
+msgstr "स्टेटस कोडसह अपलोड:<br>%i"
 
-#: src/modules/shot/e_mod_config.c:132
-msgid "Image quality [50-90 = jpg, 100 = png]"
-msgstr "प्रतिमा गुणवत्ता [50-90 = jpg, 100 = png]"
+#: src/modules/shot/e_mod_share.c:246
+msgid "Uploading screenshot"
+msgstr "स्क्रीनशॉट अपलोड करत आहे"
 
-#: src/modules/shot/e_mod_config.c:139
-msgid "Info"
-msgstr "माहिती"
+#: src/modules/shot/e_mod_share.c:252
+msgid "Uploading ..."
+msgstr "अपलोडिंग..."
 
-#: src/modules/shot/e_mod_config.c:140
-msgid "Alt+PrtSc: screenshot active window"
-msgstr "Alt+PrtSc : स्क्रीनशॉट सक्रिय विंडो"
+#: src/modules/shot/e_mod_share.c:257
+msgid "Screenshot is available at this location:"
+msgstr "स्क्रीनशॉट या ठिकाणी उपलब्ध आहे:"
+
+#: src/modules/shot/e_mod_share.c:266
+#, fuzzy
+msgid "Hide"
+msgstr "ऑटो हाइड"
+
+#: src/modules/shot/e_mod_share.c:315
+msgid "Confirm Share"
+msgstr "शेअर ची पुष्टी करा"
+
+#: src/modules/shot/e_mod_share.c:317
+#, fuzzy
+msgid ""
+"Are you sure you want to upload this image<ps/>publically to these services?"
+msgstr "आपण हा बार स्त्रोत हटवू इच्छित आहात याची आपल्याला खात्री आहे का?"
+
+#: src/modules/shot/e_mod_share.c:320
+msgid "Imgur.com"
+msgstr ""
+
+#: src/modules/shot/e_mod_share.c:323
+msgid "E.org"
+msgstr ""
 
 #: src/modules/tasks/e_mod_main.c:340 src/modules/tasks/e_mod_main.c:855
 msgid "Tasks"
@@ -9918,8 +9870,8 @@ msgid "Variant"
 msgstr "व्हेरियंट (संपादन)"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:278
-#: src/modules/notification/e_mod_main.c:374
+#: src/modules/notification/e_mod_main.c:277
+#: src/modules/notification/e_mod_main.c:373
 msgid "Notification"
 msgstr "सूचना"
 
@@ -9939,32 +9891,32 @@ msgstr ""
 "सर्व्हर म्हणून कार्य करणारे इतर कोणतेही मॉड्यूल नाही आणि डी-बस योग्यरित्या स्थापित आणि "
 "चालू आहे याची खात्री करा"
 
-#: src/modules/notification/e_mod_main.c:426
+#: src/modules/notification/e_mod_main.c:423
 #: src/modules/clipboard/e_mod_main.c:424
 msgid "Empty"
 msgstr "रिक्त"
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:617
 msgid "Enter Presentation Mode"
 msgstr "प्रेझेंटेशन मोड प्रविष्ट करा"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:618
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha <b>प्रेझेंटेशन</b> मोडमध्ये आहे."
 
-#: src/modules/notification/e_mod_main.c:632
+#: src/modules/notification/e_mod_main.c:622
 msgid "Exited Presentation Mode"
 msgstr "एक्झिट प्रेझेंटेशन मोड"
 
-#: src/modules/notification/e_mod_main.c:633
+#: src/modules/notification/e_mod_main.c:623
 msgid "Presentation mode is over."
 msgstr "प्रेझेंटेशन मोड संपला आहे."
 
-#: src/modules/notification/e_mod_main.c:647
+#: src/modules/notification/e_mod_main.c:637
 msgid "Enter Offline Mode"
 msgstr "ऑफलाइन मोड प्रविष्ट करा"
 
-#: src/modules/notification/e_mod_main.c:648
+#: src/modules/notification/e_mod_main.c:638
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -9972,11 +9924,11 @@ msgstr ""
 "Moksha <b>ऑफलाइन</b> मोडमध्ये आहे.<br>ऑफलाइन मोडदरम्यान, नेटवर्क वापरणारे मॉड्यूल "
 "मतदान दूरस्थ सेवा थांबवतील."
 
-#: src/modules/notification/e_mod_main.c:654
+#: src/modules/notification/e_mod_main.c:644
 msgid "Exited Offline Mode"
 msgstr "ऑफलाइन मोडमधून बाहेर पडले"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:645
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -9984,7 +9936,7 @@ msgstr ""
 "आता <b>ऑनलाइन</b> मोडमध्ये.<br>आता नेटवर्क वापरणारे मॉड्यूल नियमित कामे पुन्हा सुरू "
 "करतील."
 
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 msgid "Notification expired!"
 msgstr "अधिसूचनेची मुदत संपली!"
 
@@ -10112,6 +10064,14 @@ msgstr " व्हाइटस्पेस ट्रिम करा"
 #: src/modules/clipboard/e_mod_config.c:217
 msgid " Trim Newlines"
 msgstr " न्यूलाईन्स ट्रिम करा"
+
+#: src/modules/clipboard/e_mod_config.c:221
+#: src/modules/clipboard/e_mod_main.c:361
+#: src/modules/clipboard/e_mod_main.c:955
+#: src/modules/clipboard/e_mod_main.c:956
+#: src/modules/clipboard/e_mod_main.c:957
+msgid "Clipboard"
+msgstr "क्लिपबोर्ड"
 
 #: src/modules/clipboard/e_mod_config.c:227
 msgid " Save History"
@@ -10387,9 +10347,151 @@ msgid "Volume Mute"
 msgstr "व्हॉल्यूम बद्ध"
 
 #: src/modules/separator/e_mod_main.c:122
-
 msgid "Separator"
 msgstr "स्वतंत्र गट"
+
+#~ msgid "Screenshot"
+#~ msgstr "स्क्रीनशॉट"
+
+#~ msgid "Screenshot in: "
+#~ msgstr "स्क्रीनशॉट इन: "
+
+#~ msgid "Screenshot stored in"
+#~ msgstr "स्क्रीनशॉट मध्ये संग्रहित"
+
+#~ msgid "Error - Folder does not exist"
+#~ msgstr "त्रुटी - फोल्डर अस्तित्वात नाही"
+
+#~ msgid ""
+#~ "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-"
+#~ "Advanced-Take Screenshot<br><br>Would you like to set up it now?"
+#~ msgstr ""
+#~ "टेक-स्क्रीनशॉट सेटिंग्जमध्ये फोल्डर बदला<br><br>मेनू-सेटिंग्स-ऑल-अॅडव्हान्स्ड-टेक "
+#~ "स्क्रीनशॉट<br><br>आता ते सेट करायला आवडेल का?"
+
+#~ msgid "Error saving screenshot file"
+#~ msgstr "त्रुटी जतन स्क्रीनशॉट फाइल"
+
+#, c-format
+#~ msgid "Path: %s"
+#~ msgstr "मार्ग: %s"
+
+#~ msgid "Error - Unknown format"
+#~ msgstr "त्रुटी - अज्ञात स्वरूप"
+
+#~ msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
+#~ msgstr "कृपया 'परिपूर्ण गुणवत्ता' वापरा<br>फक्त क्लिपबोर्डमध्ये कॉपी करण्यासाठी."
+
+#~ msgid ""
+#~ "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
+#~ "extensions<br>only as other formats are not<br>supported currently."
+#~ msgstr ""
+#~ "फाईलला अनिर्दिष्ट विस्तार आहे.<br>कृपया '.jpg' किंवा '.png' एक्सटेंशन वापरा<br>फक्त "
+#~ "इतर फॉरमॅट जसे नसतात<br>सध्या समर्थित आहे."
+
+#~ msgid "Select screenshot save location"
+#~ msgstr "स्क्रीनशॉट सेव्ह लोकेशन निवडा"
+
+#~ msgid "Error - Can't create file"
+#~ msgstr "त्रुटी - फाइल तयार करू शकत नाही"
+
+#, c-format
+#~ msgid "Cannot create temporary file '%s': %s"
+#~ msgstr "तात्पुरती फाइल '%s' तयार करता येणार नाही : %s"
+
+#~ msgid "Error - Can't open file"
+#~ msgstr "त्रुटी - फाईल उघडू शकत नाही"
+
+#, c-format
+#~ msgid "Cannot open temporary file '%s': %s"
+#~ msgstr "तात्पुरती फाइल '%s' उघडता येणार नाही : %s"
+
+#~ msgid "Error - Bad size"
+#~ msgstr "त्रुटी - खराब आकार"
+
+#, c-format
+#~ msgid "Cannot get size of file '%s'"
+#~ msgstr "फाईल '%s'चा आकार मिळू शकत नाही"
+
+#~ msgid "Error - Can't allocate memory"
+#~ msgstr "त्रुटी - मेमरी आवंटित करू शकत नाही"
+
+#, c-format
+#~ msgid "Cannot allocate memory for picture: %s"
+#~ msgstr "चित्रासाठी मेमरी देऊ शकत नाही : %s"
+
+#~ msgid "Error - Can't read picture"
+#~ msgstr "त्रुटी - चित्र वाचता येत नाही"
+
+#~ msgid "Cannot read picture"
+#~ msgstr "चित्र वाचता येत नाही"
+
+#~ msgid "Copy link"
+#~ msgstr "कॉपी लिंक"
+
+#~ msgid ""
+#~ "This image will be uploaded<br>to enlightenment.org. It will be publicly "
+#~ "visible."
+#~ msgstr "हा फोटो अपलोड केला जाईल<br>enlightenment.org. ते जाहीरपणे दिसेल."
+
+#~ msgid "Confirm"
+#~ msgstr "पुष्टी"
+
+#~ msgid "Where to put Screenshot..."
+#~ msgstr "स्क्रीनशॉट कुठे ठेवावा..."
+
+#~ msgid "Perfect"
+#~ msgstr "परिपूर्ण"
+
+#, c-format
+#~ msgid ""
+#~ "Select the screenshot mode... <br>Delay time is set in the Screenshot "
+#~ "module settings<br>The current delay time: <b> %d s</b>"
+#~ msgstr ""
+#~ "स्क्रीनशॉट मोड निवडा... <br>स्क्रीनशॉट मॉड्यूल सेटिंग्जमध्ये विलंब वेळ सेट केला "
+#~ "जातो<br>सध्याचा विलंब वेळ: <b> %d एस</b>"
+
+#~ msgid "Instant shot"
+#~ msgstr "झटपट शॉट"
+
+#~ msgid "Delayed shot"
+#~ msgstr "उशीरा शॉट"
+
+#~ msgid "Screenshot Settings"
+#~ msgstr "स्क्रीनशॉट सेटिंग"
+
+#~ msgid " Show the screenshot mode dialog"
+#~ msgstr " स्क्रीनशॉट मोड संवाद दर्शवा"
+
+#~ msgid " Screenshot guide (quality/share/save)"
+#~ msgstr " स्क्रीनशॉट मार्गदर्शक (गुणवत्ता / सामायिक / सेव्ह)"
+
+#~ msgid " Show notifications"
+#~ msgstr " सूचना दाखवा"
+
+#~ msgid " Copy to Clipboard"
+#~ msgstr " क्लिपबोर्डवर कॉपी करा"
+
+#~ msgid " Launch app after screenshot"
+#~ msgstr " स्क्रीनशॉटनंतर अॅप लाँच करा"
+
+#~ msgid "Application for opening:"
+#~ msgstr "उघडण्यासाठी अर्ज :"
+
+#~ msgid "Folder for saving screenshots:"
+#~ msgstr "स्क्रीनशॉट जतन करण्यासाठी फोल्डर:"
+
+#~ msgid "Delay time [s]"
+#~ msgstr "विलंब वेळ (संपादन)"
+
+#~ msgid "Image quality [50-90 = jpg, 100 = png]"
+#~ msgstr "प्रतिमा गुणवत्ता [50-90 = jpg, 100 = png]"
+
+#~ msgid "Info"
+#~ msgstr "माहिती"
+
+#~ msgid "Alt+PrtSc: screenshot active window"
+#~ msgstr "Alt+PrtSc : स्क्रीनशॉट सक्रिय विंडो"
 
 #~ msgid "Moksha Settings Write Problems"
 #~ msgstr "Moksha सेटिंग्ज समस्या लिहितात"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: E17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-10-10 18:24+0200\n"
+"POT-Creation-Date: 2026-01-18 18:44+0100\n"
 "PO-Revision-Date: 2013-09-10 23:23+0000\n"
 "Last-Translator: H. İbrahim Güngör <h.ibrahim.gungor@gmail.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -32,7 +32,7 @@ msgstr "Moksha Hakkında"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:113
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
+#: src/modules/fileman/e_fwin.c:2587
 msgid "Close"
 msgstr "Kapat"
 
@@ -107,7 +107,6 @@ msgstr "Moksha'tan çıkmak istediğinizden emin misiniz?"
 #: src/bin/e_actions.c:2496 src/bin/e_actions.c:2561 src/bin/e_actions.c:2626
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10521
 #: src/bin/e_screensaver.c:193 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:318
 msgid "Yes"
 msgstr "Evet"
 
@@ -156,7 +155,7 @@ msgstr "Bilgisayarınızı uykuya geçirmek istediğinizden emin misiniz?"
 #: src/bin/e_actions.c:3158 src/bin/e_actions.c:3163 src/bin/e_actions.c:3168
 #: src/bin/e_actions.c:3467 src/bin/e_actions.c:3471 src/bin/e_actions.c:3476
 #: src/bin/e_actions.c:3482 src/bin/e_actions.c:3488 src/bin/e_actions.c:3494
-#: src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_main.c:400
 msgid "Window : Actions"
 msgstr "Pencere : Eylemler"
 
@@ -561,7 +560,7 @@ msgstr "Pencere... veya başlangıca... atla"
 #: src/bin/e_actions.c:3645 src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:986 src/modules/shot/e_mod_main.c:1317
+#: src/modules/shot/e_mod_main.c:384 src/modules/shot/e_mod_main.c:392
 msgid "Screen"
 msgstr "Ekran"
 
@@ -872,9 +871,9 @@ msgstr "Seç"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:318 src/modules/shot/e_mod_main.c:514
-#: src/modules/shot/e_mod_main.c:779 src/modules/shot/e_mod_main.c:805
-#: src/modules/shot/e_mod_main.c:1047 src/modules/xkbswitch/e_mod_config.c:587
+#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:120
+#: src/modules/shot/e_mod_share.c:267 src/modules/shot/e_mod_share.c:326
+#: src/modules/xkbswitch/e_mod_config.c:587
 msgid "Cancel"
 msgstr "İptal"
 
@@ -1020,8 +1019,8 @@ msgstr "Temel"
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10790 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
-#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:519
+#: src/bin/e_module.c:839 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1030,7 +1029,7 @@ msgstr "Temel"
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:586
+#: src/modules/shot/e_mod_delay.c:79 src/modules/xkbswitch/e_mod_config.c:586
 msgid "OK"
 msgstr "Tamam"
 
@@ -1252,6 +1251,7 @@ msgid "Cut"
 msgstr "Kes"
 
 #: src/bin/e_entry.c:514 src/bin/e_fm.c:9123 src/bin/e_fm.c:11650
+#: src/modules/shot/e_mod_preview.c:113
 msgid "Copy"
 msgstr "Kopyala"
 
@@ -1530,7 +1530,7 @@ msgid "Eject"
 msgstr "Çıkarma"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
-#: src/modules/ibar/e_mod_main.c:1683
+#: src/modules/ibar/e_mod_main.c:1822
 msgid "Properties"
 msgstr "Özellikler"
 
@@ -1691,7 +1691,7 @@ msgid "Yes to all"
 msgstr "Tümüne evet"
 
 #: src/bin/e_fm.c:10525 src/modules/xkbswitch/e_mod_config.c:402
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:633
 msgid "Warning"
 msgstr ""
@@ -1838,7 +1838,7 @@ msgstr "Diğerleri:"
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:215
 #: src/modules/conf_theme/e_int_config_theme.c:1434
-#: src/modules/conf_theme/e_int_config_xsettings.c:540
+#: src/modules/conf_theme/e_int_config_xsettings.c:548
 msgid "Preview"
 msgstr "Önizleme"
 
@@ -2527,15 +2527,14 @@ msgstr "Pozisyon İste"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:466 src/modules/ibar/e_mod_main.c:1676
+#: src/modules/ibar/e_mod_main.c:474 src/modules/ibar/e_mod_main.c:1815
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:848
+#: src/modules/connman/e_mod_main.c:459 src/modules/tasks/e_mod_main.c:848
 #: src/modules/xkbswitch/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:396
-#: src/modules/notification/e_mod_main.c:343
-#: src/modules/notification/e_mod_main.c:457
+#: src/modules/notification/e_mod_main.c:342
+#: src/modules/notification/e_mod_main.c:454
 #: src/modules/clipboard/e_mod_main.c:303
 #: src/modules/clipboard/e_mod_main.c:455 src/modules/places/e_mod_main.c:518
 msgid "Settings"
@@ -2625,7 +2624,7 @@ msgstr "Boyut, Konum ve Kilitler"
 #: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:990
+#: src/modules/everything/evry_view.c:1628
 msgid "All"
 msgstr "Tümü"
 
@@ -2733,7 +2732,7 @@ msgstr "Modül Ayarları"
 msgid "Load"
 msgstr "Yükle"
 
-#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:620
+#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:621
 msgid "Unload"
 msgstr "Boşalt"
 
@@ -3557,35 +3556,35 @@ msgstr ""
 "için yüklenmeyecek. <br><br>Ayarlar penceresi modüllerinizi tekrar seçmenize "
 "izin verecektir."
 
-#: src/bin/e_module.c:185
+#: src/bin/e_module.c:186
 #, c-format
 msgid "Loading Module: %s"
 msgstr "Mudül Yükleniyor: %s"
 
-#: src/bin/e_module.c:234
+#: src/bin/e_module.c:235
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
 "be found in the<br>module search directories.<br>"
 msgstr ""
 
-#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
+#: src/bin/e_module.c:238 src/bin/e_module.c:251 src/bin/e_module.c:269
 msgid "Error loading Module"
 msgstr "Modül yükleme hatası"
 
-#: src/bin/e_module.c:245 src/bin/e_module.c:262
+#: src/bin/e_module.c:246 src/bin/e_module.c:263
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
 
-#: src/bin/e_module.c:267
+#: src/bin/e_module.c:268
 #, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "Modül tüm gereken fonksiyonları içermiyor"
 
-#: src/bin/e_module.c:282
+#: src/bin/e_module.c:283
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3594,34 +3593,34 @@ msgstr ""
 "Modül API hatası<br>Modül başlatılırken hata: %s<br>Asgari modül API sürümü "
 "gerekiyor: %i.<br>Moksha tarafından önerilen modül API sürümü: %i.<br>"
 
-#: src/bin/e_module.c:287
+#: src/bin/e_module.c:288
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Moksha %s Modülü"
 
-#: src/bin/e_module.c:615
+#: src/bin/e_module.c:616
 msgid "What action should be taken with this module?<br>"
 msgstr ""
 
-#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:622 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:697
 #: src/modules/clipboard/e_mod_main.c:785
 msgid "Keep"
 msgstr "Sakla"
 
-#: src/bin/e_module.c:823
+#: src/bin/e_module.c:824
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
 "module list is as follows:<br><br>"
 msgstr ""
 
-#: src/bin/e_module.c:835
+#: src/bin/e_module.c:836
 msgid "Unstable module tainting"
 msgstr ""
 
-#: src/bin/e_module.c:839
+#: src/bin/e_module.c:840
 msgid "I know"
 msgstr "Biliyorum"
 
@@ -3742,7 +3741,7 @@ msgid "Rename Shelf"
 msgstr "Rafı Yeniden Adlandır"
 
 #: src/bin/e_shelf.c:2476 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1670
+#: src/modules/ibar/e_mod_main.c:468 src/modules/ibar/e_mod_main.c:1809
 msgid "Contents"
 msgstr "İçindekiler"
 
@@ -5693,7 +5692,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:444
+#: src/modules/notification/e_mod_main.c:441
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5831,8 +5830,8 @@ msgid "Quick Launcher"
 msgstr "Başlatıcı"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:309
-#: src/modules/shot/e_mod_main.c:1288 src/modules/shot/e_mod_main.c:1317
-#: src/modules/shot/e_mod_main.c:1329
+#: src/modules/shot/e_mod_main.c:357 src/modules/shot/e_mod_main.c:384
+#: src/modules/shot/e_mod_main.c:405
 msgid "Take Screenshot"
 msgstr "Ekran Görüntüsü Yakala"
 
@@ -6127,7 +6126,7 @@ msgid "Themes"
 msgstr "Temalar"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:571
+#: src/modules/conf_theme/e_int_config_xsettings.c:579
 #: src/modules/everything/evry_config.c:447
 #: src/modules/everything/evry_config.c:473
 msgid "Icons"
@@ -6285,13 +6284,11 @@ msgid "e.g. Saving to disk"
 msgstr ""
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:973
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "Düşük"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:971
 msgid "Medium"
 msgstr "Orta"
 
@@ -6303,7 +6300,6 @@ msgid "%.0f s"
 msgstr "%.0f s"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:969
 msgid "High"
 msgstr "Yüksek"
 
@@ -7009,7 +7005,7 @@ msgid "Assign"
 msgstr "Ata"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:434
+#: src/modules/notification/e_mod_main.c:431
 #: src/modules/clipboard/e_mod_main.c:442
 msgid "Clear"
 msgstr "Temizle"
@@ -7043,24 +7039,24 @@ msgstr "Moksha bir kopyalama hatası nedeniyle temayı<br>içe aktaramadı."
 msgid "Application Theme Settings"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:515
-#: src/modules/conf_theme/e_int_config_xsettings.c:559
+#: src/modules/conf_theme/e_int_config_xsettings.c:523
+#: src/modules/conf_theme/e_int_config_xsettings.c:567
 msgid "Match Moksha theme if possible"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:524
+#: src/modules/conf_theme/e_int_config_xsettings.c:532
 msgid "Enable X Application Settings"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:528
+#: src/modules/conf_theme/e_int_config_xsettings.c:536
 msgid "GTK Applications"
 msgstr "GTK Uygulamaları"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:563
+#: src/modules/conf_theme/e_int_config_xsettings.c:571
 msgid "Enable icon theme for applications"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:567
+#: src/modules/conf_theme/e_int_config_xsettings.c:575
 msgid "Enable icon theme for Moksha"
 msgstr ""
 
@@ -8811,30 +8807,30 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Bu çubuğu ve içeriğini silmek istediğinize emin misiniz?"
 
-#: src/modules/ibar/e_mod_main.c:333 src/modules/ibar/e_mod_main.c:3121
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:341 src/modules/ibar/e_mod_main.c:3267
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1659
+#: src/modules/ibar/e_mod_main.c:457 src/modules/ibar/e_mod_main.c:1798
 msgid "Create new Icon"
 msgstr ""
 
-#: src/modules/ibar/e_mod_main.c:1690
+#: src/modules/ibar/e_mod_main.c:1829
 #, fuzzy
 msgid "Add to bar"
 msgstr "Favorilere Ekle"
 
-#: src/modules/ibar/e_mod_main.c:1696
+#: src/modules/ibar/e_mod_main.c:1835
 msgid "Remove from bar"
 msgstr ""
 
-#: src/modules/ibar/e_mod_main.c:1702
+#: src/modules/ibar/e_mod_main.c:1841
 #, c-format
 msgid "Icon %s"
 msgstr "Simge %s"
 
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "Focus IBar"
 msgstr ""
 
@@ -9469,255 +9465,218 @@ msgstr ""
 msgid "Systray"
 msgstr "Sistem Çekmecesi"
 
-#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1230
+#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
+msgid "Select action to take with screenshot"
+msgstr ""
+
+#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
+msgid "Delay"
+msgstr ""
+
+#: src/modules/shot/e_mod_delay.c:61
+#, fuzzy, c-format
+msgid "%1.1f sec"
+msgstr "%1.1f s"
+
+#: src/modules/shot/e_mod_edit.c:1968
 #, fuzzy
-msgid "Screenshot"
-msgstr "Ekran Görüntüsü Yakala"
+msgid "Tools"
+msgstr "İpuçları"
 
-#: src/modules/shot/e_mod_main.c:101
+#: src/modules/shot/e_mod_edit.c:1980
 #, fuzzy
-msgid "Screenshot in: "
-msgstr "Ekran Görüntüsü Yakala"
+msgid "Select crop area"
+msgstr "Birini seç"
 
-#: src/modules/shot/e_mod_main.c:116
+#: src/modules/shot/e_mod_edit.c:1981
 #, fuzzy
-msgid "Screenshot stored in"
-msgstr "Ekran Görüntüsü Yakala"
+msgid "Modify objects"
+msgstr "Düzenle"
 
-#: src/modules/shot/e_mod_main.c:311
-msgid "Error - Folder does not exist"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:313
-msgid ""
-"Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
-"Take Screenshot<br><br>Would you like to set up it now?"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:359
-msgid "Error saving screenshot file"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:360
-#, c-format
-msgid "Path: %s"
-msgstr "Yol: %s"
-
-#: src/modules/shot/e_mod_main.c:420 src/modules/shot/e_mod_main.c:430
-msgid "Error - Unknown format"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:421
-msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:431
-msgid ""
-"File has an unspecified extension.<br>Please use '.jpg' or '.png' "
-"extensions<br>only as other formats are not<br>supported currently."
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:498
-msgid "Select screenshot save location"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:512 src/modules/shot/e_mod_main.c:1041
-msgid "Save"
-msgstr "Kaydet"
-
-#: src/modules/shot/e_mod_main.c:618
-#, c-format
-msgid "Uploaded %s / %s"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:639
-msgid "Error - Upload Failed"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:640
-#, c-format
-msgid "Upload failed with status code:<br>%i"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:689
-msgid "Error - Can't create file"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:690
-#, c-format
-msgid "Cannot create temporary file '%s': %s"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:708
-msgid "Error - Can't open file"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:709
-#, c-format
-msgid "Cannot open temporary file '%s': %s"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:717
-msgid "Error - Bad size"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:718
-#, c-format
-msgid "Cannot get size of file '%s'"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:728
-msgid "Error - Can't allocate memory"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:729
-#, c-format
-msgid "Cannot allocate memory for picture: %s"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:736
-msgid "Error - Can't read picture"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:737
-msgid "Cannot read picture"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:759
-msgid "Uploading screenshot"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:764
-msgid "Uploading ..."
-msgstr "Yükleniyor ..."
-
-#: src/modules/shot/e_mod_main.c:769
-msgid "Screenshot is available at this location:"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:778
+#: src/modules/shot/e_mod_edit.c:1982
 #, fuzzy
-msgid "Copy link"
-msgstr "Kopyala"
+msgid "Delete objects"
+msgstr "Silme işlemi tamamlandı"
 
-#: src/modules/shot/e_mod_main.c:802
-msgid "Confirm Share"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:803
-msgid ""
-"This image will be uploaded<br>to enlightenment.org. It will be publicly "
-"visible."
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:805
-msgid "Confirm"
-msgstr "Onayla"
-
-#: src/modules/shot/e_mod_main.c:906
-msgid "Where to put Screenshot..."
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:958
-msgid "Quality"
-msgstr "Kalite"
-
-#: src/modules/shot/e_mod_main.c:967
-msgid "Perfect"
-msgstr "Mükemmel"
-
-#: src/modules/shot/e_mod_main.c:1043
-msgid "Share"
-msgstr "Paylaş"
-
-#: src/modules/shot/e_mod_main.c:1045 src/modules/clipboard/e_mod_config.c:221
-#: src/modules/clipboard/e_mod_main.c:361
-#: src/modules/clipboard/e_mod_main.c:955
-#: src/modules/clipboard/e_mod_main.c:956
-#: src/modules/clipboard/e_mod_main.c:957
+#: src/modules/shot/e_mod_edit.c:1991
 #, fuzzy
-msgid "Clipboard"
-msgstr "Panoya Kopyala"
+msgid "Single arrow line"
+msgstr "Fare tıklanınca göster"
 
-#: src/modules/shot/e_mod_main.c:1227
-#, c-format
-msgid ""
-"Select the screenshot mode... <br>Delay time is set in the Screenshot module "
-"settings<br>The current delay time: <b> %d s</b>"
+#: src/modules/shot/e_mod_edit.c:1992
+msgid "Double arrow line"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1236
-msgid "Instant shot"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:1237
+#: src/modules/shot/e_mod_edit.c:1993
 #, fuzzy
-msgid "Delayed shot"
-msgstr "Ertelenmiş Eylem"
+msgid "Plain line"
+msgstr "Düz"
 
-#: src/modules/shot/e_mod_main.c:1277 src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_edit.c:1994
+msgid "Solid box"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:1996
+msgid "Malloc"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:1997
+msgid "Malloc (evil)"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:1998
+#, fuzzy
+msgid "Pointing finger"
+msgstr "İşaretçi"
+
+#: src/modules/shot/e_mod_edit.c:1999
+msgid "Enlightenment logo"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2001
+msgid "Foot"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2002
+msgid "Silly walk"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2003
+#, fuzzy
+msgid "Box outline"
+msgstr "Çıktı:"
+
+#: src/modules/shot/e_mod_edit.c:2004
+#, fuzzy
+msgid "Circle outline"
+msgstr "Kaydırmayı Canlandır"
+
+#: src/modules/shot/e_mod_edit.c:2006
+#, fuzzy
+msgid "Plain text"
+msgstr "Düz"
+
+#: src/modules/shot/e_mod_edit.c:2007
+#, fuzzy
+msgid "Text box"
+msgstr "Metin"
+
+#: src/modules/shot/e_mod_edit.c:2008
+msgid "Text thought bubble"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2009
+msgid "Text thought bubble 2"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2011
+msgid "Speech bubble"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2012
+msgid "Speech bubble 2"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2013
+msgid "Kaboom splat"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2014
+msgid "Pow explode"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2022
+#, fuzzy
+msgid "Color"
+msgstr "Renkler"
+
+#: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1305
+#: src/modules/shot/e_mod_main.c:374
 msgid "Shot Error"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1306
+#: src/modules/shot/e_mod_main.c:375
 msgid "Cannot initialize network"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1335 src/modules/shot/e_mod_config.c:47
+#: src/modules/shot/e_mod_main.c:392
 #, fuzzy
-msgid "Screenshot Settings"
-msgstr "Ekran Kilidi Ayarları"
+msgid "Take Screenshot with Delay"
+msgstr "Ekran Görüntüsü Yakala"
 
-#: src/modules/shot/e_mod_config.c:100
+#: src/modules/shot/e_mod_preview.c:93
+msgid "Quality"
+msgstr "Kalite"
+
+#: src/modules/shot/e_mod_preview.c:109
+msgid "Save"
+msgstr "Kaydet"
+
+#: src/modules/shot/e_mod_preview.c:111
+msgid "Share"
+msgstr "Paylaş"
+
+#: src/modules/shot/e_mod_save.c:204
 #, fuzzy
-msgid " Show the screenshot mode dialog"
-msgstr "Tüm ekranlarda göster"
+msgid "Error - No Filemanager"
+msgstr "Dosya yöneticisi"
 
-#: src/modules/shot/e_mod_config.c:103
-msgid " Screenshot guide (quality/share/save)"
+#: src/modules/shot/e_mod_save.c:205
+msgid ""
+"No filemanager action and/or module was found.<br>Cannot show the location "
+"of your screenshots."
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:106
+#: src/modules/shot/e_mod_share.c:149
+#, c-format
+msgid "Uploaded %i%%"
+msgstr ""
+
+#: src/modules/shot/e_mod_share.c:163
+msgid "Error - Upload Failed"
+msgstr ""
+
+#: src/modules/shot/e_mod_share.c:164
+#, c-format
+msgid "Upload failed with status code:<ps/>%i"
+msgstr ""
+
+#: src/modules/shot/e_mod_share.c:246
+msgid "Uploading screenshot"
+msgstr ""
+
+#: src/modules/shot/e_mod_share.c:252
+msgid "Uploading ..."
+msgstr "Yükleniyor ..."
+
+#: src/modules/shot/e_mod_share.c:257
+msgid "Screenshot is available at this location:"
+msgstr ""
+
+#: src/modules/shot/e_mod_share.c:266
 #, fuzzy
-msgid " Show notifications"
-msgstr "Bildirim"
+msgid "Hide"
+msgstr "Otomatik Gizle"
 
-#: src/modules/shot/e_mod_config.c:109
+#: src/modules/shot/e_mod_share.c:315
+msgid "Confirm Share"
+msgstr ""
+
+#: src/modules/shot/e_mod_share.c:317
 #, fuzzy
-msgid " Copy to Clipboard"
-msgstr "Panoya Kopyala"
+msgid ""
+"Are you sure you want to upload this image<ps/>publically to these services?"
+msgstr "Bu çubuğu ve içeriğini silmek istediğinize emin misiniz?"
 
-#: src/modules/shot/e_mod_config.c:112
-msgid " Launch app after screenshot"
+#: src/modules/shot/e_mod_share.c:320
+msgid "Imgur.com"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:115
-#, fuzzy
-msgid "Application for opening:"
-msgstr "Uygulama Özellikleri"
-
-#: src/modules/shot/e_mod_config.c:121
-msgid "Folder for saving screenshots:"
-msgstr ""
-
-#: src/modules/shot/e_mod_config.c:127
-msgid "Delay time [s]"
-msgstr ""
-
-#: src/modules/shot/e_mod_config.c:132
-msgid "Image quality [50-90 = jpg, 100 = png]"
-msgstr ""
-
-#: src/modules/shot/e_mod_config.c:139
-msgid "Info"
-msgstr ""
-
-#: src/modules/shot/e_mod_config.c:140
-msgid "Alt+PrtSc: screenshot active window"
+#: src/modules/shot/e_mod_share.c:323
+msgid "E.org"
 msgstr ""
 
 #: src/modules/tasks/e_mod_main.c:340 src/modules/tasks/e_mod_main.c:855
@@ -9908,8 +9867,8 @@ msgid "Variant"
 msgstr "Türev"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:278
-#: src/modules/notification/e_mod_main.c:374
+#: src/modules/notification/e_mod_main.c:277
+#: src/modules/notification/e_mod_main.c:373
 msgid "Notification"
 msgstr "Bildirim"
 
@@ -9931,33 +9890,33 @@ msgstr ""
 "DBus Başlatılması Sırasında Hata! dbus'ın doğru kurulduğundan ve "
 "çalıştığından emin olun."
 
-#: src/modules/notification/e_mod_main.c:426
+#: src/modules/notification/e_mod_main.c:423
 #: src/modules/clipboard/e_mod_main.c:424
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:617
 msgid "Enter Presentation Mode"
 msgstr "Sunum Kipine Gir"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:618
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:632
+#: src/modules/notification/e_mod_main.c:622
 msgid "Exited Presentation Mode"
 msgstr "Sunum Modundan Çıkıldı"
 
-#: src/modules/notification/e_mod_main.c:633
+#: src/modules/notification/e_mod_main.c:623
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Sunum Kipini Aç/Kapa"
 
-#: src/modules/notification/e_mod_main.c:647
+#: src/modules/notification/e_mod_main.c:637
 msgid "Enter Offline Mode"
 msgstr "Çevrimdışı Moduna Gir"
 
-#: src/modules/notification/e_mod_main.c:648
+#: src/modules/notification/e_mod_main.c:638
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -9965,11 +9924,11 @@ msgstr ""
 "Enlightment <b>çevrimdışı</b> modunda.<br>Çevrimdışı modu sırasında, ağı "
 "kullanan modüller dış servislerden veri almayı durduracak."
 
-#: src/modules/notification/e_mod_main.c:654
+#: src/modules/notification/e_mod_main.c:644
 msgid "Exited Offline Mode"
 msgstr "Çevrimdışı Modundan Çıkıldı"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:645
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -9977,7 +9936,7 @@ msgstr ""
 "Şimdi <b>çevrimiçi</b> modunda.<br>Ağı kullanan modüller şimdi normal "
 "görevlerine devam edecek."
 
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 #, fuzzy
 msgid "Notification expired!"
 msgstr "Bildirim"
@@ -10119,6 +10078,15 @@ msgstr ""
 #: src/modules/clipboard/e_mod_config.c:217
 msgid " Trim Newlines"
 msgstr ""
+
+#: src/modules/clipboard/e_mod_config.c:221
+#: src/modules/clipboard/e_mod_main.c:361
+#: src/modules/clipboard/e_mod_main.c:955
+#: src/modules/clipboard/e_mod_main.c:956
+#: src/modules/clipboard/e_mod_main.c:957
+#, fuzzy
+msgid "Clipboard"
+msgstr "Panoya Kopyala"
 
 #: src/modules/clipboard/e_mod_config.c:227
 msgid " Save History"
@@ -10419,6 +10387,56 @@ msgstr ""
 #, fuzzy
 msgid "Separator"
 msgstr "Grubu ayır"
+
+#, fuzzy
+#~ msgid "Screenshot"
+#~ msgstr "Ekran Görüntüsü Yakala"
+
+#, fuzzy
+#~ msgid "Screenshot in: "
+#~ msgstr "Ekran Görüntüsü Yakala"
+
+#, fuzzy
+#~ msgid "Screenshot stored in"
+#~ msgstr "Ekran Görüntüsü Yakala"
+
+#, c-format
+#~ msgid "Path: %s"
+#~ msgstr "Yol: %s"
+
+#, fuzzy
+#~ msgid "Copy link"
+#~ msgstr "Kopyala"
+
+#~ msgid "Confirm"
+#~ msgstr "Onayla"
+
+#~ msgid "Perfect"
+#~ msgstr "Mükemmel"
+
+#, fuzzy
+#~ msgid "Delayed shot"
+#~ msgstr "Ertelenmiş Eylem"
+
+#, fuzzy
+#~ msgid "Screenshot Settings"
+#~ msgstr "Ekran Kilidi Ayarları"
+
+#, fuzzy
+#~ msgid " Show the screenshot mode dialog"
+#~ msgstr "Tüm ekranlarda göster"
+
+#, fuzzy
+#~ msgid " Show notifications"
+#~ msgstr "Bildirim"
+
+#, fuzzy
+#~ msgid " Copy to Clipboard"
+#~ msgstr "Panoya Kopyala"
+
+#, fuzzy
+#~ msgid "Application for opening:"
+#~ msgstr "Uygulama Özellikleri"
 
 #~ msgid "Moksha Settings Write Problems"
 #~ msgstr "Moksha Ayarları Yazma Sorunları"

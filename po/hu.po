@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-10-10 18:24+0200\n"
+"POT-Creation-Date: 2026-01-18 18:44+0100\n"
 "PO-Revision-Date: 2014-01-29 15:21+0100\n"
 "Last-Translator: rezso <rezso@rezso.net>\n"
 "Language-Team: Hungarian\n"
@@ -31,7 +31,7 @@ msgstr "Az Moksharõl"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:113
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
+#: src/modules/fileman/e_fwin.c:2587
 msgid "Close"
 msgstr "Bezárás"
 
@@ -107,7 +107,6 @@ msgstr "Tényleg ki akarsz lépni?"
 #: src/bin/e_actions.c:2496 src/bin/e_actions.c:2561 src/bin/e_actions.c:2626
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10521
 #: src/bin/e_screensaver.c:193 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:318
 msgid "Yes"
 msgstr "Igen"
 
@@ -156,7 +155,7 @@ msgstr "Biztosan hibernálni akarod a gépet?"
 #: src/bin/e_actions.c:3158 src/bin/e_actions.c:3163 src/bin/e_actions.c:3168
 #: src/bin/e_actions.c:3467 src/bin/e_actions.c:3471 src/bin/e_actions.c:3476
 #: src/bin/e_actions.c:3482 src/bin/e_actions.c:3488 src/bin/e_actions.c:3494
-#: src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_main.c:400
 msgid "Window : Actions"
 msgstr "Ablak : Műveletek"
 
@@ -564,7 +563,7 @@ msgstr "Ugrás az ablakra..."
 #: src/bin/e_actions.c:3645 src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:986 src/modules/shot/e_mod_main.c:1317
+#: src/modules/shot/e_mod_main.c:384 src/modules/shot/e_mod_main.c:392
 msgid "Screen"
 msgstr "Képernyő"
 
@@ -899,9 +898,9 @@ msgstr "Válassz egy"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:318 src/modules/shot/e_mod_main.c:514
-#: src/modules/shot/e_mod_main.c:779 src/modules/shot/e_mod_main.c:805
-#: src/modules/shot/e_mod_main.c:1047 src/modules/xkbswitch/e_mod_config.c:587
+#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:120
+#: src/modules/shot/e_mod_share.c:267 src/modules/shot/e_mod_share.c:326
+#: src/modules/xkbswitch/e_mod_config.c:587
 msgid "Cancel"
 msgstr "Mégsem"
 
@@ -1059,8 +1058,8 @@ msgstr "Alap"
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10790 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
-#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:519
+#: src/bin/e_module.c:839 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1069,7 +1068,7 @@ msgstr "Alap"
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:586
+#: src/modules/shot/e_mod_delay.c:79 src/modules/xkbswitch/e_mod_config.c:586
 msgid "OK"
 msgstr "OK"
 
@@ -1300,6 +1299,7 @@ msgid "Cut"
 msgstr "Kivágás"
 
 #: src/bin/e_entry.c:514 src/bin/e_fm.c:9123 src/bin/e_fm.c:11650
+#: src/modules/shot/e_mod_preview.c:113
 msgid "Copy"
 msgstr "Másolás"
 
@@ -1580,7 +1580,7 @@ msgid "Eject"
 msgstr "Lemez kiadása"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
-#: src/modules/ibar/e_mod_main.c:1683
+#: src/modules/ibar/e_mod_main.c:1822
 msgid "Properties"
 msgstr "Tulajdonságok"
 
@@ -1751,7 +1751,7 @@ msgid "Yes to all"
 msgstr "Igen, mindet"
 
 #: src/bin/e_fm.c:10525 src/modules/xkbswitch/e_mod_config.c:402
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:633
 msgid "Warning"
 msgstr "Figyelmeztetés"
@@ -1905,7 +1905,7 @@ msgstr "Mások:"
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:215
 #: src/modules/conf_theme/e_int_config_theme.c:1434
-#: src/modules/conf_theme/e_int_config_xsettings.c:540
+#: src/modules/conf_theme/e_int_config_xsettings.c:548
 msgid "Preview"
 msgstr "Előnézet"
 
@@ -2622,15 +2622,14 @@ msgstr "Hely kérés"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:466 src/modules/ibar/e_mod_main.c:1676
+#: src/modules/ibar/e_mod_main.c:474 src/modules/ibar/e_mod_main.c:1815
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:848
+#: src/modules/connman/e_mod_main.c:459 src/modules/tasks/e_mod_main.c:848
 #: src/modules/xkbswitch/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:396
-#: src/modules/notification/e_mod_main.c:343
-#: src/modules/notification/e_mod_main.c:457
+#: src/modules/notification/e_mod_main.c:342
+#: src/modules/notification/e_mod_main.c:454
 #: src/modules/clipboard/e_mod_main.c:303
 #: src/modules/clipboard/e_mod_main.c:455 src/modules/places/e_mod_main.c:518
 msgid "Settings"
@@ -2719,7 +2718,7 @@ msgstr "Méret, hely és zárolások"
 #: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:990
+#: src/modules/everything/evry_view.c:1628
 #, fuzzy
 msgid "All"
 msgstr "Engedélyezés"
@@ -2834,7 +2833,7 @@ msgstr "Modul beállítások"
 msgid "Load"
 msgstr "Területi beállítás"
 
-#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:620
+#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:621
 #, fuzzy
 msgid "Unload"
 msgstr "Modul kikapcsolása"
@@ -3702,12 +3701,12 @@ msgstr ""
 "távolítod a hibákat<br>a beálításodból. a modul beállítások ablak<br>újra "
 "lehetővé teszi, hogy kiválaszd a <br>moduljaidat ismét."
 
-#: src/bin/e_module.c:185
+#: src/bin/e_module.c:186
 #, c-format
 msgid "Loading Module: %s"
 msgstr "Modul betöltése: %s"
 
-#: src/bin/e_module.c:234
+#: src/bin/e_module.c:235
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3716,11 +3715,11 @@ msgstr ""
 "Hiba a %s modul betöltésekor<br>Nincs %s nevû modul a modul könyvtárakban."
 "<br>"
 
-#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
+#: src/bin/e_module.c:238 src/bin/e_module.c:251 src/bin/e_module.c:269
 msgid "Error loading Module"
 msgstr "Hiba a modul betöltésekor"
 
-#: src/bin/e_module.c:245 src/bin/e_module.c:262
+#: src/bin/e_module.c:246 src/bin/e_module.c:263
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3729,11 +3728,11 @@ msgstr ""
 "Hiba a %s modul betöltésekor. A modul teljes elérési útja:<br>%s<br><br>A "
 "hiba:<br>%s<br>"
 
-#: src/bin/e_module.c:267
+#: src/bin/e_module.c:268
 msgid "Module does not contain all needed functions."
 msgstr "A modul nem tartalmazza az összes szükséges funkciót"
 
-#: src/bin/e_module.c:282
+#: src/bin/e_module.c:283
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3742,34 +3741,34 @@ msgstr ""
 "Modul API hiba<br>Hiba a modul betöltésekor: %s<br> Ennek a modulnak "
 "legalább %i verziójú api kell<br>Az Moksha API verziója: %i<br>"
 
-#: src/bin/e_module.c:287
+#: src/bin/e_module.c:288
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Moksha %s modul"
 
-#: src/bin/e_module.c:615
+#: src/bin/e_module.c:616
 msgid "What action should be taken with this module?<br>"
 msgstr "Mit tegyek ezzel a modullal?<br>"
 
-#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:622 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:697
 #: src/modules/clipboard/e_mod_main.c:785
 msgid "Keep"
 msgstr "Megtartás"
 
-#: src/bin/e_module.c:823
+#: src/bin/e_module.c:824
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
 "module list is as follows:<br><br>"
 msgstr ""
 
-#: src/bin/e_module.c:835
+#: src/bin/e_module.c:836
 msgid "Unstable module tainting"
 msgstr "Külső modul"
 
-#: src/bin/e_module.c:839
+#: src/bin/e_module.c:840
 msgid "I know"
 msgstr "Tudom"
 
@@ -3896,7 +3895,7 @@ msgid "Rename Shelf"
 msgstr "Panel átnevezése"
 
 #: src/bin/e_shelf.c:2476 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1670
+#: src/modules/ibar/e_mod_main.c:468 src/modules/ibar/e_mod_main.c:1809
 msgid "Contents"
 msgstr "Tartalom"
 
@@ -5883,7 +5882,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:444
+#: src/modules/notification/e_mod_main.c:441
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -6017,8 +6016,8 @@ msgid "Quick Launcher"
 msgstr "Indítás"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:309
-#: src/modules/shot/e_mod_main.c:1288 src/modules/shot/e_mod_main.c:1317
-#: src/modules/shot/e_mod_main.c:1329
+#: src/modules/shot/e_mod_main.c:357 src/modules/shot/e_mod_main.c:384
+#: src/modules/shot/e_mod_main.c:405
 msgid "Take Screenshot"
 msgstr "Képernyőkép készítése"
 
@@ -6316,7 +6315,7 @@ msgid "Themes"
 msgstr "Témák"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:571
+#: src/modules/conf_theme/e_int_config_xsettings.c:579
 #: src/modules/everything/evry_config.c:447
 #: src/modules/everything/evry_config.c:473
 msgid "Icons"
@@ -6477,13 +6476,11 @@ msgid "e.g. Saving to disk"
 msgstr "pl.: Mentés a lemezre"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:973
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "Alacsony"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:971
 msgid "Medium"
 msgstr "Közepes"
 
@@ -6495,7 +6492,6 @@ msgid "%.0f s"
 msgstr "%.0f mp"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:969
 msgid "High"
 msgstr "Magas"
 
@@ -7203,7 +7199,7 @@ msgid "Assign"
 msgstr "Hozzárendelés"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:434
+#: src/modules/notification/e_mod_main.c:431
 #: src/modules/clipboard/e_mod_main.c:442
 msgid "Clear"
 msgstr "Törlés"
@@ -7237,24 +7233,24 @@ msgstr "Az Moksha nem tudja importálni a témát, <br> másolási hiba miatt."
 msgid "Application Theme Settings"
 msgstr "Alkalmazások téma-beállításai"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:515
-#: src/modules/conf_theme/e_int_config_xsettings.c:559
+#: src/modules/conf_theme/e_int_config_xsettings.c:523
+#: src/modules/conf_theme/e_int_config_xsettings.c:567
 msgid "Match Moksha theme if possible"
 msgstr "Ha lehet, az Moksha témával megegyező"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:524
+#: src/modules/conf_theme/e_int_config_xsettings.c:532
 msgid "Enable X Application Settings"
 msgstr "X alkalmazások beállításainak engedélyezése"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:528
+#: src/modules/conf_theme/e_int_config_xsettings.c:536
 msgid "GTK Applications"
 msgstr "GTK alkalmazások"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:563
+#: src/modules/conf_theme/e_int_config_xsettings.c:571
 msgid "Enable icon theme for applications"
 msgstr "Alkalmazás ikon témájának engedélyezése"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:567
+#: src/modules/conf_theme/e_int_config_xsettings.c:575
 msgid "Enable icon theme for Moksha"
 msgstr "Az Moksha ikon témájának engedélyezése"
 
@@ -9001,31 +8997,31 @@ msgstr "A \"%s\" törlését kérted.<br><br> Biztosan törölni szeretnéd?"
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Biztosan törölni szeretnéd?"
 
-#: src/modules/ibar/e_mod_main.c:333 src/modules/ibar/e_mod_main.c:3121
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:341 src/modules/ibar/e_mod_main.c:3267
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1659
+#: src/modules/ibar/e_mod_main.c:457 src/modules/ibar/e_mod_main.c:1798
 msgid "Create new Icon"
 msgstr "Új ikon készítése"
 
-#: src/modules/ibar/e_mod_main.c:1690
+#: src/modules/ibar/e_mod_main.c:1829
 #, fuzzy
 msgid "Add to bar"
 msgstr "Hozzáadás Ibar"
 
-#: src/modules/ibar/e_mod_main.c:1696
+#: src/modules/ibar/e_mod_main.c:1835
 #, fuzzy
 msgid "Remove from bar"
 msgstr "Modul eltávolítása"
 
-#: src/modules/ibar/e_mod_main.c:1702
+#: src/modules/ibar/e_mod_main.c:1841
 #, c-format
 msgid "Icon %s"
 msgstr "%s ikon"
 
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "Focus IBar"
 msgstr "Főkusz az IBar-ra"
 
@@ -9687,257 +9683,218 @@ msgstr "Systray nem tud dolgozni egy polc , ami alá be mindent."
 msgid "Systray"
 msgstr "Rendszertálca"
 
-#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1230
+#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
+msgid "Select action to take with screenshot"
+msgstr ""
+
+#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
+msgid "Delay"
+msgstr ""
+
+#: src/modules/shot/e_mod_delay.c:61
+#, fuzzy, c-format
+msgid "%1.1f sec"
+msgstr "%1.1f mp"
+
+#: src/modules/shot/e_mod_edit.c:1968
 #, fuzzy
-msgid "Screenshot"
-msgstr "képernyők beállítása"
+msgid "Tools"
+msgstr "Tippek"
 
-#: src/modules/shot/e_mod_main.c:101
+#: src/modules/shot/e_mod_edit.c:1980
 #, fuzzy
-msgid "Screenshot in: "
-msgstr "képernyők beállítása"
+msgid "Select crop area"
+msgstr "Válassz egy"
 
-#: src/modules/shot/e_mod_main.c:116
+#: src/modules/shot/e_mod_edit.c:1981
 #, fuzzy
-msgid "Screenshot stored in"
-msgstr "képernyők beállítása"
+msgid "Modify objects"
+msgstr "Módosítás"
 
-#: src/modules/shot/e_mod_main.c:311
-msgid "Error - Folder does not exist"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:313
-msgid ""
-"Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
-"Take Screenshot<br><br>Would you like to set up it now?"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:359
-msgid "Error saving screenshot file"
-msgstr "Hiba a képernyőkép mentése közben"
-
-#: src/modules/shot/e_mod_main.c:360
-#, c-format
-msgid "Path: %s"
-msgstr "Útvonal: %s"
-
-#: src/modules/shot/e_mod_main.c:420 src/modules/shot/e_mod_main.c:430
-msgid "Error - Unknown format"
-msgstr "Hiba - Ismeretlen formátum"
-
-#: src/modules/shot/e_mod_main.c:421
-msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:431
-msgid ""
-"File has an unspecified extension.<br>Please use '.jpg' or '.png' "
-"extensions<br>only as other formats are not<br>supported currently."
-msgstr ""
-"A fájlnak nem megfelelő a kiterjesztése.<br>Használj ',jpg'-t vagy '.png'-t,"
-"<br>mert más formátum nem támogatott jelenleg."
-
-#: src/modules/shot/e_mod_main.c:498
-msgid "Select screenshot save location"
-msgstr "Válassz képernyőkép mentési útvonalat"
-
-#: src/modules/shot/e_mod_main.c:512 src/modules/shot/e_mod_main.c:1041
-msgid "Save"
-msgstr "Mentés"
-
-#: src/modules/shot/e_mod_main.c:618
-#, c-format
-msgid "Uploaded %s / %s"
-msgstr "Feltöltve: %s / %s"
-
-#: src/modules/shot/e_mod_main.c:639
-msgid "Error - Upload Failed"
-msgstr "Hiba - Feltöltés sikertelen"
-
-#: src/modules/shot/e_mod_main.c:640
-#, c-format
-msgid "Upload failed with status code:<br>%i"
-msgstr "A feltöltés megszakadt a következő kóddal:<br>%i"
-
-#: src/modules/shot/e_mod_main.c:689
-msgid "Error - Can't create file"
-msgstr "Hiba - A fájl nem hozható lérte"
-
-#: src/modules/shot/e_mod_main.c:690
-#, c-format
-msgid "Cannot create temporary file '%s': %s"
-msgstr "Nem lehet a(z) '%s' ideiglenes fájlt létrehozni: %s"
-
-#: src/modules/shot/e_mod_main.c:708
-msgid "Error - Can't open file"
-msgstr "Hiba - Az állományt nem lehet megnyitni"
-
-#: src/modules/shot/e_mod_main.c:709
-#, c-format
-msgid "Cannot open temporary file '%s': %s"
-msgstr "Nem lehet a(z) '%s' ideiglenes fájlt megnyitni: %s"
-
-#: src/modules/shot/e_mod_main.c:717
-msgid "Error - Bad size"
-msgstr "Hiba - Rossz méret"
-
-#: src/modules/shot/e_mod_main.c:718
-#, c-format
-msgid "Cannot get size of file '%s'"
-msgstr "Nem lehet a(z) '%s' állomány méretét megállapítani"
-
-#: src/modules/shot/e_mod_main.c:728
-msgid "Error - Can't allocate memory"
-msgstr "Hiba - Nem sikerült lefoglalni elég memóriát"
-
-#: src/modules/shot/e_mod_main.c:729
-#, c-format
-msgid "Cannot allocate memory for picture: %s"
-msgstr "A(z) %s kép számára nem sikerült memóriát foglalni"
-
-#: src/modules/shot/e_mod_main.c:736
-msgid "Error - Can't read picture"
-msgstr "Hiba - A kép nem olvasható"
-
-#: src/modules/shot/e_mod_main.c:737
-msgid "Cannot read picture"
-msgstr "Nem olvasható a kép"
-
-#: src/modules/shot/e_mod_main.c:759
-msgid "Uploading screenshot"
-msgstr "Képernyőkép feltöltése"
-
-#: src/modules/shot/e_mod_main.c:764
-msgid "Uploading ..."
-msgstr "Feltöltés..."
-
-#: src/modules/shot/e_mod_main.c:769
-msgid "Screenshot is available at this location:"
-msgstr "A képernyőkép mentve ide:"
-
-#: src/modules/shot/e_mod_main.c:778
-msgid "Copy link"
-msgstr "Hivatkozás másolása"
-
-#: src/modules/shot/e_mod_main.c:802
-msgid "Confirm Share"
-msgstr "Megosztás megerősítése"
-
-#: src/modules/shot/e_mod_main.c:803
-msgid ""
-"This image will be uploaded<br>to enlightenment.org. It will be publicly "
-"visible."
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:805
-msgid "Confirm"
-msgstr "Megerősítés"
-
-#: src/modules/shot/e_mod_main.c:906
-msgid "Where to put Screenshot..."
-msgstr "Hogyan készítsem a képernyőképeket..."
-
-#: src/modules/shot/e_mod_main.c:958
-msgid "Quality"
-msgstr "Minőség"
-
-#: src/modules/shot/e_mod_main.c:967
-msgid "Perfect"
-msgstr "Kiváló"
-
-#: src/modules/shot/e_mod_main.c:1043
-msgid "Share"
-msgstr "Megosztás"
-
-#: src/modules/shot/e_mod_main.c:1045 src/modules/clipboard/e_mod_config.c:221
-#: src/modules/clipboard/e_mod_main.c:361
-#: src/modules/clipboard/e_mod_main.c:955
-#: src/modules/clipboard/e_mod_main.c:956
-#: src/modules/clipboard/e_mod_main.c:957
-msgid "Clipboard"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:1227
-#, c-format
-msgid ""
-"Select the screenshot mode... <br>Delay time is set in the Screenshot module "
-"settings<br>The current delay time: <b> %d s</b>"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:1236
-msgid "Instant shot"
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:1237
+#: src/modules/shot/e_mod_edit.c:1982
 #, fuzzy
-msgid "Delayed shot"
-msgstr "Késleltetett folyamat"
+msgid "Delete objects"
+msgstr "Törlés végrehajtva"
 
-#: src/modules/shot/e_mod_main.c:1277 src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_edit.c:1991
+#, fuzzy
+msgid "Single arrow line"
+msgstr "Mutasd egér kattintásra"
+
+#: src/modules/shot/e_mod_edit.c:1992
+msgid "Double arrow line"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:1993
+#, fuzzy
+msgid "Plain line"
+msgstr "Egyszerű"
+
+#: src/modules/shot/e_mod_edit.c:1994
+msgid "Solid box"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:1996
+msgid "Malloc"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:1997
+msgid "Malloc (evil)"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:1998
+#, fuzzy
+msgid "Pointing finger"
+msgstr "Mutató fókusz"
+
+#: src/modules/shot/e_mod_edit.c:1999
+msgid "Enlightenment logo"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2001
+msgid "Foot"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2002
+msgid "Silly walk"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2003
+#, fuzzy
+msgid "Box outline"
+msgstr "Vázlat:"
+
+#: src/modules/shot/e_mod_edit.c:2004
+#, fuzzy
+msgid "Circle outline"
+msgstr "Animált váltás"
+
+#: src/modules/shot/e_mod_edit.c:2006
+#, fuzzy
+msgid "Plain text"
+msgstr "Egyszerű"
+
+#: src/modules/shot/e_mod_edit.c:2007
+#, fuzzy
+msgid "Text box"
+msgstr "Szöveg"
+
+#: src/modules/shot/e_mod_edit.c:2008
+msgid "Text thought bubble"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2009
+msgid "Text thought bubble 2"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2011
+msgid "Speech bubble"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2012
+msgid "Speech bubble 2"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2013
+msgid "Kaboom splat"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2014
+msgid "Pow explode"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2022
+#, fuzzy
+msgid "Color"
+msgstr "Színek"
+
+#: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
 msgstr "Képlopás indítása"
 
-#: src/modules/shot/e_mod_main.c:1305
+#: src/modules/shot/e_mod_main.c:374
 msgid "Shot Error"
 msgstr "Készítési hiba"
 
-#: src/modules/shot/e_mod_main.c:1306
+#: src/modules/shot/e_mod_main.c:375
 msgid "Cannot initialize network"
 msgstr "A hálózat nem indítható"
 
-#: src/modules/shot/e_mod_main.c:1335 src/modules/shot/e_mod_config.c:47
+#: src/modules/shot/e_mod_main.c:392
 #, fuzzy
-msgid "Screenshot Settings"
-msgstr "Képernyő zárolási beállítások"
+msgid "Take Screenshot with Delay"
+msgstr "Képernyőkép készítése"
 
-#: src/modules/shot/e_mod_config.c:100
+#: src/modules/shot/e_mod_preview.c:93
+msgid "Quality"
+msgstr "Minőség"
+
+#: src/modules/shot/e_mod_preview.c:109
+msgid "Save"
+msgstr "Mentés"
+
+#: src/modules/shot/e_mod_preview.c:111
+msgid "Share"
+msgstr "Megosztás"
+
+#: src/modules/shot/e_mod_save.c:204
 #, fuzzy
-msgid " Show the screenshot mode dialog"
-msgstr "Mutasd az összes képernyőn"
+msgid "Error - No Filemanager"
+msgstr "Fájlkezelõ"
 
-#: src/modules/shot/e_mod_config.c:103
-msgid " Screenshot guide (quality/share/save)"
+#: src/modules/shot/e_mod_save.c:205
+msgid ""
+"No filemanager action and/or module was found.<br>Cannot show the location "
+"of your screenshots."
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:106
-#, fuzzy
-msgid " Show notifications"
-msgstr "Értesítés"
+#: src/modules/shot/e_mod_share.c:149
+#, fuzzy, c-format
+msgid "Uploaded %i%%"
+msgstr "Feltöltve: %s / %s"
 
-#: src/modules/shot/e_mod_config.c:109
-#, fuzzy
-msgid " Copy to Clipboard"
-msgstr "Kártyák"
+#: src/modules/shot/e_mod_share.c:163
+msgid "Error - Upload Failed"
+msgstr "Hiba - Feltöltés sikertelen"
 
-#: src/modules/shot/e_mod_config.c:112
-msgid " Launch app after screenshot"
+#: src/modules/shot/e_mod_share.c:164
+#, fuzzy, c-format
+msgid "Upload failed with status code:<ps/>%i"
+msgstr "A feltöltés megszakadt a következő kóddal:<br>%i"
+
+#: src/modules/shot/e_mod_share.c:246
+msgid "Uploading screenshot"
+msgstr "Képernyőkép feltöltése"
+
+#: src/modules/shot/e_mod_share.c:252
+msgid "Uploading ..."
+msgstr "Feltöltés..."
+
+#: src/modules/shot/e_mod_share.c:257
+msgid "Screenshot is available at this location:"
+msgstr "A képernyőkép mentve ide:"
+
+#: src/modules/shot/e_mod_share.c:266
+#, fuzzy
+msgid "Hide"
+msgstr "Automatikus elrejtés"
+
+#: src/modules/shot/e_mod_share.c:315
+msgid "Confirm Share"
+msgstr "Megosztás megerősítése"
+
+#: src/modules/shot/e_mod_share.c:317
+#, fuzzy
+msgid ""
+"Are you sure you want to upload this image<ps/>publically to these services?"
+msgstr "Biztosan törölni szeretnéd?"
+
+#: src/modules/shot/e_mod_share.c:320
+msgid "Imgur.com"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:115
-#, fuzzy
-msgid "Application for opening:"
-msgstr "Az alkalmazás ikonjának használata "
-
-#: src/modules/shot/e_mod_config.c:121
-#, fuzzy
-msgid "Folder for saving screenshots:"
-msgstr "Hiba a modul betöltésekor"
-
-#: src/modules/shot/e_mod_config.c:127
-#, fuzzy
-msgid "Delay time [s]"
-msgstr "Késleltetést felfüggeszti"
-
-#: src/modules/shot/e_mod_config.c:132
-msgid "Image quality [50-90 = jpg, 100 = png]"
-msgstr ""
-
-#: src/modules/shot/e_mod_config.c:139
-msgid "Info"
-msgstr ""
-
-#: src/modules/shot/e_mod_config.c:140
-msgid "Alt+PrtSc: screenshot active window"
+#: src/modules/shot/e_mod_share.c:323
+msgid "E.org"
 msgstr ""
 
 #: src/modules/tasks/e_mod_main.c:340 src/modules/tasks/e_mod_main.c:855
@@ -10136,8 +10093,8 @@ msgid "Variant"
 msgstr "Variáció"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:278
-#: src/modules/notification/e_mod_main.c:374
+#: src/modules/notification/e_mod_main.c:277
+#: src/modules/notification/e_mod_main.c:373
 msgid "Notification"
 msgstr "Értesítés"
 
@@ -10157,34 +10114,34 @@ msgstr ""
 "Ellenőrizd, hogy nem működik a háttérben másik modul, és a D-Bus megfelelően "
 "van telepítve, és fut-e"
 
-#: src/modules/notification/e_mod_main.c:426
+#: src/modules/notification/e_mod_main.c:423
 #: src/modules/clipboard/e_mod_main.c:424
 msgid "Empty"
 msgstr "Üres"
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:617
 msgid "Enter Presentation Mode"
 msgstr "Belépés a bemutató módba"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:618
 #, fuzzy
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Javaslat a bemutató módba való belépéshez"
 
-#: src/modules/notification/e_mod_main.c:632
+#: src/modules/notification/e_mod_main.c:622
 msgid "Exited Presentation Mode"
 msgstr "Kilépve a bemutató módból"
 
-#: src/modules/notification/e_mod_main.c:633
+#: src/modules/notification/e_mod_main.c:623
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Bemutató mód"
 
-#: src/modules/notification/e_mod_main.c:647
+#: src/modules/notification/e_mod_main.c:637
 msgid "Enter Offline Mode"
 msgstr "Belépés kapcsolat nélküli módba"
 
-#: src/modules/notification/e_mod_main.c:648
+#: src/modules/notification/e_mod_main.c:638
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10192,11 +10149,11 @@ msgstr ""
 "Az Moksha <b>kapcsolat nélküli<b> módban fut.<br>Ez alatt azok a modulok, "
 "amelyek a netet használják, le lesznek állítva."
 
-#: src/modules/notification/e_mod_main.c:654
+#: src/modules/notification/e_mod_main.c:644
 msgid "Exited Offline Mode"
 msgstr "Kilépve a kapcsolat nélküli módból."
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:645
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10204,7 +10161,7 @@ msgstr ""
 "Most <b>online<b> módban van.<br>A hálózatot használó modulok ismét "
 "szabályosan működnek."
 
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 #, fuzzy
 msgid "Notification expired!"
 msgstr "Figyelmeztető doboz"
@@ -10344,6 +10301,14 @@ msgstr ""
 
 #: src/modules/clipboard/e_mod_config.c:217
 msgid " Trim Newlines"
+msgstr ""
+
+#: src/modules/clipboard/e_mod_config.c:221
+#: src/modules/clipboard/e_mod_main.c:361
+#: src/modules/clipboard/e_mod_main.c:955
+#: src/modules/clipboard/e_mod_main.c:956
+#: src/modules/clipboard/e_mod_main.c:957
+msgid "Clipboard"
 msgstr ""
 
 #: src/modules/clipboard/e_mod_config.c:227
@@ -10644,6 +10609,116 @@ msgstr "Felbontás módosítása"
 #: src/modules/separator/e_mod_main.c:122
 msgid "Separator"
 msgstr "Szeparátor"
+
+#, fuzzy
+#~ msgid "Screenshot"
+#~ msgstr "képernyők beállítása"
+
+#, fuzzy
+#~ msgid "Screenshot in: "
+#~ msgstr "képernyők beállítása"
+
+#, fuzzy
+#~ msgid "Screenshot stored in"
+#~ msgstr "képernyők beállítása"
+
+#~ msgid "Error saving screenshot file"
+#~ msgstr "Hiba a képernyőkép mentése közben"
+
+#, c-format
+#~ msgid "Path: %s"
+#~ msgstr "Útvonal: %s"
+
+#~ msgid "Error - Unknown format"
+#~ msgstr "Hiba - Ismeretlen formátum"
+
+#~ msgid ""
+#~ "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
+#~ "extensions<br>only as other formats are not<br>supported currently."
+#~ msgstr ""
+#~ "A fájlnak nem megfelelő a kiterjesztése.<br>Használj ',jpg'-t vagy '.png'-"
+#~ "t,<br>mert más formátum nem támogatott jelenleg."
+
+#~ msgid "Select screenshot save location"
+#~ msgstr "Válassz képernyőkép mentési útvonalat"
+
+#~ msgid "Error - Can't create file"
+#~ msgstr "Hiba - A fájl nem hozható lérte"
+
+#, c-format
+#~ msgid "Cannot create temporary file '%s': %s"
+#~ msgstr "Nem lehet a(z) '%s' ideiglenes fájlt létrehozni: %s"
+
+#~ msgid "Error - Can't open file"
+#~ msgstr "Hiba - Az állományt nem lehet megnyitni"
+
+#, c-format
+#~ msgid "Cannot open temporary file '%s': %s"
+#~ msgstr "Nem lehet a(z) '%s' ideiglenes fájlt megnyitni: %s"
+
+#~ msgid "Error - Bad size"
+#~ msgstr "Hiba - Rossz méret"
+
+#, c-format
+#~ msgid "Cannot get size of file '%s'"
+#~ msgstr "Nem lehet a(z) '%s' állomány méretét megállapítani"
+
+#~ msgid "Error - Can't allocate memory"
+#~ msgstr "Hiba - Nem sikerült lefoglalni elég memóriát"
+
+#, c-format
+#~ msgid "Cannot allocate memory for picture: %s"
+#~ msgstr "A(z) %s kép számára nem sikerült memóriát foglalni"
+
+#~ msgid "Error - Can't read picture"
+#~ msgstr "Hiba - A kép nem olvasható"
+
+#~ msgid "Cannot read picture"
+#~ msgstr "Nem olvasható a kép"
+
+#~ msgid "Copy link"
+#~ msgstr "Hivatkozás másolása"
+
+#~ msgid "Confirm"
+#~ msgstr "Megerősítés"
+
+#~ msgid "Where to put Screenshot..."
+#~ msgstr "Hogyan készítsem a képernyőképeket..."
+
+#~ msgid "Perfect"
+#~ msgstr "Kiváló"
+
+#, fuzzy
+#~ msgid "Delayed shot"
+#~ msgstr "Késleltetett folyamat"
+
+#, fuzzy
+#~ msgid "Screenshot Settings"
+#~ msgstr "Képernyő zárolási beállítások"
+
+#, fuzzy
+#~ msgid " Show the screenshot mode dialog"
+#~ msgstr "Mutasd az összes képernyőn"
+
+#, fuzzy
+#~ msgid " Show notifications"
+#~ msgstr "Értesítés"
+
+#, fuzzy
+#~ msgid " Copy to Clipboard"
+#~ msgstr "Kártyák"
+
+#, fuzzy
+#~ msgid "Application for opening:"
+#~ msgstr "Az alkalmazás ikonjának használata "
+
+#, fuzzy
+#~ msgid "Folder for saving screenshots:"
+#~ msgstr "Hiba a modul betöltésekor"
+
+#, fuzzy
+#~ msgid "Delay time [s]"
+#~ msgstr "Késleltetést felfüggeszti"
 
 #~ msgid "Moksha Settings Write Problems"
 #~ msgstr "Moksha konfiguráció írási problémák"

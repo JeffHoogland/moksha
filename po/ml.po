@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.4.1.18338\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-10-10 18:24+0200\n"
+"POT-Creation-Date: 2026-01-18 18:44+0100\n"
 "PO-Revision-Date: 2025-03-11 11:37+0530\n"
 "Last-Translator: Indraneel Rajeevan <https://github.com/indraneel12>\n"
 "Language-Team: Malayalam\n"
@@ -30,7 +30,7 @@ msgstr "മോക്ഷയെക്കുറിച്ച്"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:113
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
+#: src/modules/fileman/e_fwin.c:2587
 msgid "Close"
 msgstr "അടയ്ക്കുക"
 
@@ -107,7 +107,6 @@ msgstr "മോക്ഷയിൽ നിന്ന് പുറത്തുകട�
 #: src/bin/e_actions.c:2496 src/bin/e_actions.c:2561 src/bin/e_actions.c:2626
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10521
 #: src/bin/e_screensaver.c:193 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:318
 msgid "Yes"
 msgstr "അതെ"
 
@@ -156,7 +155,7 @@ msgstr "നിങ്ങളുടെ കമ്പ്യൂട്ടർ ഹൈബ�
 #: src/bin/e_actions.c:3158 src/bin/e_actions.c:3163 src/bin/e_actions.c:3168
 #: src/bin/e_actions.c:3467 src/bin/e_actions.c:3471 src/bin/e_actions.c:3476
 #: src/bin/e_actions.c:3482 src/bin/e_actions.c:3488 src/bin/e_actions.c:3494
-#: src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_main.c:400
 msgid "Window : Actions"
 msgstr "വിൻഡോ : പ്രവർത്തനങ്ങൾ"
 
@@ -558,7 +557,7 @@ msgstr "വിൻഡോയിലേക്ക് പോകുക... അല്ല�
 #: src/bin/e_actions.c:3645 src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:986 src/modules/shot/e_mod_main.c:1317
+#: src/modules/shot/e_mod_main.c:384 src/modules/shot/e_mod_main.c:392
 msgid "Screen"
 msgstr "സ്ക്രീൻ"
 
@@ -868,9 +867,9 @@ msgstr "തിരഞ്ഞെടുക്കുക"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:318 src/modules/shot/e_mod_main.c:514
-#: src/modules/shot/e_mod_main.c:779 src/modules/shot/e_mod_main.c:805
-#: src/modules/shot/e_mod_main.c:1047 src/modules/xkbswitch/e_mod_config.c:587
+#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:120
+#: src/modules/shot/e_mod_share.c:267 src/modules/shot/e_mod_share.c:326
+#: src/modules/xkbswitch/e_mod_config.c:587
 msgid "Cancel"
 msgstr "റദ്ദാക്കുക"
 
@@ -1016,8 +1015,8 @@ msgstr "ലളിതമായ"
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10790 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
-#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:519
+#: src/bin/e_module.c:839 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1026,7 +1025,7 @@ msgstr "ലളിതമായ"
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:586
+#: src/modules/shot/e_mod_delay.c:79 src/modules/xkbswitch/e_mod_config.c:586
 msgid "OK"
 msgstr "ശരി"
 
@@ -1255,6 +1254,7 @@ msgid "Cut"
 msgstr "കട്ട് ചെയ്യുക"
 
 #: src/bin/e_entry.c:514 src/bin/e_fm.c:9123 src/bin/e_fm.c:11650
+#: src/modules/shot/e_mod_preview.c:113
 msgid "Copy"
 msgstr "കോപ്പി ചെയ്യുക"
 
@@ -1534,7 +1534,7 @@ msgid "Eject"
 msgstr "ഇജക്റ്റ് ചെയ്യുക"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
-#: src/modules/ibar/e_mod_main.c:1683
+#: src/modules/ibar/e_mod_main.c:1822
 msgid "Properties"
 msgstr "സവിശേഷതകൾ"
 
@@ -1695,7 +1695,7 @@ msgid "Yes to all"
 msgstr "പറഞ്ഞതെല്ലാം വേണം"
 
 #: src/bin/e_fm.c:10525 src/modules/xkbswitch/e_mod_config.c:402
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:633
 msgid "Warning"
 msgstr "മുന്നറിയിപ്പ്"
@@ -1847,7 +1847,7 @@ msgstr "മറ്റുള്ളവ:"
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:215
 #: src/modules/conf_theme/e_int_config_theme.c:1434
-#: src/modules/conf_theme/e_int_config_xsettings.c:540
+#: src/modules/conf_theme/e_int_config_xsettings.c:548
 msgid "Preview"
 msgstr "പ്രിവ്യൂ"
 
@@ -2534,15 +2534,14 @@ msgstr "പൊസിഷൻ അഭ്യർത്ഥിക്കുക"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:466 src/modules/ibar/e_mod_main.c:1676
+#: src/modules/ibar/e_mod_main.c:474 src/modules/ibar/e_mod_main.c:1815
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:848
+#: src/modules/connman/e_mod_main.c:459 src/modules/tasks/e_mod_main.c:848
 #: src/modules/xkbswitch/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:396
-#: src/modules/notification/e_mod_main.c:343
-#: src/modules/notification/e_mod_main.c:457
+#: src/modules/notification/e_mod_main.c:342
+#: src/modules/notification/e_mod_main.c:454
 #: src/modules/clipboard/e_mod_main.c:303
 #: src/modules/clipboard/e_mod_main.c:455 src/modules/places/e_mod_main.c:518
 msgid "Settings"
@@ -2633,7 +2632,7 @@ msgstr "വലിപ്പം, സ്ഥാനം, ലോക്കുകൾ"
 #: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:990
+#: src/modules/everything/evry_view.c:1628
 msgid "All"
 msgstr "എല്ലാം"
 
@@ -2741,7 +2740,7 @@ msgstr "മൊഡ്യൂൾ ക്രമീകരണങ്ങൾ"
 msgid "Load"
 msgstr "ലോഡ് ചെയ്യുക"
 
-#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:620
+#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:621
 msgid "Unload"
 msgstr "അൺലോഡ് ചെയ്യുക"
 
@@ -3587,12 +3586,12 @@ msgstr ""
 "നീക്കംചെയ്യാൻ സഹായിക്കുന്നതിന് അവ ലോഡ് ചെയ്യപ്പെടില്ല.<br><br>മൊഡ്യൂൾ കോൺഫിഗറേഷൻ ഡയലോഗ് "
 "നിങ്ങളുടെ മൊഡ്യൂളുകൾ വീണ്ടും തിരഞ്ഞെടുക്കാൻ<br>നിങ്ങളെ അനുവദിക്കും."
 
-#: src/bin/e_module.c:185
+#: src/bin/e_module.c:186
 #, c-format
 msgid "Loading Module: %s"
 msgstr "ഈ മൊഡ്യൂൾ ലോഡ് ചെയ്യുന്നു: %s"
 
-#: src/bin/e_module.c:234
+#: src/bin/e_module.c:235
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3601,11 +3600,11 @@ msgstr ""
 "%s എന്ന് പേരുള്ള മൊഡ്യൂൾ ലോഡ് ചെയ്യുന്നതിൽ ഒരു പിശകുണ്ടായി<br>മൊഡ്യൂൾ തിരയൽ "
 "ഡയറക്‌ടറികളിൽ<br>%s എന്ന് പേരുള്ള ഒരു മൊഡ്യൂളും കണ്ടെത്താനായില്ല.<br>"
 
-#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
+#: src/bin/e_module.c:238 src/bin/e_module.c:251 src/bin/e_module.c:269
 msgid "Error loading Module"
 msgstr "മൊഡ്യൂൾ ലോഡ് ചെയ്യുന്നതിൽ പിശക്"
 
-#: src/bin/e_module.c:245 src/bin/e_module.c:262
+#: src/bin/e_module.c:246 src/bin/e_module.c:263
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3614,11 +3613,11 @@ msgstr ""
 "%s എന്ന് പേരുള്ള മൊഡ്യൂൾ ലോഡ് ചെയ്യുന്നതിൽ ഒരു പിശകുണ്ടായി<br>ഈ മൊഡ്യൂളിലേക്കുള്ള മുഴുവൻ പാത "
 "ഇതാണ്:<br>%s<br>റിപ്പോർട്ട് ചെയ്ത പിശക്:<br>%s<br>"
 
-#: src/bin/e_module.c:267
+#: src/bin/e_module.c:268
 msgid "Module does not contain all needed functions."
 msgstr "മൊഡ്യൂളിൽ ആവശ്യമായ എല്ലാ പ്രവർത്തനങ്ങളും അടങ്ങിയിട്ടില്ല."
 
-#: src/bin/e_module.c:282
+#: src/bin/e_module.c:283
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3627,23 +3626,23 @@ msgstr ""
 "മൊഡ്യൂൾ API പിശക്<br>മൊഡ്യൂൾ സമാരംഭിക്കുന്നതിൽ പിശക്: %s<br>ഇതിന് ഏറ്റവും കുറഞ്ഞ മൊഡ്യൂൾ API "
 "പതിപ്പ് %i ആവശ്യമാണ്.<br>മോക്ഷ പരസ്യപ്പെടുത്തിയ മൊഡ്യൂൾ API ഇതാണ്: %i.<br>"
 
-#: src/bin/e_module.c:287
+#: src/bin/e_module.c:288
 #, c-format
 msgid "Moksha %s Module"
 msgstr "മോക്ഷ %s മൊഡ്യൂൾ"
 
-#: src/bin/e_module.c:615
+#: src/bin/e_module.c:616
 msgid "What action should be taken with this module?<br>"
 msgstr "ഈ മൊഡ്യൂളിൽ എന്ത് നടപടിയാണ് സ്വീകരിക്കേണ്ടത്?<br>"
 
-#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:622 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:697
 #: src/modules/clipboard/e_mod_main.c:785
 msgid "Keep"
 msgstr "സൂക്ഷിക്കുക"
 
-#: src/bin/e_module.c:823
+#: src/bin/e_module.c:824
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3653,11 +3652,11 @@ msgstr ""
 "കാരണമായേക്കാം.<br>എന്തെങ്കിലും ബഗുകൾ റിപ്പോർട്ടുചെയ്യുന്നതിന് മുമ്പ് ദയവായി അവ നീക്കം ചെയ്യുക."
 "<br><br>മൊഡ്യൂൾ ലിസ്റ്റ് ഇപ്രകാരമാണ്:<br><br>"
 
-#: src/bin/e_module.c:835
+#: src/bin/e_module.c:836
 msgid "Unstable module tainting"
 msgstr "അസ്ഥിര മൊഡ്യൂൾ മലിനീകരണം"
 
-#: src/bin/e_module.c:839
+#: src/bin/e_module.c:840
 msgid "I know"
 msgstr "എനിക്കറിയാം"
 
@@ -3784,7 +3783,7 @@ msgid "Rename Shelf"
 msgstr "ഷെൽഫിൻ്റെ പേര് മാറ്റുക"
 
 #: src/bin/e_shelf.c:2476 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1670
+#: src/modules/ibar/e_mod_main.c:468 src/modules/ibar/e_mod_main.c:1809
 msgid "Contents"
 msgstr "ഉള്ളടക്കങ്ങൾ"
 
@@ -5749,7 +5748,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:444
+#: src/modules/notification/e_mod_main.c:441
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5879,8 +5878,8 @@ msgid "Quick Launcher"
 msgstr "ദ്രുത ലോഞ്ചർ"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:309
-#: src/modules/shot/e_mod_main.c:1288 src/modules/shot/e_mod_main.c:1317
-#: src/modules/shot/e_mod_main.c:1329
+#: src/modules/shot/e_mod_main.c:357 src/modules/shot/e_mod_main.c:384
+#: src/modules/shot/e_mod_main.c:405
 msgid "Take Screenshot"
 msgstr "സ്ക്രീൻഷോട്ട് എടുക്കുക"
 
@@ -6170,7 +6169,7 @@ msgid "Themes"
 msgstr "ഥീമുകൾ"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:571
+#: src/modules/conf_theme/e_int_config_xsettings.c:579
 #: src/modules/everything/evry_config.c:447
 #: src/modules/everything/evry_config.c:473
 msgid "Icons"
@@ -6331,13 +6330,11 @@ msgid "e.g. Saving to disk"
 msgstr "ഉദാ. ഡിസ്കിൽ സേവ് ചെയ്യുന്നത്"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:973
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "താഴ്ന്നത്"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:971
 msgid "Medium"
 msgstr "ഇടത്തരം"
 
@@ -6349,7 +6346,6 @@ msgid "%.0f s"
 msgstr "%.0f സെക്കൻഡ്"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:969
 msgid "High"
 msgstr "ഉയർന്നത്"
 
@@ -7052,7 +7048,7 @@ msgid "Assign"
 msgstr "ചുമതലപ്പെടുത്തുക"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:434
+#: src/modules/notification/e_mod_main.c:431
 #: src/modules/clipboard/e_mod_main.c:442
 msgid "Clear"
 msgstr "മായ്ക്കുക"
@@ -7086,24 +7082,24 @@ msgstr "കോപ്പി പിശക് കാരണം മോക്ഷയ്
 msgid "Application Theme Settings"
 msgstr "അപ്ലിക്കേഷൻ ഥീം ക്രമീകരണങ്ങൾ"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:515
-#: src/modules/conf_theme/e_int_config_xsettings.c:559
+#: src/modules/conf_theme/e_int_config_xsettings.c:523
+#: src/modules/conf_theme/e_int_config_xsettings.c:567
 msgid "Match Moksha theme if possible"
 msgstr "സാധ്യമെങ്കിൽ മോക്ഷയുടെ ഥീമുമായി പൊരുത്തപ്പെടുത്തുക"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:524
+#: src/modules/conf_theme/e_int_config_xsettings.c:532
 msgid "Enable X Application Settings"
 msgstr "X അപ്ലിക്കേഷൻ ക്രമീകരണങ്ങൾ പ്രവർത്തനക്ഷമമാക്കുക"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:528
+#: src/modules/conf_theme/e_int_config_xsettings.c:536
 msgid "GTK Applications"
 msgstr "GTK ആപ്ലിക്കേഷനുകൾ"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:563
+#: src/modules/conf_theme/e_int_config_xsettings.c:571
 msgid "Enable icon theme for applications"
 msgstr "അപ്ലിക്കേഷനുകൾക്കായി ഐക്കൺ ഥീം പ്രവർത്തനക്ഷമമാക്കുക"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:567
+#: src/modules/conf_theme/e_int_config_xsettings.c:575
 msgid "Enable icon theme for Moksha"
 msgstr "മോക്ഷയ്‌ക്കായി ഐക്കൺ ഥീം പ്രവർത്തനക്ഷമമാക്കുക"
 
@@ -8838,29 +8834,29 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "ഈ ബാർ ഉറവിടം ഇല്ലാതാക്കണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?"
 
-#: src/modules/ibar/e_mod_main.c:333 src/modules/ibar/e_mod_main.c:3121
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:341 src/modules/ibar/e_mod_main.c:3267
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "IBar"
 msgstr "ഐബാർ"
 
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1659
+#: src/modules/ibar/e_mod_main.c:457 src/modules/ibar/e_mod_main.c:1798
 msgid "Create new Icon"
 msgstr "പുതിയ ഐക്കൺ സൃഷ്ടിക്കുക"
 
-#: src/modules/ibar/e_mod_main.c:1690
+#: src/modules/ibar/e_mod_main.c:1829
 msgid "Add to bar"
 msgstr "ബാറിലേക്ക് ചേർക്കുക"
 
-#: src/modules/ibar/e_mod_main.c:1696
+#: src/modules/ibar/e_mod_main.c:1835
 msgid "Remove from bar"
 msgstr "ബാറിൽ നിന്ന് ഇല്ലാതാക്കുക"
 
-#: src/modules/ibar/e_mod_main.c:1702
+#: src/modules/ibar/e_mod_main.c:1841
 #, c-format
 msgid "Icon %s"
 msgstr "ഐക്കൺ %s"
 
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "Focus IBar"
 msgstr "ഐബാർ ഫോക്കസുചെയ്യുക"
 
@@ -9524,252 +9520,219 @@ msgstr ""
 msgid "Systray"
 msgstr "സിസ്‌ട്രേ"
 
-#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1230
-msgid "Screenshot"
-msgstr "സ്ക്രീൻഷോട്ട്"
-
-#: src/modules/shot/e_mod_main.c:101
-msgid "Screenshot in: "
-msgstr "സ്ക്രീൻഷോട്ട് ഇതിൽ: "
-
-#: src/modules/shot/e_mod_main.c:116
-msgid "Screenshot stored in"
-msgstr "സ്ക്രീൻഷോട്ട് ഇവിടെ സംഭരിച്ചു"
-
-#: src/modules/shot/e_mod_main.c:311
-msgid "Error - Folder does not exist"
-msgstr "പിശക് - ഫോൾഡർ നിലവിലില്ല"
-
-#: src/modules/shot/e_mod_main.c:313
-msgid ""
-"Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
-"Take Screenshot<br><br>Would you like to set up it now?"
+#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
+msgid "Select action to take with screenshot"
 msgstr ""
-"സ്ക്രീൻഷോട്ട്-എടുക്കുക ക്രമീകരണങ്ങളിൽ ഫോൾഡർ മാറ്റുക<br><br>മെനു-ക്രമീകരണങ്ങൾ-എല്ലാം-നൂതന-"
-"എടുക്കുക സ്ക്രീൻഷോട്ട്<br><br>നിങ്ങൾക്കിത് ഇപ്പോൾ സജ്ജീകരിക്കണോ?"
 
-#: src/modules/shot/e_mod_main.c:359
-msgid "Error saving screenshot file"
-msgstr "സ്ക്രീൻഷോട്ട് ഫയൽ സംരക്ഷിക്കുന്നതിൽ പിശക്"
-
-#: src/modules/shot/e_mod_main.c:360
-#, c-format
-msgid "Path: %s"
-msgstr "പാത: %s"
-
-#: src/modules/shot/e_mod_main.c:420 src/modules/shot/e_mod_main.c:430
-msgid "Error - Unknown format"
-msgstr "പിശക് - അജ്ഞാത ഫോർമാറ്റ്"
-
-#: src/modules/shot/e_mod_main.c:421
-msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
-msgstr "ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തുന്നതിന് മാത്രം<br>'തികഞ്ഞ നിലവാരം' ഉപയോഗിക്കുക."
-
-#: src/modules/shot/e_mod_main.c:431
-msgid ""
-"File has an unspecified extension.<br>Please use '.jpg' or '.png' "
-"extensions<br>only as other formats are not<br>supported currently."
+#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
+msgid "Delay"
 msgstr ""
-"ഫയലിന് വ്യക്തമാക്കാത്തൊരു എക്സ്റ്റെൻഷനുണ്ട്.<br>മറ്റ് ഫോർമാറ്റുകൾ നിലവിൽ "
-"പിന്തുണയ്ക്കാത്തതിനാൽ<br>ദയവായി '.jpg' അല്ലെങ്കിൽ '.png' എക്സ്റ്റെൻഷനുകൾ<br>മാത്രം "
-"ഉപയോഗിക്കുക."
 
-#: src/modules/shot/e_mod_main.c:498
-msgid "Select screenshot save location"
-msgstr "സ്ക്രീൻഷോട്ട് സേവ് ലൊക്കേഷൻ തിരഞ്ഞെടുക്കുക"
+#: src/modules/shot/e_mod_delay.c:61
+#, fuzzy, c-format
+msgid "%1.1f sec"
+msgstr "%1.1f സെക്കൻഡ്"
 
-#: src/modules/shot/e_mod_main.c:512 src/modules/shot/e_mod_main.c:1041
-msgid "Save"
-msgstr "സേവുചെയ്യുക"
+#: src/modules/shot/e_mod_edit.c:1968
+#, fuzzy
+msgid "Tools"
+msgstr "ടൂൾടിപ്പുകൾ"
 
-#: src/modules/shot/e_mod_main.c:618
-#, c-format
-msgid "Uploaded %s / %s"
-msgstr "%s / %s അപ്‌ലോഡുചെയ്തു"
+#: src/modules/shot/e_mod_edit.c:1980
+#, fuzzy
+msgid "Select crop area"
+msgstr "ഒരെണ്ണം തിരഞ്ഞെടുക്കുക"
 
-#: src/modules/shot/e_mod_main.c:639
-msgid "Error - Upload Failed"
-msgstr "പിശക് - അപ്‌ലോഡ് പരാജയപ്പെട്ടു"
+#: src/modules/shot/e_mod_edit.c:1981
+#, fuzzy
+msgid "Modify objects"
+msgstr "പരിഷ്ക്കരിക്കുക"
 
-#: src/modules/shot/e_mod_main.c:640
-#, c-format
-msgid "Upload failed with status code:<br>%i"
-msgstr "ഈ സ്റ്റാറ്റസ് കോഡിൽ അപ്‌ലോഡ് പരാജയപ്പെട്ടു:<br>%i"
+#: src/modules/shot/e_mod_edit.c:1982
+#, fuzzy
+msgid "Delete objects"
+msgstr "ഡിലീറ്റ് പൂർത്തിയായി"
 
-#: src/modules/shot/e_mod_main.c:689
-msgid "Error - Can't create file"
-msgstr "പിശക് - ഫയൽ സൃഷ്ടിക്കാൻ കഴിഞ്ഞില്ല"
+#: src/modules/shot/e_mod_edit.c:1991
+#, fuzzy
+msgid "Single arrow line"
+msgstr "ഒറ്റ മൗസ് ക്ലിക്ക്"
 
-#: src/modules/shot/e_mod_main.c:690
-#, c-format
-msgid "Cannot create temporary file '%s': %s"
-msgstr "താൽക്കാലിക ഫയൽ '%s' സൃഷ്ടിക്കാൻ കഴിഞ്ഞില്ല: %s"
-
-#: src/modules/shot/e_mod_main.c:708
-msgid "Error - Can't open file"
-msgstr "പിശക് - ഫയൽ തുറക്കാനായില്ല"
-
-#: src/modules/shot/e_mod_main.c:709
-#, c-format
-msgid "Cannot open temporary file '%s': %s"
-msgstr "താൽക്കാലിക ഫയൽ '%s' തുറക്കാൻ കഴിഞ്ഞില്ല: %s"
-
-#: src/modules/shot/e_mod_main.c:717
-msgid "Error - Bad size"
-msgstr "പിശക് - മോശം വലിപ്പം"
-
-#: src/modules/shot/e_mod_main.c:718
-#, c-format
-msgid "Cannot get size of file '%s'"
-msgstr "'%s' ഫയലിൻ്റെ വലിപ്പം കണ്ടെത്താൻ കഴിഞ്ഞില്ല"
-
-#: src/modules/shot/e_mod_main.c:728
-msgid "Error - Can't allocate memory"
-msgstr "പിശക് - മെമ്മറി അനുവദിക്കാൻ കഴിഞ്ഞില്ല"
-
-#: src/modules/shot/e_mod_main.c:729
-#, c-format
-msgid "Cannot allocate memory for picture: %s"
-msgstr "ചിത്രത്തിനായി മെമ്മറി അനുവദിക്കാൻ കഴിഞ്ഞില്ല: %s"
-
-#: src/modules/shot/e_mod_main.c:736
-msgid "Error - Can't read picture"
-msgstr "പിശക് - ചിത്രം വായിക്കാൻ കഴിഞ്ഞില്ല"
-
-#: src/modules/shot/e_mod_main.c:737
-msgid "Cannot read picture"
-msgstr "ചിത്രം വായിക്കാൻ കഴിഞ്ഞില്ല"
-
-#: src/modules/shot/e_mod_main.c:759
-msgid "Uploading screenshot"
-msgstr "സ്ക്രീൻഷോട്ട് അപ്ലോഡുചെയ്യുന്നു"
-
-#: src/modules/shot/e_mod_main.c:764
-msgid "Uploading ..."
-msgstr "അപ്ലോഡുചെയ്യുന്നു ..."
-
-#: src/modules/shot/e_mod_main.c:769
-msgid "Screenshot is available at this location:"
-msgstr "സ്ക്രീൻഷോട്ട് ഈ ലൊക്കേഷനിൽ ലഭ്യമാണ്:"
-
-#: src/modules/shot/e_mod_main.c:778
-msgid "Copy link"
-msgstr "ലിങ്ക് പകർത്തുക"
-
-#: src/modules/shot/e_mod_main.c:802
-msgid "Confirm Share"
-msgstr "പങ്കിടൽ സ്ഥിരീകരിക്കുക"
-
-#: src/modules/shot/e_mod_main.c:803
-msgid ""
-"This image will be uploaded<br>to enlightenment.org. It will be publicly "
-"visible."
-msgstr "ഈ ചിത്രം enlightenment.org-ലേക്ക് അപ്‌ലോഡ് ചെയ്യപ്പെടും. അത് പൊതുവായി ദൃശ്യമാകും."
-
-#: src/modules/shot/e_mod_main.c:805
-msgid "Confirm"
-msgstr "സ്ഥിരീകരിക്കുക"
-
-#: src/modules/shot/e_mod_main.c:906
-msgid "Where to put Screenshot..."
-msgstr "സ്ക്രീൻഷോട്ട് എവിടെ വെക്കണം..."
-
-#: src/modules/shot/e_mod_main.c:958
-msgid "Quality"
-msgstr "ഗുണനിലവാരം"
-
-#: src/modules/shot/e_mod_main.c:967
-msgid "Perfect"
-msgstr "തികഞ്ഞ"
-
-#: src/modules/shot/e_mod_main.c:1043
-msgid "Share"
-msgstr "പങ്കിടുക"
-
-#: src/modules/shot/e_mod_main.c:1045 src/modules/clipboard/e_mod_config.c:221
-#: src/modules/clipboard/e_mod_main.c:361
-#: src/modules/clipboard/e_mod_main.c:955
-#: src/modules/clipboard/e_mod_main.c:956
-#: src/modules/clipboard/e_mod_main.c:957
-msgid "Clipboard"
-msgstr "ക്ലിപ്പ്ബോർഡ്"
-
-#: src/modules/shot/e_mod_main.c:1227
-#, c-format
-msgid ""
-"Select the screenshot mode... <br>Delay time is set in the Screenshot module "
-"settings<br>The current delay time: <b> %d s</b>"
+#: src/modules/shot/e_mod_edit.c:1992
+msgid "Double arrow line"
 msgstr ""
-"സ്ക്രീൻഷോട്ട് മോഡ് തിരഞ്ഞെടുക്കുക... <br>സ്‌ക്രീൻഷോട്ട് മൊഡ്യൂൾ ക്രമീകരണങ്ങളിൽ കാലതാമസ സമയം "
-"സജ്ജീകരിച്ചിട്ടുണ്ഡ്<br>നിലവിലെ കാലതാമസ സമയം: <b> %d സെക്കൻഡ്</b>"
 
-#: src/modules/shot/e_mod_main.c:1236
-msgid "Instant shot"
-msgstr "തൽക്ഷണ ഷോട്ട്"
+#: src/modules/shot/e_mod_edit.c:1993
+#, fuzzy
+msgid "Plain line"
+msgstr "സാധാരണ"
 
-#: src/modules/shot/e_mod_main.c:1237
-msgid "Delayed shot"
-msgstr "വൈകിയ ഷോട്ട്"
+#: src/modules/shot/e_mod_edit.c:1994
+msgid "Solid box"
+msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1277 src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_edit.c:1996
+msgid "Malloc"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:1997
+msgid "Malloc (evil)"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:1998
+#, fuzzy
+msgid "Pointing finger"
+msgstr "പോയിൻ്റർ"
+
+#: src/modules/shot/e_mod_edit.c:1999
+msgid "Enlightenment logo"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2001
+msgid "Foot"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2002
+msgid "Silly walk"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2003
+#, fuzzy
+msgid "Box outline"
+msgstr "രൂപരേഖ:"
+
+#: src/modules/shot/e_mod_edit.c:2004
+#, fuzzy
+msgid "Circle outline"
+msgstr "സർക്കുലർ സ്ക്രോളിംഗ്"
+
+#: src/modules/shot/e_mod_edit.c:2006
+#, fuzzy
+msgid "Plain text"
+msgstr "സാധാരണ"
+
+#: src/modules/shot/e_mod_edit.c:2007
+#, fuzzy
+msgid "Text box"
+msgstr "വാചകം"
+
+#: src/modules/shot/e_mod_edit.c:2008
+msgid "Text thought bubble"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2009
+msgid "Text thought bubble 2"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2011
+msgid "Speech bubble"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2012
+msgid "Speech bubble 2"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2013
+msgid "Kaboom splat"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2014
+msgid "Pow explode"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2022
+#, fuzzy
+msgid "Color"
+msgstr "നിറങ്ങൾ"
+
+#: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
 msgstr "ഷോട്ട് എടുക്കുക"
 
-#: src/modules/shot/e_mod_main.c:1305
+#: src/modules/shot/e_mod_main.c:374
 msgid "Shot Error"
 msgstr "ഷോട്ട് പിശക്"
 
-#: src/modules/shot/e_mod_main.c:1306
+#: src/modules/shot/e_mod_main.c:375
 msgid "Cannot initialize network"
 msgstr "നെറ്റ്‌വർക്ക് ആരംഭിക്കാൻ കഴിഞ്ഞില്ല"
 
-#: src/modules/shot/e_mod_main.c:1335 src/modules/shot/e_mod_config.c:47
-msgid "Screenshot Settings"
-msgstr "സ്ക്രീൻഷോട്ട് ക്രമീകരണങ്ങൾ"
+#: src/modules/shot/e_mod_main.c:392
+#, fuzzy
+msgid "Take Screenshot with Delay"
+msgstr "സ്ക്രീൻഷോട്ട് എടുക്കുക"
 
-#: src/modules/shot/e_mod_config.c:100
-msgid " Show the screenshot mode dialog"
-msgstr " സ്ക്രീൻഷോട്ട് മോഡ് ഡയലോഗ് കാണിക്കുക"
+#: src/modules/shot/e_mod_preview.c:93
+msgid "Quality"
+msgstr "ഗുണനിലവാരം"
 
-#: src/modules/shot/e_mod_config.c:103
-msgid " Screenshot guide (quality/share/save)"
-msgstr " സ്ക്രീൻഷോട്ട് ഗൈഡ് (ഗുണനിലവാരം/പങ്കിടൽ/സംരക്ഷിക്കുക)"
+#: src/modules/shot/e_mod_preview.c:109
+msgid "Save"
+msgstr "സേവുചെയ്യുക"
 
-#: src/modules/shot/e_mod_config.c:106
-msgid " Show notifications"
-msgstr " അറിയിപ്പുകൾ കാണിക്കുക"
+#: src/modules/shot/e_mod_preview.c:111
+msgid "Share"
+msgstr "പങ്കിടുക"
 
-#: src/modules/shot/e_mod_config.c:109
-msgid " Copy to Clipboard"
-msgstr " ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തുക"
+#: src/modules/shot/e_mod_save.c:204
+#, fuzzy
+msgid "Error - No Filemanager"
+msgstr "ഫയൽമാനേജർ"
 
-#: src/modules/shot/e_mod_config.c:112
-msgid " Launch app after screenshot"
-msgstr " സ്ക്രീൻഷോട്ടിന് ശേഷം ആപ്പ് ലോഞ്ചുചെയ്യുക"
+#: src/modules/shot/e_mod_save.c:205
+msgid ""
+"No filemanager action and/or module was found.<br>Cannot show the location "
+"of your screenshots."
+msgstr ""
 
-#: src/modules/shot/e_mod_config.c:115
-msgid "Application for opening:"
-msgstr "തുറക്കുന്നതിനുള്ള ആപ്ലിക്കേഷൻ:"
+#: src/modules/shot/e_mod_share.c:149
+#, fuzzy, c-format
+msgid "Uploaded %i%%"
+msgstr "%s / %s അപ്‌ലോഡുചെയ്തു"
 
-#: src/modules/shot/e_mod_config.c:121
-msgid "Folder for saving screenshots:"
-msgstr "സ്ക്രീൻഷോട്ടുകൾ സംരക്ഷിക്കുന്നതിനുള്ള ഫോൾഡർ:"
+#: src/modules/shot/e_mod_share.c:163
+msgid "Error - Upload Failed"
+msgstr "പിശക് - അപ്‌ലോഡ് പരാജയപ്പെട്ടു"
 
-#: src/modules/shot/e_mod_config.c:127
-msgid "Delay time [s]"
-msgstr "കാലതാമസം [സെക്കൻഡ്]"
+#: src/modules/shot/e_mod_share.c:164
+#, fuzzy, c-format
+msgid "Upload failed with status code:<ps/>%i"
+msgstr "ഈ സ്റ്റാറ്റസ് കോഡിൽ അപ്‌ലോഡ് പരാജയപ്പെട്ടു:<br>%i"
 
-#: src/modules/shot/e_mod_config.c:132
-msgid "Image quality [50-90 = jpg, 100 = png]"
-msgstr "ചിത്രത്തിൻ്റെ ഗുണനിലവാരം [50-90 = jpg, 100 = png]"
+#: src/modules/shot/e_mod_share.c:246
+msgid "Uploading screenshot"
+msgstr "സ്ക്രീൻഷോട്ട് അപ്ലോഡുചെയ്യുന്നു"
 
-#: src/modules/shot/e_mod_config.c:139
-msgid "Info"
-msgstr "വിവരം"
+#: src/modules/shot/e_mod_share.c:252
+msgid "Uploading ..."
+msgstr "അപ്ലോഡുചെയ്യുന്നു ..."
 
-#: src/modules/shot/e_mod_config.c:140
-msgid "Alt+PrtSc: screenshot active window"
-msgstr "Alt+PrtSc: സജീവ വിൻഡോയെ സ്ക്രീൻഷോട്ടുചെയ്യുക"
+#: src/modules/shot/e_mod_share.c:257
+msgid "Screenshot is available at this location:"
+msgstr "സ്ക്രീൻഷോട്ട് ഈ ലൊക്കേഷനിൽ ലഭ്യമാണ്:"
+
+#: src/modules/shot/e_mod_share.c:266
+#, fuzzy
+msgid "Hide"
+msgstr "സ്വയമേവ മറയ്ക്കുക"
+
+#: src/modules/shot/e_mod_share.c:315
+msgid "Confirm Share"
+msgstr "പങ്കിടൽ സ്ഥിരീകരിക്കുക"
+
+#: src/modules/shot/e_mod_share.c:317
+#, fuzzy
+msgid ""
+"Are you sure you want to upload this image<ps/>publically to these services?"
+msgstr "ഈ ബാർ ഉറവിടം ഇല്ലാതാക്കണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?"
+
+#: src/modules/shot/e_mod_share.c:320
+msgid "Imgur.com"
+msgstr ""
+
+#: src/modules/shot/e_mod_share.c:323
+msgid "E.org"
+msgstr ""
 
 #: src/modules/tasks/e_mod_main.c:340 src/modules/tasks/e_mod_main.c:855
 msgid "Tasks"
@@ -9955,8 +9918,8 @@ msgid "Variant"
 msgstr "വകഭേദം"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:278
-#: src/modules/notification/e_mod_main.c:374
+#: src/modules/notification/e_mod_main.c:277
+#: src/modules/notification/e_mod_main.c:373
 msgid "Notification"
 msgstr "അറിയിപ്പ്"
 
@@ -9976,32 +9939,32 @@ msgstr ""
 "ഒരു സെർവറായി പ്രവർത്തിക്കുന്ന മറ്റൊരു മൊഡ്യൂളും ഇല്ലെന്നും ഡി-ബസ് ശരിയായി ഇൻസ്റ്റാൾ "
 "ചെയ്തിട്ടുണ്ടെന്നും പ്രവർത്തിക്കുന്നുണ്ടെന്നും ഉറപ്പാക്കുക"
 
-#: src/modules/notification/e_mod_main.c:426
+#: src/modules/notification/e_mod_main.c:423
 #: src/modules/clipboard/e_mod_main.c:424
 msgid "Empty"
 msgstr "ശൂന്യം"
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:617
 msgid "Enter Presentation Mode"
 msgstr "അവതരണ മോഡിലേക്ക് പ്രവേശിക്കുക"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:618
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "മോക്ഷ <b>അവതരണ</b> മോഡിലാണ്."
 
-#: src/modules/notification/e_mod_main.c:632
+#: src/modules/notification/e_mod_main.c:622
 msgid "Exited Presentation Mode"
 msgstr "അവതരണ മോഡിൽ നിന്ന് പുറത്തുകടന്നു"
 
-#: src/modules/notification/e_mod_main.c:633
+#: src/modules/notification/e_mod_main.c:623
 msgid "Presentation mode is over."
 msgstr "അവതരണ മോഡ് അവസാനിച്ചു."
 
-#: src/modules/notification/e_mod_main.c:647
+#: src/modules/notification/e_mod_main.c:637
 msgid "Enter Offline Mode"
 msgstr "ഓഫ്‌ലൈൻ മോഡിലേക്ക് പ്രവേശിക്കുക"
 
-#: src/modules/notification/e_mod_main.c:648
+#: src/modules/notification/e_mod_main.c:638
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10009,11 +9972,11 @@ msgstr ""
 "മോക്ഷ <b>ഓഫ്‌ലൈൻ</b> മോഡിലാണ്.<br>ഓഫ്‌ലൈൻ മോഡിൽ, നെറ്റ്‌വർക്ക് ഉപയോഗിക്കുന്ന മൊഡ്യൂളുകൾ "
 "റിമോട്ട് സേവനങ്ങൾ പോളിംഗ് നിർത്തും."
 
-#: src/modules/notification/e_mod_main.c:654
+#: src/modules/notification/e_mod_main.c:644
 msgid "Exited Offline Mode"
 msgstr "ഓഫ്‌ലൈൻ മോഡിൽ നിന്ന് പുറത്തുകടന്നു"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:645
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10021,7 +9984,7 @@ msgstr ""
 "ഇപ്പോൾ <b>ഓൺലൈൻ</b> മോഡിൽ.<br>ഇനി നെറ്റ്‌വർക്ക് ഉപയോഗിക്കുന്ന മൊഡ്യൂളുകൾ സാധാരണ ജോലികൾ "
 "പുനരാരംഭിക്കും."
 
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 msgid "Notification expired!"
 msgstr "അറിയിപ്പ് കാലഹരണപ്പെട്ടു!"
 
@@ -10149,6 +10112,14 @@ msgstr " വൈറ്റ്‌സ്‌പേസ് ട്രിമ്മുച�
 #: src/modules/clipboard/e_mod_config.c:217
 msgid " Trim Newlines"
 msgstr " ന്യൂലൈനുകൾ ട്രിമ്മുചെയ്യുക"
+
+#: src/modules/clipboard/e_mod_config.c:221
+#: src/modules/clipboard/e_mod_main.c:361
+#: src/modules/clipboard/e_mod_main.c:955
+#: src/modules/clipboard/e_mod_main.c:956
+#: src/modules/clipboard/e_mod_main.c:957
+msgid "Clipboard"
+msgstr "ക്ലിപ്പ്ബോർഡ്"
 
 #: src/modules/clipboard/e_mod_config.c:227
 msgid " Save History"
@@ -10425,6 +10396,150 @@ msgstr "വോളിയം നിശബ്ദതത"
 #: src/modules/separator/e_mod_main.c:122
 msgid "Separator"
 msgstr "സെപ്പറേറ്റർ"
+
+#~ msgid "Screenshot"
+#~ msgstr "സ്ക്രീൻഷോട്ട്"
+
+#~ msgid "Screenshot in: "
+#~ msgstr "സ്ക്രീൻഷോട്ട് ഇതിൽ: "
+
+#~ msgid "Screenshot stored in"
+#~ msgstr "സ്ക്രീൻഷോട്ട് ഇവിടെ സംഭരിച്ചു"
+
+#~ msgid "Error - Folder does not exist"
+#~ msgstr "പിശക് - ഫോൾഡർ നിലവിലില്ല"
+
+#~ msgid ""
+#~ "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-"
+#~ "Advanced-Take Screenshot<br><br>Would you like to set up it now?"
+#~ msgstr ""
+#~ "സ്ക്രീൻഷോട്ട്-എടുക്കുക ക്രമീകരണങ്ങളിൽ ഫോൾഡർ മാറ്റുക<br><br>മെനു-ക്രമീകരണങ്ങൾ-എല്ലാം-നൂതന-"
+#~ "എടുക്കുക സ്ക്രീൻഷോട്ട്<br><br>നിങ്ങൾക്കിത് ഇപ്പോൾ സജ്ജീകരിക്കണോ?"
+
+#~ msgid "Error saving screenshot file"
+#~ msgstr "സ്ക്രീൻഷോട്ട് ഫയൽ സംരക്ഷിക്കുന്നതിൽ പിശക്"
+
+#, c-format
+#~ msgid "Path: %s"
+#~ msgstr "പാത: %s"
+
+#~ msgid "Error - Unknown format"
+#~ msgstr "പിശക് - അജ്ഞാത ഫോർമാറ്റ്"
+
+#~ msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
+#~ msgstr "ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തുന്നതിന് മാത്രം<br>'തികഞ്ഞ നിലവാരം' ഉപയോഗിക്കുക."
+
+#~ msgid ""
+#~ "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
+#~ "extensions<br>only as other formats are not<br>supported currently."
+#~ msgstr ""
+#~ "ഫയലിന് വ്യക്തമാക്കാത്തൊരു എക്സ്റ്റെൻഷനുണ്ട്.<br>മറ്റ് ഫോർമാറ്റുകൾ നിലവിൽ "
+#~ "പിന്തുണയ്ക്കാത്തതിനാൽ<br>ദയവായി '.jpg' അല്ലെങ്കിൽ '.png' എക്സ്റ്റെൻഷനുകൾ<br>മാത്രം "
+#~ "ഉപയോഗിക്കുക."
+
+#~ msgid "Select screenshot save location"
+#~ msgstr "സ്ക്രീൻഷോട്ട് സേവ് ലൊക്കേഷൻ തിരഞ്ഞെടുക്കുക"
+
+#~ msgid "Error - Can't create file"
+#~ msgstr "പിശക് - ഫയൽ സൃഷ്ടിക്കാൻ കഴിഞ്ഞില്ല"
+
+#, c-format
+#~ msgid "Cannot create temporary file '%s': %s"
+#~ msgstr "താൽക്കാലിക ഫയൽ '%s' സൃഷ്ടിക്കാൻ കഴിഞ്ഞില്ല: %s"
+
+#~ msgid "Error - Can't open file"
+#~ msgstr "പിശക് - ഫയൽ തുറക്കാനായില്ല"
+
+#, c-format
+#~ msgid "Cannot open temporary file '%s': %s"
+#~ msgstr "താൽക്കാലിക ഫയൽ '%s' തുറക്കാൻ കഴിഞ്ഞില്ല: %s"
+
+#~ msgid "Error - Bad size"
+#~ msgstr "പിശക് - മോശം വലിപ്പം"
+
+#, c-format
+#~ msgid "Cannot get size of file '%s'"
+#~ msgstr "'%s' ഫയലിൻ്റെ വലിപ്പം കണ്ടെത്താൻ കഴിഞ്ഞില്ല"
+
+#~ msgid "Error - Can't allocate memory"
+#~ msgstr "പിശക് - മെമ്മറി അനുവദിക്കാൻ കഴിഞ്ഞില്ല"
+
+#, c-format
+#~ msgid "Cannot allocate memory for picture: %s"
+#~ msgstr "ചിത്രത്തിനായി മെമ്മറി അനുവദിക്കാൻ കഴിഞ്ഞില്ല: %s"
+
+#~ msgid "Error - Can't read picture"
+#~ msgstr "പിശക് - ചിത്രം വായിക്കാൻ കഴിഞ്ഞില്ല"
+
+#~ msgid "Cannot read picture"
+#~ msgstr "ചിത്രം വായിക്കാൻ കഴിഞ്ഞില്ല"
+
+#~ msgid "Copy link"
+#~ msgstr "ലിങ്ക് പകർത്തുക"
+
+#~ msgid ""
+#~ "This image will be uploaded<br>to enlightenment.org. It will be publicly "
+#~ "visible."
+#~ msgstr "ഈ ചിത്രം enlightenment.org-ലേക്ക് അപ്‌ലോഡ് ചെയ്യപ്പെടും. അത് പൊതുവായി ദൃശ്യമാകും."
+
+#~ msgid "Confirm"
+#~ msgstr "സ്ഥിരീകരിക്കുക"
+
+#~ msgid "Where to put Screenshot..."
+#~ msgstr "സ്ക്രീൻഷോട്ട് എവിടെ വെക്കണം..."
+
+#~ msgid "Perfect"
+#~ msgstr "തികഞ്ഞ"
+
+#, c-format
+#~ msgid ""
+#~ "Select the screenshot mode... <br>Delay time is set in the Screenshot "
+#~ "module settings<br>The current delay time: <b> %d s</b>"
+#~ msgstr ""
+#~ "സ്ക്രീൻഷോട്ട് മോഡ് തിരഞ്ഞെടുക്കുക... <br>സ്‌ക്രീൻഷോട്ട് മൊഡ്യൂൾ ക്രമീകരണങ്ങളിൽ കാലതാമസ സമയം "
+#~ "സജ്ജീകരിച്ചിട്ടുണ്ഡ്<br>നിലവിലെ കാലതാമസ സമയം: <b> %d സെക്കൻഡ്</b>"
+
+#~ msgid "Instant shot"
+#~ msgstr "തൽക്ഷണ ഷോട്ട്"
+
+#~ msgid "Delayed shot"
+#~ msgstr "വൈകിയ ഷോട്ട്"
+
+#~ msgid "Screenshot Settings"
+#~ msgstr "സ്ക്രീൻഷോട്ട് ക്രമീകരണങ്ങൾ"
+
+#~ msgid " Show the screenshot mode dialog"
+#~ msgstr " സ്ക്രീൻഷോട്ട് മോഡ് ഡയലോഗ് കാണിക്കുക"
+
+#~ msgid " Screenshot guide (quality/share/save)"
+#~ msgstr " സ്ക്രീൻഷോട്ട് ഗൈഡ് (ഗുണനിലവാരം/പങ്കിടൽ/സംരക്ഷിക്കുക)"
+
+#~ msgid " Show notifications"
+#~ msgstr " അറിയിപ്പുകൾ കാണിക്കുക"
+
+#~ msgid " Copy to Clipboard"
+#~ msgstr " ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തുക"
+
+#~ msgid " Launch app after screenshot"
+#~ msgstr " സ്ക്രീൻഷോട്ടിന് ശേഷം ആപ്പ് ലോഞ്ചുചെയ്യുക"
+
+#~ msgid "Application for opening:"
+#~ msgstr "തുറക്കുന്നതിനുള്ള ആപ്ലിക്കേഷൻ:"
+
+#~ msgid "Folder for saving screenshots:"
+#~ msgstr "സ്ക്രീൻഷോട്ടുകൾ സംരക്ഷിക്കുന്നതിനുള്ള ഫോൾഡർ:"
+
+#~ msgid "Delay time [s]"
+#~ msgstr "കാലതാമസം [സെക്കൻഡ്]"
+
+#~ msgid "Image quality [50-90 = jpg, 100 = png]"
+#~ msgstr "ചിത്രത്തിൻ്റെ ഗുണനിലവാരം [50-90 = jpg, 100 = png]"
+
+#~ msgid "Info"
+#~ msgstr "വിവരം"
+
+#~ msgid "Alt+PrtSc: screenshot active window"
+#~ msgstr "Alt+PrtSc: സജീവ വിൻഡോയെ സ്ക്രീൻഷോട്ടുചെയ്യുക"
 
 #~ msgid "Moksha Settings Write Problems"
 #~ msgstr "മോക്ഷ ക്രമീകരണങ്ങൾ എഴുതുന്നതിൽ പ്രശ്നങ്ങൾ"

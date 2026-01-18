@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-10-10 18:24+0200\n"
+"POT-Creation-Date: 2026-01-18 18:44+0100\n"
 "PO-Revision-Date: 2013-12-01 01:53+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -33,7 +33,7 @@ msgstr "عن Mokshaِ"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:113
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
+#: src/modules/fileman/e_fwin.c:2587
 msgid "Close"
 msgstr "إغلاق"
 
@@ -111,7 +111,6 @@ msgstr "أتريد بالفعل الخروج من Mokshaِ ؟"
 #: src/bin/e_actions.c:2496 src/bin/e_actions.c:2561 src/bin/e_actions.c:2626
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10521
 #: src/bin/e_screensaver.c:193 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:318
 msgid "Yes"
 msgstr "نعم"
 
@@ -160,7 +159,7 @@ msgstr "أتريد بالفعل إسبات حاسبك؟"
 #: src/bin/e_actions.c:3158 src/bin/e_actions.c:3163 src/bin/e_actions.c:3168
 #: src/bin/e_actions.c:3467 src/bin/e_actions.c:3471 src/bin/e_actions.c:3476
 #: src/bin/e_actions.c:3482 src/bin/e_actions.c:3488 src/bin/e_actions.c:3494
-#: src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_main.c:400
 msgid "Window : Actions"
 msgstr "النوافذ : اﻹجراءات"
 
@@ -566,7 +565,7 @@ msgstr "اقفز إلى نافذة... أو ابدأ..."
 #: src/bin/e_actions.c:3645 src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:986 src/modules/shot/e_mod_main.c:1317
+#: src/modules/shot/e_mod_main.c:384 src/modules/shot/e_mod_main.c:392
 msgid "Screen"
 msgstr "الشاشة"
 
@@ -878,9 +877,9 @@ msgstr "حدد"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:318 src/modules/shot/e_mod_main.c:514
-#: src/modules/shot/e_mod_main.c:779 src/modules/shot/e_mod_main.c:805
-#: src/modules/shot/e_mod_main.c:1047 src/modules/xkbswitch/e_mod_config.c:587
+#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:120
+#: src/modules/shot/e_mod_share.c:267 src/modules/shot/e_mod_share.c:326
+#: src/modules/xkbswitch/e_mod_config.c:587
 msgid "Cancel"
 msgstr "ألغ"
 
@@ -1024,8 +1023,8 @@ msgstr "أساسي"
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10790 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
-#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:519
+#: src/bin/e_module.c:839 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1034,7 +1033,7 @@ msgstr "أساسي"
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:586
+#: src/modules/shot/e_mod_delay.c:79 src/modules/xkbswitch/e_mod_config.c:586
 msgid "OK"
 msgstr "موافق"
 
@@ -1260,6 +1259,7 @@ msgid "Cut"
 msgstr "قص"
 
 #: src/bin/e_entry.c:514 src/bin/e_fm.c:9123 src/bin/e_fm.c:11650
+#: src/modules/shot/e_mod_preview.c:113
 msgid "Copy"
 msgstr "انسخ"
 
@@ -1544,7 +1544,7 @@ msgid "Eject"
 msgstr "اخرج"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
-#: src/modules/ibar/e_mod_main.c:1683
+#: src/modules/ibar/e_mod_main.c:1822
 msgid "Properties"
 msgstr "الخصائص"
 
@@ -1705,7 +1705,7 @@ msgid "Yes to all"
 msgstr "نعم للكل"
 
 #: src/bin/e_fm.c:10525 src/modules/xkbswitch/e_mod_config.c:402
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:633
 msgid "Warning"
 msgstr ""
@@ -1865,7 +1865,7 @@ msgstr "أخرى :"
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:215
 #: src/modules/conf_theme/e_int_config_theme.c:1434
-#: src/modules/conf_theme/e_int_config_xsettings.c:540
+#: src/modules/conf_theme/e_int_config_xsettings.c:548
 msgid "Preview"
 msgstr "معاينة"
 
@@ -2550,15 +2550,14 @@ msgstr "أطلب الموضع"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:466 src/modules/ibar/e_mod_main.c:1676
+#: src/modules/ibar/e_mod_main.c:474 src/modules/ibar/e_mod_main.c:1815
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:848
+#: src/modules/connman/e_mod_main.c:459 src/modules/tasks/e_mod_main.c:848
 #: src/modules/xkbswitch/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:396
-#: src/modules/notification/e_mod_main.c:343
-#: src/modules/notification/e_mod_main.c:457
+#: src/modules/notification/e_mod_main.c:342
+#: src/modules/notification/e_mod_main.c:454
 #: src/modules/clipboard/e_mod_main.c:303
 #: src/modules/clipboard/e_mod_main.c:455 src/modules/places/e_mod_main.c:518
 msgid "Settings"
@@ -2648,7 +2647,7 @@ msgstr "الحجم, المكان واﻷقفال"
 #: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:990
+#: src/modules/everything/evry_view.c:1628
 msgid "All"
 msgstr "الكل"
 
@@ -2756,7 +2755,7 @@ msgstr "إعدادات الوحدة"
 msgid "Load"
 msgstr "حمل"
 
-#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:620
+#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:621
 msgid "Unload"
 msgstr "لا تحمل"
 
@@ -3572,12 +3571,12 @@ msgstr ""
 "و لن يتم تحميلها ﻷجل المساعدة<br> في إزالة أي مشكلة وحدات من إعداداتك."
 "<br><br>حوارات إعداد الوحدة ستدعك تختار<br>وحداتك مجددا.."
 
-#: src/bin/e_module.c:185
+#: src/bin/e_module.c:186
 #, c-format
 msgid "Loading Module: %s"
 msgstr "تحميل الوحدات: %s"
 
-#: src/bin/e_module.c:234
+#: src/bin/e_module.c:235
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3586,11 +3585,11 @@ msgstr ""
 "كان هنالك تحميل خاطئ للوحدة المسماة بـ : %s<br>لا وجود لوحدة مسماة بـ %s "
 "يمكن العثور عليها في<br>بحث مجلد الوحدات.<br>"
 
-#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
+#: src/bin/e_module.c:238 src/bin/e_module.c:251 src/bin/e_module.c:269
 msgid "Error loading Module"
 msgstr "خلل في تحميل الوحدة"
 
-#: src/bin/e_module.c:245 src/bin/e_module.c:262
+#: src/bin/e_module.c:246 src/bin/e_module.c:263
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3599,12 +3598,12 @@ msgstr ""
 "كان هنالك تحميل خاطئ للوحدة المسماة بـ : %s<br>المسار الكامل إلى هذه الوحدة "
 "هو:<br>%s<br>الخطأ المبلغ عنه هو:<br>%s<br>"
 
-#: src/bin/e_module.c:267
+#: src/bin/e_module.c:268
 #, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "لا تحتوي الوحدة على كل الوظائف المعتمد عليها"
 
-#: src/bin/e_module.c:282
+#: src/bin/e_module.c:283
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3613,23 +3612,23 @@ msgstr ""
 "خطأ بوحدة API <br>خطأ بتهيئة الوحدة: %s<br>حيث أنها تتطلب أقل إصدار لوحدة "
 "API من: %i.<br>الوحدة API التي تعمل بواسطة Moksha هي: %i.<br>"
 
-#: src/bin/e_module.c:287
+#: src/bin/e_module.c:288
 #, c-format
 msgid "Moksha %s Module"
 msgstr "وحدة  %s ﻹنلايتنمينت"
 
-#: src/bin/e_module.c:615
+#: src/bin/e_module.c:616
 msgid "What action should be taken with this module?<br>"
 msgstr "ما نوع العملية التي يجب اتخاذها مع هذه الوحدة؟<br>"
 
-#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:622 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:697
 #: src/modules/clipboard/e_mod_main.c:785
 msgid "Keep"
 msgstr "أبقِ"
 
-#: src/bin/e_module.c:823
+#: src/bin/e_module.c:824
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3638,12 +3637,12 @@ msgstr ""
 "الوحدات التالية ليست قياسية لـ<br>Mokshaِ  و لربما ستسبب عللا و  تحطمات."
 "<br>لذا رجاء أزلها قبل اﻹبلاغ عن أي علة.<br><br>و الوحدات هي :<br><br>"
 
-#: src/bin/e_module.c:835
+#: src/bin/e_module.c:836
 #, fuzzy
 msgid "Unstable module tainting"
 msgstr "وحدات ملوثة غير مستقرة"
 
-#: src/bin/e_module.c:839
+#: src/bin/e_module.c:840
 msgid "I know"
 msgstr "أعلم ذلك"
 
@@ -3768,7 +3767,7 @@ msgid "Rename Shelf"
 msgstr "أعد تسمية الرف"
 
 #: src/bin/e_shelf.c:2476 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1670
+#: src/modules/ibar/e_mod_main.c:468 src/modules/ibar/e_mod_main.c:1809
 msgid "Contents"
 msgstr "المحتويات"
 
@@ -5799,7 +5798,7 @@ msgid "Vaio"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:444
+#: src/modules/notification/e_mod_main.c:441
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5942,8 +5941,8 @@ msgid "Quick Launcher"
 msgstr "مهيء اﻹقلاع"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:309
-#: src/modules/shot/e_mod_main.c:1288 src/modules/shot/e_mod_main.c:1317
-#: src/modules/shot/e_mod_main.c:1329
+#: src/modules/shot/e_mod_main.c:357 src/modules/shot/e_mod_main.c:384
+#: src/modules/shot/e_mod_main.c:405
 msgid "Take Screenshot"
 msgstr "صوِّر لشاشة"
 
@@ -6240,7 +6239,7 @@ msgid "Themes"
 msgstr "السمات"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:571
+#: src/modules/conf_theme/e_int_config_xsettings.c:579
 #: src/modules/everything/evry_config.c:447
 #: src/modules/everything/evry_config.c:473
 msgid "Icons"
@@ -6400,13 +6399,11 @@ msgid "e.g. Saving to disk"
 msgstr "مثل احفظ إلى القرص"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:973
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "قليل"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:971
 msgid "Medium"
 msgstr "متوسط"
 
@@ -6418,7 +6415,6 @@ msgid "%.0f s"
 msgstr "%.0f ث"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:969
 msgid "High"
 msgstr "عالي"
 
@@ -7135,7 +7131,7 @@ msgid "Assign"
 msgstr "تعيينن"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:434
+#: src/modules/notification/e_mod_main.c:431
 #: src/modules/clipboard/e_mod_main.c:442
 msgid "Clear"
 msgstr "امح"
@@ -7167,24 +7163,24 @@ msgstr "لا يستطيع Mokshaِ استيراد السمة<br>جراء خلل 
 msgid "Application Theme Settings"
 msgstr "ضبط سمة التطبيق"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:515
-#: src/modules/conf_theme/e_int_config_xsettings.c:559
+#: src/modules/conf_theme/e_int_config_xsettings.c:523
+#: src/modules/conf_theme/e_int_config_xsettings.c:567
 msgid "Match Moksha theme if possible"
 msgstr "طابق سمة Mokshaِ إن أمكن"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:524
+#: src/modules/conf_theme/e_int_config_xsettings.c:532
 msgid "Enable X Application Settings"
 msgstr "مكِّن إعدادات تطبيق X"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:528
+#: src/modules/conf_theme/e_int_config_xsettings.c:536
 msgid "GTK Applications"
 msgstr "تطبيقات GTK"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:563
+#: src/modules/conf_theme/e_int_config_xsettings.c:571
 msgid "Enable icon theme for applications"
 msgstr "مكِّن سمة أيقونات التطبيقات"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:567
+#: src/modules/conf_theme/e_int_config_xsettings.c:575
 msgid "Enable icon theme for Moksha"
 msgstr "مكِّن سمة أيقونات Mokshaِ"
 
@@ -8958,31 +8954,31 @@ msgstr "لقد قمت بطلب محو  \"%s\".<br><br>هل تريد تأكيد �
 msgid "Are you sure you want to delete this bar source?"
 msgstr "هل تريد تأكيد مسح مصدر هذا الشريط؟"
 
-#: src/modules/ibar/e_mod_main.c:333 src/modules/ibar/e_mod_main.c:3121
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:341 src/modules/ibar/e_mod_main.c:3267
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "IBar"
 msgstr "شريط التشغيل السريع (( IBar )) "
 
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1659
+#: src/modules/ibar/e_mod_main.c:457 src/modules/ibar/e_mod_main.c:1798
 msgid "Create new Icon"
 msgstr "إنشاء أيقونة جديدة"
 
-#: src/modules/ibar/e_mod_main.c:1690
+#: src/modules/ibar/e_mod_main.c:1829
 #, fuzzy
 msgid "Add to bar"
 msgstr "أضف إلى  شريط التشغيل السريع IBar"
 
-#: src/modules/ibar/e_mod_main.c:1696
+#: src/modules/ibar/e_mod_main.c:1835
 #, fuzzy
 msgid "Remove from bar"
 msgstr "أزل التكدس"
 
-#: src/modules/ibar/e_mod_main.c:1702
+#: src/modules/ibar/e_mod_main.c:1841
 #, c-format
 msgid "Icon %s"
 msgstr "أيقونة %s"
 
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "Focus IBar"
 msgstr "Focus IBar"
 
@@ -9643,261 +9639,219 @@ msgstr "حاشية النظام لا يمكنها العمل في رف ضُبِ�
 msgid "Systray"
 msgstr "حاشية النظام"
 
-#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1230
-#, fuzzy
-msgid "Screenshot"
-msgstr "صوِّر لشاشة"
-
-#: src/modules/shot/e_mod_main.c:101
-#, fuzzy
-msgid "Screenshot in: "
-msgstr "صوِّر لشاشة"
-
-#: src/modules/shot/e_mod_main.c:116
-#, fuzzy
-msgid "Screenshot stored in"
-msgstr "صوِّر لشاشة"
-
-#: src/modules/shot/e_mod_main.c:311
-msgid "Error - Folder does not exist"
+#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
+msgid "Select action to take with screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:313
-msgid ""
-"Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
-"Take Screenshot<br><br>Would you like to set up it now?"
+#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
+msgid "Delay"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:359
-msgid "Error saving screenshot file"
-msgstr "خطأ في حفظ ملف صورة الشاشة"
+#: src/modules/shot/e_mod_delay.c:61
+#, fuzzy, c-format
+msgid "%1.1f sec"
+msgstr "%1.1f ثانية/ثوان"
 
-#: src/modules/shot/e_mod_main.c:360
-#, c-format
-msgid "Path: %s"
-msgstr "المسار: %s"
-
-#: src/modules/shot/e_mod_main.c:420 src/modules/shot/e_mod_main.c:430
-msgid "Error - Unknown format"
-msgstr "خطأ - صيغة مجهولة"
-
-#: src/modules/shot/e_mod_main.c:421
-msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
-msgstr ""
-
-#: src/modules/shot/e_mod_main.c:431
-msgid ""
-"File has an unspecified extension.<br>Please use '.jpg' or '.png' "
-"extensions<br>only as other formats are not<br>supported currently."
-msgstr ""
-"الملف يستخدم صيغة مجهولة.<br>رجاء استخدم الصيغة '.jpg' أو '.png'<br>فقط حيث "
-"أن الصيغ اﻷخرى<br>ليست مدعومة حاليا."
-
-#: src/modules/shot/e_mod_main.c:498
-msgid "Select screenshot save location"
-msgstr "حدد مكان حفظ صورة الشاشة"
-
-#: src/modules/shot/e_mod_main.c:512 src/modules/shot/e_mod_main.c:1041
-msgid "Save"
-msgstr "حفظ"
-
-#: src/modules/shot/e_mod_main.c:618
-#, c-format
-msgid "Uploaded %s / %s"
-msgstr "رُفِعَ %s / %s"
-
-#: src/modules/shot/e_mod_main.c:639
-msgid "Error - Upload Failed"
-msgstr "خطأ - فشل الرفع"
-
-#: src/modules/shot/e_mod_main.c:640
-#, c-format
-msgid "Upload failed with status code:<br>%i"
-msgstr "فشل الرفع برقم الحالة :<br>%i"
-
-#: src/modules/shot/e_mod_main.c:689
-msgid "Error - Can't create file"
-msgstr "خطأ - لايمكن انشاء ملف"
-
-#: src/modules/shot/e_mod_main.c:690
-#, c-format
-msgid "Cannot create temporary file '%s': %s"
-msgstr "لا يمكن إنشاء ملف مؤقت '%s': %s"
-
-#: src/modules/shot/e_mod_main.c:708
-msgid "Error - Can't open file"
-msgstr "خطأ - لا يمكن فتح ملف"
-
-#: src/modules/shot/e_mod_main.c:709
-#, c-format
-msgid "Cannot open temporary file '%s': %s"
-msgstr "لا يمكن فتح ملف مؤقت '%s': %s"
-
-#: src/modules/shot/e_mod_main.c:717
-msgid "Error - Bad size"
-msgstr "خطأ - حجم سيء"
-
-#: src/modules/shot/e_mod_main.c:718
-#, c-format
-msgid "Cannot get size of file '%s'"
-msgstr "لا يمكن معرفة حجم ملف '%s'"
-
-#: src/modules/shot/e_mod_main.c:728
-msgid "Error - Can't allocate memory"
-msgstr "خطأ - لا يمكن تخصيص ذاكرة"
-
-#: src/modules/shot/e_mod_main.c:729
-#, c-format
-msgid "Cannot allocate memory for picture: %s"
-msgstr "لا يمكن تخصيص ذاكرة للصورة : %s"
-
-#: src/modules/shot/e_mod_main.c:736
-msgid "Error - Can't read picture"
-msgstr "خطأ - لا يمكن قراءة الصورة"
-
-#: src/modules/shot/e_mod_main.c:737
-msgid "Cannot read picture"
-msgstr "لا يمكن قراءة الصورة"
-
-#: src/modules/shot/e_mod_main.c:759
-msgid "Uploading screenshot"
-msgstr "رفع صورة الشاشة"
-
-#: src/modules/shot/e_mod_main.c:764
-msgid "Uploading ..."
-msgstr "رفع  ..."
-
-#: src/modules/shot/e_mod_main.c:769
-msgid "Screenshot is available at this location:"
-msgstr "صورة الشاشة متوفرة في هذا الموقع :"
-
-#: src/modules/shot/e_mod_main.c:778
+#: src/modules/shot/e_mod_edit.c:1968
 #, fuzzy
-msgid "Copy link"
-msgstr "انسخ"
+msgid "Tools"
+msgstr "تلميحات"
 
-#: src/modules/shot/e_mod_main.c:802
-msgid "Confirm Share"
-msgstr "أكِّد المشاركة"
-
-#: src/modules/shot/e_mod_main.c:803
-msgid ""
-"This image will be uploaded<br>to enlightenment.org. It will be publicly "
-"visible."
-msgstr "سترفع هذه الصورة إلى<br> enlightenment.org. و ستكون ظاهرة للعموم."
-
-#: src/modules/shot/e_mod_main.c:805
-msgid "Confirm"
-msgstr "أكِّد"
-
-#: src/modules/shot/e_mod_main.c:906
-msgid "Where to put Screenshot..."
-msgstr "أين ستُوضع صورة الشاشة..."
-
-#: src/modules/shot/e_mod_main.c:958
-msgid "Quality"
-msgstr "الجودة"
-
-#: src/modules/shot/e_mod_main.c:967
-msgid "Perfect"
-msgstr "ممتاز"
-
-#: src/modules/shot/e_mod_main.c:1043
-msgid "Share"
-msgstr "شارك"
-
-#: src/modules/shot/e_mod_main.c:1045 src/modules/clipboard/e_mod_config.c:221
-#: src/modules/clipboard/e_mod_main.c:361
-#: src/modules/clipboard/e_mod_main.c:955
-#: src/modules/clipboard/e_mod_main.c:956
-#: src/modules/clipboard/e_mod_main.c:957
+#: src/modules/shot/e_mod_edit.c:1980
 #, fuzzy
-msgid "Clipboard"
-msgstr "إنسخ إلى لوحة الصور"
+msgid "Select crop area"
+msgstr "إختر واحدا"
 
-#: src/modules/shot/e_mod_main.c:1227
-#, c-format
-msgid ""
-"Select the screenshot mode... <br>Delay time is set in the Screenshot module "
-"settings<br>The current delay time: <b> %d s</b>"
+#: src/modules/shot/e_mod_edit.c:1981
+#, fuzzy
+msgid "Modify objects"
+msgstr "تعديل"
+
+#: src/modules/shot/e_mod_edit.c:1982
+#, fuzzy
+msgid "Delete objects"
+msgstr "تم الحذف"
+
+#: src/modules/shot/e_mod_edit.c:1991
+#, fuzzy
+msgid "Single arrow line"
+msgstr "أظهر عند الضغط بالفأرة"
+
+#: src/modules/shot/e_mod_edit.c:1992
+msgid "Double arrow line"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1236
-msgid "Instant shot"
+#: src/modules/shot/e_mod_edit.c:1993
+#, fuzzy
+msgid "Plain line"
+msgstr "بارز"
+
+#: src/modules/shot/e_mod_edit.c:1994
+msgid "Solid box"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1237
-#, fuzzy
-msgid "Delayed shot"
-msgstr "الحدث المتأخر"
+#: src/modules/shot/e_mod_edit.c:1996
+msgid "Malloc"
+msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1277 src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_edit.c:1997
+msgid "Malloc (evil)"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:1998
+#, fuzzy
+msgid "Pointing finger"
+msgstr "المؤشر"
+
+#: src/modules/shot/e_mod_edit.c:1999
+msgid "Enlightenment logo"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2001
+msgid "Foot"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2002
+msgid "Silly walk"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2003
+#, fuzzy
+msgid "Box outline"
+msgstr "دون اتصال:"
+
+#: src/modules/shot/e_mod_edit.c:2004
+#, fuzzy
+msgid "Circle outline"
+msgstr "حرّك بسلاسة"
+
+#: src/modules/shot/e_mod_edit.c:2006
+#, fuzzy
+msgid "Plain text"
+msgstr "بارز"
+
+#: src/modules/shot/e_mod_edit.c:2007
+#, fuzzy
+msgid "Text box"
+msgstr "نص"
+
+#: src/modules/shot/e_mod_edit.c:2008
+msgid "Text thought bubble"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2009
+msgid "Text thought bubble 2"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2011
+msgid "Speech bubble"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2012
+msgid "Speech bubble 2"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2013
+msgid "Kaboom splat"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2014
+msgid "Pow explode"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2022
+#, fuzzy
+msgid "Color"
+msgstr "اﻷلوان"
+
+#: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
 msgstr "خذ صورة"
 
-#: src/modules/shot/e_mod_main.c:1305
+#: src/modules/shot/e_mod_main.c:374
 msgid "Shot Error"
 msgstr "خطأ في التصوير"
 
-#: src/modules/shot/e_mod_main.c:1306
+#: src/modules/shot/e_mod_main.c:375
 msgid "Cannot initialize network"
 msgstr "لا يمكن بدء اﻹتصال الشبكي"
 
-#: src/modules/shot/e_mod_main.c:1335 src/modules/shot/e_mod_config.c:47
+#: src/modules/shot/e_mod_main.c:392
 #, fuzzy
-msgid "Screenshot Settings"
-msgstr "إعدادات قفل الشاشة"
+msgid "Take Screenshot with Delay"
+msgstr "صوِّر لشاشة"
 
-#: src/modules/shot/e_mod_config.c:100
+#: src/modules/shot/e_mod_preview.c:93
+msgid "Quality"
+msgstr "الجودة"
+
+#: src/modules/shot/e_mod_preview.c:109
+msgid "Save"
+msgstr "حفظ"
+
+#: src/modules/shot/e_mod_preview.c:111
+msgid "Share"
+msgstr "شارك"
+
+#: src/modules/shot/e_mod_save.c:204
 #, fuzzy
-msgid " Show the screenshot mode dialog"
-msgstr "اعرض في كل الشاشات"
+msgid "Error - No Filemanager"
+msgstr "مدير الملفات"
 
-#: src/modules/shot/e_mod_config.c:103
-msgid " Screenshot guide (quality/share/save)"
+#: src/modules/shot/e_mod_save.c:205
+msgid ""
+"No filemanager action and/or module was found.<br>Cannot show the location "
+"of your screenshots."
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:106
-#, fuzzy
-msgid " Show notifications"
-msgstr "تنبيه"
+#: src/modules/shot/e_mod_share.c:149
+#, fuzzy, c-format
+msgid "Uploaded %i%%"
+msgstr "رُفِعَ %s / %s"
 
-#: src/modules/shot/e_mod_config.c:109
-#, fuzzy
-msgid " Copy to Clipboard"
-msgstr "إنسخ إلى لوحة الصور"
+#: src/modules/shot/e_mod_share.c:163
+msgid "Error - Upload Failed"
+msgstr "خطأ - فشل الرفع"
 
-#: src/modules/shot/e_mod_config.c:112
-msgid " Launch app after screenshot"
+#: src/modules/shot/e_mod_share.c:164
+#, fuzzy, c-format
+msgid "Upload failed with status code:<ps/>%i"
+msgstr "فشل الرفع برقم الحالة :<br>%i"
+
+#: src/modules/shot/e_mod_share.c:246
+msgid "Uploading screenshot"
+msgstr "رفع صورة الشاشة"
+
+#: src/modules/shot/e_mod_share.c:252
+msgid "Uploading ..."
+msgstr "رفع  ..."
+
+#: src/modules/shot/e_mod_share.c:257
+msgid "Screenshot is available at this location:"
+msgstr "صورة الشاشة متوفرة في هذا الموقع :"
+
+#: src/modules/shot/e_mod_share.c:266
+#, fuzzy
+msgid "Hide"
+msgstr "إخفاء تلقائي"
+
+#: src/modules/shot/e_mod_share.c:315
+msgid "Confirm Share"
+msgstr "أكِّد المشاركة"
+
+#: src/modules/shot/e_mod_share.c:317
+#, fuzzy
+msgid ""
+"Are you sure you want to upload this image<ps/>publically to these services?"
+msgstr "هل تريد تأكيد مسح مصدر هذا الشريط؟"
+
+#: src/modules/shot/e_mod_share.c:320
+msgid "Imgur.com"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:115
-#, fuzzy
-msgid "Application for opening:"
-msgstr "خصائص التطبيق"
-
-#: src/modules/shot/e_mod_config.c:121
-#, fuzzy
-msgid "Folder for saving screenshots:"
-msgstr "خطأ في حفظ ملف صورة الشاشة"
-
-#: src/modules/shot/e_mod_config.c:127
-#, fuzzy
-msgid "Delay time [s]"
-msgstr "أخِّر حتى التعليق"
-
-#: src/modules/shot/e_mod_config.c:132
-msgid "Image quality [50-90 = jpg, 100 = png]"
+#: src/modules/shot/e_mod_share.c:323
+msgid "E.org"
 msgstr ""
-
-#: src/modules/shot/e_mod_config.c:139
-msgid "Info"
-msgstr ""
-
-#: src/modules/shot/e_mod_config.c:140
-#, fuzzy
-msgid "Alt+PrtSc: screenshot active window"
-msgstr "حدد مكان حفظ صورة الشاشة"
 
 #: src/modules/tasks/e_mod_main.c:340 src/modules/tasks/e_mod_main.c:855
 msgid "Tasks"
@@ -10090,8 +10044,8 @@ msgid "Variant"
 msgstr "متنوع"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:278
-#: src/modules/notification/e_mod_main.c:374
+#: src/modules/notification/e_mod_main.c:277
+#: src/modules/notification/e_mod_main.c:373
 msgid "Notification"
 msgstr "تنبيه"
 
@@ -10112,33 +10066,33 @@ msgid ""
 msgstr ""
 "خطأ أثناء بدء DBus! رجاءا تفقد ما إذا كان dbus قد نصب بشكل صحيح و يعمل جيدا."
 
-#: src/modules/notification/e_mod_main.c:426
+#: src/modules/notification/e_mod_main.c:423
 #: src/modules/clipboard/e_mod_main.c:424
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:617
 msgid "Enter Presentation Mode"
 msgstr "ادخل نمط العرض"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:618
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:632
+#: src/modules/notification/e_mod_main.c:622
 msgid "Exited Presentation Mode"
 msgstr "تم الخروج من نمط العرض"
 
-#: src/modules/notification/e_mod_main.c:633
+#: src/modules/notification/e_mod_main.c:623
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "التحول لعرض التقديم"
 
-#: src/modules/notification/e_mod_main.c:647
+#: src/modules/notification/e_mod_main.c:637
 msgid "Enter Offline Mode"
 msgstr "أدخل نمط خارج الشبكة"
 
-#: src/modules/notification/e_mod_main.c:648
+#: src/modules/notification/e_mod_main.c:638
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10146,11 +10100,11 @@ msgstr ""
 "Mokshaِ في نمط <b>خارج الشبكة</b>اﻵن.<br>أثناء وضع خارج الشبكة فإن الوحدات "
 "التي تستخدم الشبكة ستوقف خدمات اﻹستطلاع عن بعد."
 
-#: src/modules/notification/e_mod_main.c:654
+#: src/modules/notification/e_mod_main.c:644
 msgid "Exited Offline Mode"
 msgstr "تم الخروج من نمط خارج الشبكة"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:645
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10158,7 +10112,7 @@ msgstr ""
 "أنت اﻵن في نمط<b>في الشبكة</b> .<br>كما أن الوحدات التي تستخدم الشبكة ستكمل "
 "مهامها اﻹعتيادية."
 
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 #, fuzzy
 msgid "Notification expired!"
 msgstr "صندوق التنبيه"
@@ -10300,6 +10254,15 @@ msgstr ""
 #: src/modules/clipboard/e_mod_config.c:217
 msgid " Trim Newlines"
 msgstr ""
+
+#: src/modules/clipboard/e_mod_config.c:221
+#: src/modules/clipboard/e_mod_main.c:361
+#: src/modules/clipboard/e_mod_main.c:955
+#: src/modules/clipboard/e_mod_main.c:956
+#: src/modules/clipboard/e_mod_main.c:957
+#, fuzzy
+msgid "Clipboard"
+msgstr "إنسخ إلى لوحة الصور"
 
 #: src/modules/clipboard/e_mod_config.c:227
 msgid " Save History"
@@ -10607,6 +10570,126 @@ msgstr "حرّك ﻷعلى"
 #, fuzzy
 msgid "Separator"
 msgstr "افصل المجموعة"
+
+#, fuzzy
+#~ msgid "Screenshot"
+#~ msgstr "صوِّر لشاشة"
+
+#, fuzzy
+#~ msgid "Screenshot in: "
+#~ msgstr "صوِّر لشاشة"
+
+#, fuzzy
+#~ msgid "Screenshot stored in"
+#~ msgstr "صوِّر لشاشة"
+
+#~ msgid "Error saving screenshot file"
+#~ msgstr "خطأ في حفظ ملف صورة الشاشة"
+
+#, c-format
+#~ msgid "Path: %s"
+#~ msgstr "المسار: %s"
+
+#~ msgid "Error - Unknown format"
+#~ msgstr "خطأ - صيغة مجهولة"
+
+#~ msgid ""
+#~ "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
+#~ "extensions<br>only as other formats are not<br>supported currently."
+#~ msgstr ""
+#~ "الملف يستخدم صيغة مجهولة.<br>رجاء استخدم الصيغة '.jpg' أو '.png'<br>فقط "
+#~ "حيث أن الصيغ اﻷخرى<br>ليست مدعومة حاليا."
+
+#~ msgid "Select screenshot save location"
+#~ msgstr "حدد مكان حفظ صورة الشاشة"
+
+#~ msgid "Error - Can't create file"
+#~ msgstr "خطأ - لايمكن انشاء ملف"
+
+#, c-format
+#~ msgid "Cannot create temporary file '%s': %s"
+#~ msgstr "لا يمكن إنشاء ملف مؤقت '%s': %s"
+
+#~ msgid "Error - Can't open file"
+#~ msgstr "خطأ - لا يمكن فتح ملف"
+
+#, c-format
+#~ msgid "Cannot open temporary file '%s': %s"
+#~ msgstr "لا يمكن فتح ملف مؤقت '%s': %s"
+
+#~ msgid "Error - Bad size"
+#~ msgstr "خطأ - حجم سيء"
+
+#, c-format
+#~ msgid "Cannot get size of file '%s'"
+#~ msgstr "لا يمكن معرفة حجم ملف '%s'"
+
+#~ msgid "Error - Can't allocate memory"
+#~ msgstr "خطأ - لا يمكن تخصيص ذاكرة"
+
+#, c-format
+#~ msgid "Cannot allocate memory for picture: %s"
+#~ msgstr "لا يمكن تخصيص ذاكرة للصورة : %s"
+
+#~ msgid "Error - Can't read picture"
+#~ msgstr "خطأ - لا يمكن قراءة الصورة"
+
+#~ msgid "Cannot read picture"
+#~ msgstr "لا يمكن قراءة الصورة"
+
+#, fuzzy
+#~ msgid "Copy link"
+#~ msgstr "انسخ"
+
+#~ msgid ""
+#~ "This image will be uploaded<br>to enlightenment.org. It will be publicly "
+#~ "visible."
+#~ msgstr "سترفع هذه الصورة إلى<br> enlightenment.org. و ستكون ظاهرة للعموم."
+
+#~ msgid "Confirm"
+#~ msgstr "أكِّد"
+
+#~ msgid "Where to put Screenshot..."
+#~ msgstr "أين ستُوضع صورة الشاشة..."
+
+#~ msgid "Perfect"
+#~ msgstr "ممتاز"
+
+#, fuzzy
+#~ msgid "Delayed shot"
+#~ msgstr "الحدث المتأخر"
+
+#, fuzzy
+#~ msgid "Screenshot Settings"
+#~ msgstr "إعدادات قفل الشاشة"
+
+#, fuzzy
+#~ msgid " Show the screenshot mode dialog"
+#~ msgstr "اعرض في كل الشاشات"
+
+#, fuzzy
+#~ msgid " Show notifications"
+#~ msgstr "تنبيه"
+
+#, fuzzy
+#~ msgid " Copy to Clipboard"
+#~ msgstr "إنسخ إلى لوحة الصور"
+
+#, fuzzy
+#~ msgid "Application for opening:"
+#~ msgstr "خصائص التطبيق"
+
+#, fuzzy
+#~ msgid "Folder for saving screenshots:"
+#~ msgstr "خطأ في حفظ ملف صورة الشاشة"
+
+#, fuzzy
+#~ msgid "Delay time [s]"
+#~ msgstr "أخِّر حتى التعليق"
+
+#, fuzzy
+#~ msgid "Alt+PrtSc: screenshot active window"
+#~ msgstr "حدد مكان حفظ صورة الشاشة"
 
 #~ msgid "Moksha Settings Write Problems"
 #~ msgstr "خلل في كتابة أعدادات Mokshaِ"

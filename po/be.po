@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.4.0.17583\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-10-10 18:24+0200\n"
+"POT-Creation-Date: 2026-01-18 18:44+0100\n"
 "PO-Revision-Date: 2024-06-09 17:00+0300\n"
 "Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: Belarusian <debian-l10n-belarusian@lists.debian.org>\n"
@@ -30,7 +30,7 @@ msgstr "Аб асяроддзі Moksha"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:113
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
+#: src/modules/fileman/e_fwin.c:2587
 msgid "Close"
 msgstr "Закрыць"
 
@@ -108,7 +108,6 @@ msgstr "Вы сапраўды жадаеце выйсці з Moksha?"
 #: src/bin/e_actions.c:2496 src/bin/e_actions.c:2561 src/bin/e_actions.c:2626
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10521
 #: src/bin/e_screensaver.c:193 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:318
 msgid "Yes"
 msgstr "Так"
 
@@ -157,7 +156,7 @@ msgstr "Вы сапраўды жадаеце адправіць ваш камп'
 #: src/bin/e_actions.c:3158 src/bin/e_actions.c:3163 src/bin/e_actions.c:3168
 #: src/bin/e_actions.c:3467 src/bin/e_actions.c:3471 src/bin/e_actions.c:3476
 #: src/bin/e_actions.c:3482 src/bin/e_actions.c:3488 src/bin/e_actions.c:3494
-#: src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_main.c:400
 msgid "Window : Actions"
 msgstr "Акно : Дзеянні"
 
@@ -559,7 +558,7 @@ msgstr "Перайсці да акна... або запусціць..."
 #: src/bin/e_actions.c:3645 src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:986 src/modules/shot/e_mod_main.c:1317
+#: src/modules/shot/e_mod_main.c:384 src/modules/shot/e_mod_main.c:392
 msgid "Screen"
 msgstr "Экран"
 
@@ -869,9 +868,9 @@ msgstr "Выбраць"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:318 src/modules/shot/e_mod_main.c:514
-#: src/modules/shot/e_mod_main.c:779 src/modules/shot/e_mod_main.c:805
-#: src/modules/shot/e_mod_main.c:1047 src/modules/xkbswitch/e_mod_config.c:587
+#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:120
+#: src/modules/shot/e_mod_share.c:267 src/modules/shot/e_mod_share.c:326
+#: src/modules/xkbswitch/e_mod_config.c:587
 msgid "Cancel"
 msgstr "Скасаваць"
 
@@ -1017,8 +1016,8 @@ msgstr "Асноўныя"
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10790 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
-#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:519
+#: src/bin/e_module.c:839 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1027,7 +1026,7 @@ msgstr "Асноўныя"
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:586
+#: src/modules/shot/e_mod_delay.c:79 src/modules/xkbswitch/e_mod_config.c:586
 msgid "OK"
 msgstr "Добра"
 
@@ -1256,6 +1255,7 @@ msgid "Cut"
 msgstr "Выразаць"
 
 #: src/bin/e_entry.c:514 src/bin/e_fm.c:9123 src/bin/e_fm.c:11650
+#: src/modules/shot/e_mod_preview.c:113
 msgid "Copy"
 msgstr "Капіяваць"
 
@@ -1536,7 +1536,7 @@ msgid "Eject"
 msgstr "Вынуць"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
-#: src/modules/ibar/e_mod_main.c:1683
+#: src/modules/ibar/e_mod_main.c:1822
 msgid "Properties"
 msgstr "Уласцівасці"
 
@@ -1697,7 +1697,7 @@ msgid "Yes to all"
 msgstr "Так на ўсё"
 
 #: src/bin/e_fm.c:10525 src/modules/xkbswitch/e_mod_config.c:402
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:633
 msgid "Warning"
 msgstr "Папярэджанне"
@@ -1853,7 +1853,7 @@ msgstr "Іншыя:"
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:215
 #: src/modules/conf_theme/e_int_config_theme.c:1434
-#: src/modules/conf_theme/e_int_config_xsettings.c:540
+#: src/modules/conf_theme/e_int_config_xsettings.c:548
 msgid "Preview"
 msgstr "Перадпрагляд"
 
@@ -2541,15 +2541,14 @@ msgstr "Запыт пазіцыі"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:466 src/modules/ibar/e_mod_main.c:1676
+#: src/modules/ibar/e_mod_main.c:474 src/modules/ibar/e_mod_main.c:1815
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:848
+#: src/modules/connman/e_mod_main.c:459 src/modules/tasks/e_mod_main.c:848
 #: src/modules/xkbswitch/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:396
-#: src/modules/notification/e_mod_main.c:343
-#: src/modules/notification/e_mod_main.c:457
+#: src/modules/notification/e_mod_main.c:342
+#: src/modules/notification/e_mod_main.c:454
 #: src/modules/clipboard/e_mod_main.c:303
 #: src/modules/clipboard/e_mod_main.c:455 src/modules/places/e_mod_main.c:518
 msgid "Settings"
@@ -2640,7 +2639,7 @@ msgstr "Памер, пазіцыю і блакіроўкі"
 #: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:990
+#: src/modules/everything/evry_view.c:1628
 msgid "All"
 msgstr "Усё"
 
@@ -2748,7 +2747,7 @@ msgstr "Налады модуляў"
 msgid "Load"
 msgstr "Загрузіць"
 
-#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:620
+#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:621
 msgid "Unload"
 msgstr "Выгрузіць"
 
@@ -3592,12 +3591,12 @@ msgstr ""
 "вашай канфігурацыі.<br><br>Дыялог канфігурацыі модуляў дазволіць вам выбраць "
 "вашы<br>модулі ізноў."
 
-#: src/bin/e_module.c:185
+#: src/bin/e_module.c:186
 #, c-format
 msgid "Loading Module: %s"
 msgstr "Загрузка модуля: %s"
 
-#: src/bin/e_module.c:234
+#: src/bin/e_module.c:235
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3606,11 +3605,11 @@ msgstr ""
 "Здарылася памылка загрузкі модуля з назвай: %s<br>Модуль з назвай %s не "
 "ўдалося адшукаць у каталогах па пуцях пошуку модуляў.<br>"
 
-#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
+#: src/bin/e_module.c:238 src/bin/e_module.c:251 src/bin/e_module.c:269
 msgid "Error loading Module"
 msgstr "Памылка загрузкі модуля"
 
-#: src/bin/e_module.c:245 src/bin/e_module.c:262
+#: src/bin/e_module.c:246 src/bin/e_module.c:263
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3619,11 +3618,11 @@ msgstr ""
 "Здарылася памылка загрузкі модуля з назвай: %s<br>Поўны шлях да гэтага "
 "модуля:<br>%s<br>Паведамленне аб памылцы:<br>%s<br>"
 
-#: src/bin/e_module.c:267
+#: src/bin/e_module.c:268
 msgid "Module does not contain all needed functions."
 msgstr "Модуль не змяшчае ўсіх патрэбных функцый."
 
-#: src/bin/e_module.c:282
+#: src/bin/e_module.c:283
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3632,23 +3631,23 @@ msgstr ""
 "Памылка API модуля<br>Памылка ініцыялізацыі модуля: %s<br>Патрабуецца як "
 "менш API модуля версіі: %i.<br>Аб'яўленая Moksha версія API модуля: %i.<br>"
 
-#: src/bin/e_module.c:287
+#: src/bin/e_module.c:288
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Модуль %s Moksha"
 
-#: src/bin/e_module.c:615
+#: src/bin/e_module.c:616
 msgid "What action should be taken with this module?<br>"
 msgstr "Якое дзеянне распачаць ў дачыненні да гэтага модуля?<br>"
 
-#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:622 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:697
 #: src/modules/clipboard/e_mod_main.c:785
 msgid "Keep"
 msgstr "Трымаць"
 
-#: src/bin/e_module.c:823
+#: src/bin/e_module.c:824
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3658,11 +3657,11 @@ msgstr ""
 "выклікаць памылкі і разбурэнні.<br>Калі ласка, выдаліце іх перад тым як "
 "рапартаваць аб памылках.<br><br>Спіс гэтых модуляў наступны:<br><br>"
 
-#: src/bin/e_module.c:835
+#: src/bin/e_module.c:836
 msgid "Unstable module tainting"
 msgstr "Псаванне нестабільнымі модулямі"
 
-#: src/bin/e_module.c:839
+#: src/bin/e_module.c:840
 msgid "I know"
 msgstr "Я ведаю"
 
@@ -3789,7 +3788,7 @@ msgid "Rename Shelf"
 msgstr "Перайменаваць паліцу"
 
 #: src/bin/e_shelf.c:2476 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1670
+#: src/modules/ibar/e_mod_main.c:468 src/modules/ibar/e_mod_main.c:1809
 msgid "Contents"
 msgstr "Змест"
 
@@ -5768,7 +5767,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:444
+#: src/modules/notification/e_mod_main.c:441
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5898,8 +5897,8 @@ msgid "Quick Launcher"
 msgstr "Хуткі запуск"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:309
-#: src/modules/shot/e_mod_main.c:1288 src/modules/shot/e_mod_main.c:1317
-#: src/modules/shot/e_mod_main.c:1329
+#: src/modules/shot/e_mod_main.c:357 src/modules/shot/e_mod_main.c:384
+#: src/modules/shot/e_mod_main.c:405
 msgid "Take Screenshot"
 msgstr "Зрабіць здымак экрана"
 
@@ -6189,7 +6188,7 @@ msgid "Themes"
 msgstr "Тэмы"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:571
+#: src/modules/conf_theme/e_int_config_xsettings.c:579
 #: src/modules/everything/evry_config.c:447
 #: src/modules/everything/evry_config.c:473
 msgid "Icons"
@@ -6350,13 +6349,11 @@ msgid "e.g. Saving to disk"
 msgstr "напр. Захаванне на дыск"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:973
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "Нізкі"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:971
 msgid "Medium"
 msgstr "Сярэдні"
 
@@ -6368,7 +6365,6 @@ msgid "%.0f s"
 msgstr "%.0f с"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:969
 msgid "High"
 msgstr "Высокі"
 
@@ -7072,7 +7068,7 @@ msgid "Assign"
 msgstr "Прызначыць"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:434
+#: src/modules/notification/e_mod_main.c:431
 #: src/modules/clipboard/e_mod_main.c:442
 msgid "Clear"
 msgstr "Ачысціць"
@@ -7106,24 +7102,24 @@ msgstr "Moksha не здолеў імпартаваць тэму<br>з наго�
 msgid "Application Theme Settings"
 msgstr "Налады тэмы праграм"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:515
-#: src/modules/conf_theme/e_int_config_xsettings.c:559
+#: src/modules/conf_theme/e_int_config_xsettings.c:523
+#: src/modules/conf_theme/e_int_config_xsettings.c:567
 msgid "Match Moksha theme if possible"
 msgstr "Адпавядаць тэме Moksha, калі магчыма"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:524
+#: src/modules/conf_theme/e_int_config_xsettings.c:532
 msgid "Enable X Application Settings"
 msgstr "Уключыць налады X-праграм"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:528
+#: src/modules/conf_theme/e_int_config_xsettings.c:536
 msgid "GTK Applications"
 msgstr "GTK-праграмы"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:563
+#: src/modules/conf_theme/e_int_config_xsettings.c:571
 msgid "Enable icon theme for applications"
 msgstr "Уключыць тэму значкоў для праграм"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:567
+#: src/modules/conf_theme/e_int_config_xsettings.c:575
 msgid "Enable icon theme for Moksha"
 msgstr "Уключыць тэму значкоў для Moksha"
 
@@ -8863,29 +8859,29 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Вы ўпэўнены, што жадаеце выдаліць гэту крыніцу панэлі?"
 
-#: src/modules/ibar/e_mod_main.c:333 src/modules/ibar/e_mod_main.c:3121
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:341 src/modules/ibar/e_mod_main.c:3267
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1659
+#: src/modules/ibar/e_mod_main.c:457 src/modules/ibar/e_mod_main.c:1798
 msgid "Create new Icon"
 msgstr "Стварыць новы значок"
 
-#: src/modules/ibar/e_mod_main.c:1690
+#: src/modules/ibar/e_mod_main.c:1829
 msgid "Add to bar"
 msgstr "Дадаць на панэль"
 
-#: src/modules/ibar/e_mod_main.c:1696
+#: src/modules/ibar/e_mod_main.c:1835
 msgid "Remove from bar"
 msgstr "Выдаліць з панэлі"
 
-#: src/modules/ibar/e_mod_main.c:1702
+#: src/modules/ibar/e_mod_main.c:1841
 #, c-format
 msgid "Icon %s"
 msgstr "Значок %s"
 
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "Focus IBar"
 msgstr "Факусаванне IBar"
 
@@ -9552,254 +9548,219 @@ msgstr "Сістэмны латок не працуе на паліцы, яка�
 msgid "Systray"
 msgstr "Сістэмны латок"
 
-#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1230
-msgid "Screenshot"
-msgstr "Здымак экрана"
-
-#: src/modules/shot/e_mod_main.c:101
-msgid "Screenshot in: "
-msgstr "Зрабіць здымак экрана ў: "
-
-#: src/modules/shot/e_mod_main.c:116
-msgid "Screenshot stored in"
-msgstr "Здымак экрана захаваны ў"
-
-#: src/modules/shot/e_mod_main.c:311
-msgid "Error - Folder does not exist"
-msgstr "Памылка - Папка не існуе"
-
-#: src/modules/shot/e_mod_main.c:313
-msgid ""
-"Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
-"Take Screenshot<br><br>Would you like to set up it now?"
-msgstr ""
-"Змяніце папку ў наладах Зрабіць здымак экрана<br><br>Меню-Налады-Усе-"
-"Дадатковыя-Зрабіць здымак экрана<br><br>Жадаеце зрабіць гэта зараз?"
-
-#: src/modules/shot/e_mod_main.c:359
-msgid "Error saving screenshot file"
-msgstr "Памылка захавання здымка экрана ў файл"
-
-#: src/modules/shot/e_mod_main.c:360
-#, c-format
-msgid "Path: %s"
-msgstr "Шлях: %s"
-
-#: src/modules/shot/e_mod_main.c:420 src/modules/shot/e_mod_main.c:430
-msgid "Error - Unknown format"
-msgstr "Памылка - невядомы фармат"
-
-#: src/modules/shot/e_mod_main.c:421
-msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
+#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
+msgid "Select action to take with screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:431
-msgid ""
-"File has an unspecified extension.<br>Please use '.jpg' or '.png' "
-"extensions<br>only as other formats are not<br>supported currently."
+#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
+msgid "Delay"
 msgstr ""
-"Файл мае нявызначанае пашырэнне.<br>Калі ласка, выкарыстоўвайце "
-"толькі<br>пашырэнні '.jpg' або '.png', таму што іншыя фарматы зараз<br>не "
-"падтрымліваюцца."
 
-#: src/modules/shot/e_mod_main.c:498
-msgid "Select screenshot save location"
-msgstr "Выберыце, куды захаваць здымак экрана"
+#: src/modules/shot/e_mod_delay.c:61
+#, fuzzy, c-format
+msgid "%1.1f sec"
+msgstr "%1.1f с"
 
-#: src/modules/shot/e_mod_main.c:512 src/modules/shot/e_mod_main.c:1041
-msgid "Save"
-msgstr "Захаваць"
+#: src/modules/shot/e_mod_edit.c:1968
+#, fuzzy
+msgid "Tools"
+msgstr "Падказкі"
 
-#: src/modules/shot/e_mod_main.c:618
-#, c-format
-msgid "Uploaded %s / %s"
-msgstr "Запампавана %s / %s"
+#: src/modules/shot/e_mod_edit.c:1980
+#, fuzzy
+msgid "Select crop area"
+msgstr "Выберыце адно"
 
-#: src/modules/shot/e_mod_main.c:639
-msgid "Error - Upload Failed"
-msgstr "Памылка - не ўдалося запампаваць"
+#: src/modules/shot/e_mod_edit.c:1981
+#, fuzzy
+msgid "Modify objects"
+msgstr "Змяніць"
 
-#: src/modules/shot/e_mod_main.c:640
-#, c-format
-msgid "Upload failed with status code:<br>%i"
-msgstr "Не ўдалося запампаваць з кодам стану:<br>%i"
+#: src/modules/shot/e_mod_edit.c:1982
+#, fuzzy
+msgid "Delete objects"
+msgstr "Выдаленне скончана"
 
-#: src/modules/shot/e_mod_main.c:689
-msgid "Error - Can't create file"
-msgstr "Памылка - Немагчыма стварыць файл"
+#: src/modules/shot/e_mod_edit.c:1991
+#, fuzzy
+msgid "Single arrow line"
+msgstr "Адзінарны націск мышы"
 
-#: src/modules/shot/e_mod_main.c:690
-#, c-format
-msgid "Cannot create temporary file '%s': %s"
-msgstr "Немагчыма стварыць часовы файл '%s': %s"
-
-#: src/modules/shot/e_mod_main.c:708
-msgid "Error - Can't open file"
-msgstr "Памылка - немагчыма адкрыць файл"
-
-#: src/modules/shot/e_mod_main.c:709
-#, c-format
-msgid "Cannot open temporary file '%s': %s"
-msgstr "Немагчыма адкрыць часовы файл '%s': %s"
-
-#: src/modules/shot/e_mod_main.c:717
-msgid "Error - Bad size"
-msgstr "Памылка - дрэнны памер"
-
-#: src/modules/shot/e_mod_main.c:718
-#, c-format
-msgid "Cannot get size of file '%s'"
-msgstr "Немагчыма атрымаць памер файла '%s'"
-
-#: src/modules/shot/e_mod_main.c:728
-msgid "Error - Can't allocate memory"
-msgstr "Памылка - немагчыма вылучыць памяць"
-
-#: src/modules/shot/e_mod_main.c:729
-#, c-format
-msgid "Cannot allocate memory for picture: %s"
-msgstr "Немагчыма вылучыць памяць відарысу: %s"
-
-#: src/modules/shot/e_mod_main.c:736
-msgid "Error - Can't read picture"
-msgstr "Памылка - немагчыма чытаць відарыс"
-
-#: src/modules/shot/e_mod_main.c:737
-msgid "Cannot read picture"
-msgstr "Немагчыма чытаць відарыс"
-
-#: src/modules/shot/e_mod_main.c:759
-msgid "Uploading screenshot"
-msgstr "Запампоўванне здымка экрана"
-
-#: src/modules/shot/e_mod_main.c:764
-msgid "Uploading ..."
-msgstr "Запампоўванне ..."
-
-#: src/modules/shot/e_mod_main.c:769
-msgid "Screenshot is available at this location:"
-msgstr "Здымак экрана даступны ў гэтым месцы:"
-
-#: src/modules/shot/e_mod_main.c:778
-msgid "Copy link"
-msgstr "Капіяваць спасылку"
-
-#: src/modules/shot/e_mod_main.c:802
-msgid "Confirm Share"
-msgstr "Згадзіцца з публікаваннем"
-
-#: src/modules/shot/e_mod_main.c:803
-msgid ""
-"This image will be uploaded<br>to enlightenment.org. It will be publicly "
-"visible."
+#: src/modules/shot/e_mod_edit.c:1992
+msgid "Double arrow line"
 msgstr ""
-"Гэты відарыс будзе запампаваны <br>ў enlightenment.org. Усе змогуць яго "
-"пабачыць."
 
-#: src/modules/shot/e_mod_main.c:805
-msgid "Confirm"
-msgstr "Згадзіцца"
+#: src/modules/shot/e_mod_edit.c:1993
+#, fuzzy
+msgid "Plain line"
+msgstr "Гладка"
 
-#: src/modules/shot/e_mod_main.c:906
-msgid "Where to put Screenshot..."
-msgstr "Куды памясціць здымак экрана..."
-
-#: src/modules/shot/e_mod_main.c:958
-msgid "Quality"
-msgstr "Якасць"
-
-#: src/modules/shot/e_mod_main.c:967
-msgid "Perfect"
-msgstr "Выдатна"
-
-#: src/modules/shot/e_mod_main.c:1043
-msgid "Share"
-msgstr "Апублікаваць"
-
-#: src/modules/shot/e_mod_main.c:1045 src/modules/clipboard/e_mod_config.c:221
-#: src/modules/clipboard/e_mod_main.c:361
-#: src/modules/clipboard/e_mod_main.c:955
-#: src/modules/clipboard/e_mod_main.c:956
-#: src/modules/clipboard/e_mod_main.c:957
-msgid "Clipboard"
-msgstr " Буфер абмену"
-
-#: src/modules/shot/e_mod_main.c:1227
-#, c-format
-msgid ""
-"Select the screenshot mode... <br>Delay time is set in the Screenshot module "
-"settings<br>The current delay time: <b> %d s</b>"
+#: src/modules/shot/e_mod_edit.c:1994
+msgid "Solid box"
 msgstr ""
-"Выберыце рэжым здымка экрана... <br>Затрымка задана ў наладах модуля Здымак "
-"экрана<br>Бягучая затрымка: <b> %d с</b>"
 
-#: src/modules/shot/e_mod_main.c:1236
-msgid "Instant shot"
-msgstr "Імгненны здымак"
+#: src/modules/shot/e_mod_edit.c:1996
+msgid "Malloc"
+msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1237
-msgid "Delayed shot"
-msgstr "Здымак з затрымкай"
+#: src/modules/shot/e_mod_edit.c:1997
+msgid "Malloc (evil)"
+msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1277 src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_edit.c:1998
+#, fuzzy
+msgid "Pointing finger"
+msgstr "Паказальнік"
+
+#: src/modules/shot/e_mod_edit.c:1999
+msgid "Enlightenment logo"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2001
+msgid "Foot"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2002
+msgid "Silly walk"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2003
+#, fuzzy
+msgid "Box outline"
+msgstr "Контур:"
+
+#: src/modules/shot/e_mod_edit.c:2004
+#, fuzzy
+msgid "Circle outline"
+msgstr "Кругавая прагортка"
+
+#: src/modules/shot/e_mod_edit.c:2006
+#, fuzzy
+msgid "Plain text"
+msgstr "Гладка"
+
+#: src/modules/shot/e_mod_edit.c:2007
+#, fuzzy
+msgid "Text box"
+msgstr "Тэкст"
+
+#: src/modules/shot/e_mod_edit.c:2008
+msgid "Text thought bubble"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2009
+msgid "Text thought bubble 2"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2011
+msgid "Speech bubble"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2012
+msgid "Speech bubble 2"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2013
+msgid "Kaboom splat"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2014
+msgid "Pow explode"
+msgstr ""
+
+#: src/modules/shot/e_mod_edit.c:2022
+#, fuzzy
+msgid "Color"
+msgstr "Колеры"
+
+#: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
 msgstr "Зрабіць здымак"
 
-#: src/modules/shot/e_mod_main.c:1305
+#: src/modules/shot/e_mod_main.c:374
 msgid "Shot Error"
 msgstr "Памылка здымку"
 
-#: src/modules/shot/e_mod_main.c:1306
+#: src/modules/shot/e_mod_main.c:375
 msgid "Cannot initialize network"
 msgstr "Немагчыма ініцыялізаваць сетку"
 
-#: src/modules/shot/e_mod_main.c:1335 src/modules/shot/e_mod_config.c:47
-msgid "Screenshot Settings"
-msgstr "Налады здымка экрана"
+#: src/modules/shot/e_mod_main.c:392
+#, fuzzy
+msgid "Take Screenshot with Delay"
+msgstr "Зрабіць здымак экрана"
 
-#: src/modules/shot/e_mod_config.c:100
-msgid " Show the screenshot mode dialog"
-msgstr " Паказваць дыялог рэжыма здымка экрана"
+#: src/modules/shot/e_mod_preview.c:93
+msgid "Quality"
+msgstr "Якасць"
 
-#: src/modules/shot/e_mod_config.c:103
-msgid " Screenshot guide (quality/share/save)"
-msgstr " Параметры здымка (якасць/публікацыя/захаванне)"
+#: src/modules/shot/e_mod_preview.c:109
+msgid "Save"
+msgstr "Захаваць"
 
-#: src/modules/shot/e_mod_config.c:106
-msgid " Show notifications"
-msgstr " Паказваць паведамленні"
+#: src/modules/shot/e_mod_preview.c:111
+msgid "Share"
+msgstr "Апублікаваць"
 
-#: src/modules/shot/e_mod_config.c:109
-msgid " Copy to Clipboard"
-msgstr " Капіяваць ў буфер абмену"
+#: src/modules/shot/e_mod_save.c:204
+#, fuzzy
+msgid "Error - No Filemanager"
+msgstr "Файлавы менеджар"
 
-#: src/modules/shot/e_mod_config.c:112
-msgid " Launch app after screenshot"
-msgstr " Запусціць праграму пасля здымка"
+#: src/modules/shot/e_mod_save.c:205
+msgid ""
+"No filemanager action and/or module was found.<br>Cannot show the location "
+"of your screenshots."
+msgstr ""
 
-#: src/modules/shot/e_mod_config.c:115
-msgid "Application for opening:"
-msgstr "Праграма для адкрыцця:"
+#: src/modules/shot/e_mod_share.c:149
+#, fuzzy, c-format
+msgid "Uploaded %i%%"
+msgstr "Запампавана %s / %s"
 
-#: src/modules/shot/e_mod_config.c:121
-msgid "Folder for saving screenshots:"
-msgstr "Папка для захавання здымкаў:"
+#: src/modules/shot/e_mod_share.c:163
+msgid "Error - Upload Failed"
+msgstr "Памылка - не ўдалося запампаваць"
 
-#: src/modules/shot/e_mod_config.c:127
-msgid "Delay time [s]"
-msgstr "Час затрымкі [с]"
+#: src/modules/shot/e_mod_share.c:164
+#, fuzzy, c-format
+msgid "Upload failed with status code:<ps/>%i"
+msgstr "Не ўдалося запампаваць з кодам стану:<br>%i"
 
-#: src/modules/shot/e_mod_config.c:132
-msgid "Image quality [50-90 = jpg, 100 = png]"
-msgstr "Якасць відарыса [50-90 = jpg, 100 = png]"
+#: src/modules/shot/e_mod_share.c:246
+msgid "Uploading screenshot"
+msgstr "Запампоўванне здымка экрана"
 
-#: src/modules/shot/e_mod_config.c:139
-msgid "Info"
-msgstr "Заўвага"
+#: src/modules/shot/e_mod_share.c:252
+msgid "Uploading ..."
+msgstr "Запампоўванне ..."
 
-#: src/modules/shot/e_mod_config.c:140
-msgid "Alt+PrtSc: screenshot active window"
-msgstr "Alt+PrtSc: здымак актыўнага акна"
+#: src/modules/shot/e_mod_share.c:257
+msgid "Screenshot is available at this location:"
+msgstr "Здымак экрана даступны ў гэтым месцы:"
+
+#: src/modules/shot/e_mod_share.c:266
+#, fuzzy
+msgid "Hide"
+msgstr "Аутаматычна хаваць"
+
+#: src/modules/shot/e_mod_share.c:315
+msgid "Confirm Share"
+msgstr "Згадзіцца з публікаваннем"
+
+#: src/modules/shot/e_mod_share.c:317
+#, fuzzy
+msgid ""
+"Are you sure you want to upload this image<ps/>publically to these services?"
+msgstr "Вы ўпэўнены, што жадаеце выдаліць гэту крыніцу панэлі?"
+
+#: src/modules/shot/e_mod_share.c:320
+msgid "Imgur.com"
+msgstr ""
+
+#: src/modules/shot/e_mod_share.c:323
+msgid "E.org"
+msgstr ""
 
 #: src/modules/tasks/e_mod_main.c:340 src/modules/tasks/e_mod_main.c:855
 msgid "Tasks"
@@ -9985,8 +9946,8 @@ msgid "Variant"
 msgstr "Варыянт"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:278
-#: src/modules/notification/e_mod_main.c:374
+#: src/modules/notification/e_mod_main.c:277
+#: src/modules/notification/e_mod_main.c:373
 msgid "Notification"
 msgstr "Паведамленні"
 
@@ -10006,32 +9967,32 @@ msgstr ""
 "Пераканайцеся, што ніякія іншыя модулі не дзейнічаюць у якасці сервера ды D-"
 "Bus правільна ініцыялізаваны і выконваецца"
 
-#: src/modules/notification/e_mod_main.c:426
+#: src/modules/notification/e_mod_main.c:423
 #: src/modules/clipboard/e_mod_main.c:424
 msgid "Empty"
 msgstr "Пуста"
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:617
 msgid "Enter Presentation Mode"
 msgstr "Уваход у рэжым прэзентацыі"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:618
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha у рэжыме <b>прэзентацыі</b>."
 
-#: src/modules/notification/e_mod_main.c:632
+#: src/modules/notification/e_mod_main.c:622
 msgid "Exited Presentation Mode"
 msgstr "Зыход з рэжыму прэзентацыі"
 
-#: src/modules/notification/e_mod_main.c:633
+#: src/modules/notification/e_mod_main.c:623
 msgid "Presentation mode is over."
 msgstr "Рэжым прэзентацыі скончыўся."
 
-#: src/modules/notification/e_mod_main.c:647
+#: src/modules/notification/e_mod_main.c:637
 msgid "Enter Offline Mode"
 msgstr "Уваход у пазасеткавы рэжым"
 
-#: src/modules/notification/e_mod_main.c:648
+#: src/modules/notification/e_mod_main.c:638
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10039,11 +10000,11 @@ msgstr ""
 "Moksha у <b>пазасеткавым</b> рэжыме.<br>У гэтым рэжыме модулі, якія "
 "выкарыстоўваюць сетку, перастануць узаемадзейнічаць з аддаленнымі сэрвісамі."
 
-#: src/modules/notification/e_mod_main.c:654
+#: src/modules/notification/e_mod_main.c:644
 msgid "Exited Offline Mode"
 msgstr "Зыход з пазасеткавага рэжыма"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:645
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10051,7 +10012,7 @@ msgstr ""
 "Зараз у рэжыме <b>у сетцы</b>.<br>Зараз модулі, якія выкарыстоўваюць сетку, "
 "ізноў запрацуюць, як звычайна."
 
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 msgid "Notification expired!"
 msgstr "Паведамленне састарэла!"
 
@@ -10179,6 +10140,14 @@ msgstr " Абрэзаць прабелы"
 #: src/modules/clipboard/e_mod_config.c:217
 msgid " Trim Newlines"
 msgstr " Абрэзаць канцы радкоў"
+
+#: src/modules/clipboard/e_mod_config.c:221
+#: src/modules/clipboard/e_mod_main.c:361
+#: src/modules/clipboard/e_mod_main.c:955
+#: src/modules/clipboard/e_mod_main.c:956
+#: src/modules/clipboard/e_mod_main.c:957
+msgid "Clipboard"
+msgstr " Буфер абмену"
 
 #: src/modules/clipboard/e_mod_config.c:227
 msgid " Save History"
@@ -10456,6 +10425,149 @@ msgstr "Гук адключаны"
 #, fuzzy
 msgid "Separator"
 msgstr "Асобная група"
+
+#~ msgid "Screenshot"
+#~ msgstr "Здымак экрана"
+
+#~ msgid "Screenshot in: "
+#~ msgstr "Зрабіць здымак экрана ў: "
+
+#~ msgid "Screenshot stored in"
+#~ msgstr "Здымак экрана захаваны ў"
+
+#~ msgid "Error - Folder does not exist"
+#~ msgstr "Памылка - Папка не існуе"
+
+#~ msgid ""
+#~ "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-"
+#~ "Advanced-Take Screenshot<br><br>Would you like to set up it now?"
+#~ msgstr ""
+#~ "Змяніце папку ў наладах Зрабіць здымак экрана<br><br>Меню-Налады-Усе-"
+#~ "Дадатковыя-Зрабіць здымак экрана<br><br>Жадаеце зрабіць гэта зараз?"
+
+#~ msgid "Error saving screenshot file"
+#~ msgstr "Памылка захавання здымка экрана ў файл"
+
+#, c-format
+#~ msgid "Path: %s"
+#~ msgstr "Шлях: %s"
+
+#~ msgid "Error - Unknown format"
+#~ msgstr "Памылка - невядомы фармат"
+
+#~ msgid ""
+#~ "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
+#~ "extensions<br>only as other formats are not<br>supported currently."
+#~ msgstr ""
+#~ "Файл мае нявызначанае пашырэнне.<br>Калі ласка, выкарыстоўвайце "
+#~ "толькі<br>пашырэнні '.jpg' або '.png', таму што іншыя фарматы зараз<br>не "
+#~ "падтрымліваюцца."
+
+#~ msgid "Select screenshot save location"
+#~ msgstr "Выберыце, куды захаваць здымак экрана"
+
+#~ msgid "Error - Can't create file"
+#~ msgstr "Памылка - Немагчыма стварыць файл"
+
+#, c-format
+#~ msgid "Cannot create temporary file '%s': %s"
+#~ msgstr "Немагчыма стварыць часовы файл '%s': %s"
+
+#~ msgid "Error - Can't open file"
+#~ msgstr "Памылка - немагчыма адкрыць файл"
+
+#, c-format
+#~ msgid "Cannot open temporary file '%s': %s"
+#~ msgstr "Немагчыма адкрыць часовы файл '%s': %s"
+
+#~ msgid "Error - Bad size"
+#~ msgstr "Памылка - дрэнны памер"
+
+#, c-format
+#~ msgid "Cannot get size of file '%s'"
+#~ msgstr "Немагчыма атрымаць памер файла '%s'"
+
+#~ msgid "Error - Can't allocate memory"
+#~ msgstr "Памылка - немагчыма вылучыць памяць"
+
+#, c-format
+#~ msgid "Cannot allocate memory for picture: %s"
+#~ msgstr "Немагчыма вылучыць памяць відарысу: %s"
+
+#~ msgid "Error - Can't read picture"
+#~ msgstr "Памылка - немагчыма чытаць відарыс"
+
+#~ msgid "Cannot read picture"
+#~ msgstr "Немагчыма чытаць відарыс"
+
+#~ msgid "Copy link"
+#~ msgstr "Капіяваць спасылку"
+
+#~ msgid ""
+#~ "This image will be uploaded<br>to enlightenment.org. It will be publicly "
+#~ "visible."
+#~ msgstr ""
+#~ "Гэты відарыс будзе запампаваны <br>ў enlightenment.org. Усе змогуць яго "
+#~ "пабачыць."
+
+#~ msgid "Confirm"
+#~ msgstr "Згадзіцца"
+
+#~ msgid "Where to put Screenshot..."
+#~ msgstr "Куды памясціць здымак экрана..."
+
+#~ msgid "Perfect"
+#~ msgstr "Выдатна"
+
+#, c-format
+#~ msgid ""
+#~ "Select the screenshot mode... <br>Delay time is set in the Screenshot "
+#~ "module settings<br>The current delay time: <b> %d s</b>"
+#~ msgstr ""
+#~ "Выберыце рэжым здымка экрана... <br>Затрымка задана ў наладах модуля "
+#~ "Здымак экрана<br>Бягучая затрымка: <b> %d с</b>"
+
+#~ msgid "Instant shot"
+#~ msgstr "Імгненны здымак"
+
+#~ msgid "Delayed shot"
+#~ msgstr "Здымак з затрымкай"
+
+#~ msgid "Screenshot Settings"
+#~ msgstr "Налады здымка экрана"
+
+#~ msgid " Show the screenshot mode dialog"
+#~ msgstr " Паказваць дыялог рэжыма здымка экрана"
+
+#~ msgid " Screenshot guide (quality/share/save)"
+#~ msgstr " Параметры здымка (якасць/публікацыя/захаванне)"
+
+#~ msgid " Show notifications"
+#~ msgstr " Паказваць паведамленні"
+
+#~ msgid " Copy to Clipboard"
+#~ msgstr " Капіяваць ў буфер абмену"
+
+#~ msgid " Launch app after screenshot"
+#~ msgstr " Запусціць праграму пасля здымка"
+
+#~ msgid "Application for opening:"
+#~ msgstr "Праграма для адкрыцця:"
+
+#~ msgid "Folder for saving screenshots:"
+#~ msgstr "Папка для захавання здымкаў:"
+
+#~ msgid "Delay time [s]"
+#~ msgstr "Час затрымкі [с]"
+
+#~ msgid "Image quality [50-90 = jpg, 100 = png]"
+#~ msgstr "Якасць відарыса [50-90 = jpg, 100 = png]"
+
+#~ msgid "Info"
+#~ msgstr "Заўвага"
+
+#~ msgid "Alt+PrtSc: screenshot active window"
+#~ msgstr "Alt+PrtSc: здымак актыўнага акна"
 
 #~ msgid "Moksha Settings Write Problems"
 #~ msgstr "Праблемы пры захаванні налад Moksha"
