@@ -3,10 +3,10 @@ shot_DATA = shot/e-module-shot.edj \
 	    shot/module.desktop \
 	    shot/data/shotedit.edj \
 	    shot/data/Puk-Regular.ttf \
-        shot/data/Yantiq.ttf \ 
-        shot/data/intuitive.ttf \
-        shot/data/IndieFlower.ttf \
-        shot/data/shots.desktop
+	    shot/data/Yantiq.ttf \
+	    shot/data/intuitive.ttf \
+	    shot/data/IndieFlower.ttf \
+	    shot/data/shots.desktop
 
 CLEANFILES += shot/data/shotedit.edj
 
