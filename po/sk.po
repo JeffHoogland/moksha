@@ -9554,60 +9554,53 @@ msgid "Delay"
 msgstr ""
 
 #: src/modules/shot/e_mod_delay.c:61
-#, fuzzy, c-format
+#, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f sek"
 
 #: src/modules/shot/e_mod_edit.c:1968
-#, fuzzy
 msgid "Tools"
-msgstr "Plávajúca nápoveda"
+msgstr "Nástroje"
 
 #: src/modules/shot/e_mod_edit.c:1980
-#, fuzzy
 msgid "Select crop area"
-msgstr "Vyberte položku"
+msgstr "Výrez"
 
 #: src/modules/shot/e_mod_edit.c:1981
-#, fuzzy
 msgid "Modify objects"
-msgstr "Upraviť"
+msgstr "Upraviť objekty"
 
 #: src/modules/shot/e_mod_edit.c:1982
-#, fuzzy
 msgid "Delete objects"
-msgstr "Odstránenie dokončené"
+msgstr "Vymazať objekty"
 
 #: src/modules/shot/e_mod_edit.c:1991
-#, fuzzy
 msgid "Single arrow line"
-msgstr "Použiť jednoduché kliknutie"
+msgstr "Jednosmerná čiara"
 
 #: src/modules/shot/e_mod_edit.c:1992
 msgid "Double arrow line"
-msgstr ""
+msgstr "Obojsmerná čiara"
 
 #: src/modules/shot/e_mod_edit.c:1993
-#, fuzzy
 msgid "Plain line"
-msgstr "Plochý"
+msgstr "Obyčajná čiara"
 
 #: src/modules/shot/e_mod_edit.c:1994
 msgid "Solid box"
-msgstr ""
+msgstr "Plný obdĺžnik"
 
 #: src/modules/shot/e_mod_edit.c:1996
 msgid "Malloc"
-msgstr ""
+msgstr "Kocúr"
 
 #: src/modules/shot/e_mod_edit.c:1997
 msgid "Malloc (evil)"
-msgstr ""
+msgstr "Kocúr 2"
 
 #: src/modules/shot/e_mod_edit.c:1998
-#, fuzzy
 msgid "Pointing finger"
-msgstr "Ukazovateľom myši"
+msgstr "Ukazovateľ"
 
 #: src/modules/shot/e_mod_edit.c:1999
 msgid "Enlightenment logo"
@@ -9615,60 +9608,55 @@ msgstr ""
 
 #: src/modules/shot/e_mod_edit.c:2001
 msgid "Foot"
-msgstr ""
+msgstr "Chodidlo"
 
 #: src/modules/shot/e_mod_edit.c:2002
 msgid "Silly walk"
-msgstr ""
+msgstr "Smiešna chôdza"
 
 #: src/modules/shot/e_mod_edit.c:2003
-#, fuzzy
 msgid "Box outline"
-msgstr "Obrys:"
+msgstr "Obdĺžnik s obrysom"
 
 #: src/modules/shot/e_mod_edit.c:2004
-#, fuzzy
 msgid "Circle outline"
-msgstr "Kruhové rolovanie"
+msgstr "Kružnica"
 
 #: src/modules/shot/e_mod_edit.c:2006
-#, fuzzy
 msgid "Plain text"
-msgstr "Plochý"
+msgstr "Obyčajný text"
 
 #: src/modules/shot/e_mod_edit.c:2007
-#, fuzzy
 msgid "Text box"
-msgstr "Text"
+msgstr "Textové pole"
 
 #: src/modules/shot/e_mod_edit.c:2008
 msgid "Text thought bubble"
-msgstr ""
+msgstr "Textová bublinka"
 
 #: src/modules/shot/e_mod_edit.c:2009
 msgid "Text thought bubble 2"
-msgstr ""
+msgstr "Textová bublinka 2"
 
 #: src/modules/shot/e_mod_edit.c:2011
 msgid "Speech bubble"
-msgstr ""
+msgstr "Popisok"
 
 #: src/modules/shot/e_mod_edit.c:2012
 msgid "Speech bubble 2"
-msgstr ""
+msgstr "Popisok 2"
 
 #: src/modules/shot/e_mod_edit.c:2013
 msgid "Kaboom splat"
-msgstr ""
+msgstr "Popisok 3"
 
 #: src/modules/shot/e_mod_edit.c:2014
 msgid "Pow explode"
-msgstr ""
+msgstr "Popisok 4"
 
 #: src/modules/shot/e_mod_edit.c:2022
-#, fuzzy
 msgid "Color"
-msgstr "Farby"
+msgstr "Farba"
 
 #: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
@@ -9683,9 +9671,8 @@ msgid "Cannot initialize network"
 msgstr "Nie je možné inicializovať sieť"
 
 #: src/modules/shot/e_mod_main.c:392
-#, fuzzy
 msgid "Take Screenshot with Delay"
-msgstr "Snímka obrazovky"
+msgstr "Snímka obrazovky s oneskorením"
 
 #: src/modules/shot/e_mod_preview.c:93
 msgid "Quality"
@@ -9700,9 +9687,8 @@ msgid "Share"
 msgstr "Zdieľať"
 
 #: src/modules/shot/e_mod_save.c:204
-#, fuzzy
 msgid "Error - No Filemanager"
-msgstr "Správca súborov"
+msgstr "Chyba - chýba Správca súborov"
 
 #: src/modules/shot/e_mod_save.c:205
 msgid ""
@@ -9711,7 +9697,7 @@ msgid ""
 msgstr ""
 
 #: src/modules/shot/e_mod_share.c:149
-#, fuzzy, c-format
+#, c-format
 msgid "Uploaded %i%%"
 msgstr "Nahrané %s / %s"
 
@@ -9720,36 +9706,34 @@ msgid "Error - Upload Failed"
 msgstr "Chyba pri uploade"
 
 #: src/modules/shot/e_mod_share.c:164
-#, fuzzy, c-format
+#, c-format
 msgid "Upload failed with status code:<ps/>%i"
-msgstr "Upload zlyhal s kom:<br>%i"
+msgstr "Nahranie zlyhalo s kódom:<br>%i"
 
 #: src/modules/shot/e_mod_share.c:246
 msgid "Uploading screenshot"
-msgstr "Upload obrázku"
+msgstr "Nahratie obrázku"
 
 #: src/modules/shot/e_mod_share.c:252
 msgid "Uploading ..."
-msgstr "Upload ..."
+msgstr "Nahrávanie ..."
 
 #: src/modules/shot/e_mod_share.c:257
 msgid "Screenshot is available at this location:"
-msgstr "Obrázok bol uložený na link:"
+msgstr "Snímok bol uložený do priečinku:"
 
 #: src/modules/shot/e_mod_share.c:266
-#, fuzzy
 msgid "Hide"
-msgstr "Automatické skrývanie"
+msgstr "Skryť"
 
 #: src/modules/shot/e_mod_share.c:315
 msgid "Confirm Share"
 msgstr "Potvrdiť upload"
 
 #: src/modules/shot/e_mod_share.c:317
-#, fuzzy
 msgid ""
 "Are you sure you want to upload this image<ps/>publically to these services?"
-msgstr "Ste si istý, že chcete zmazať tento zdroj?"
+msgstr "Ste si istý, že chcete tento snímok<ps/>nahrať verejne na server?"
 
 #: src/modules/shot/e_mod_share.c:320
 msgid "Imgur.com"
