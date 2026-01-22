@@ -46,14 +46,13 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2026, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2024, vyhrazen týmem vývojářů Moksha</"
+"<title>Copyright &copy; 2026, vyhrazen týmem vývojářů Moksha</"
 "><br><br>Doufáme, že si budete užívat tento software tak, jak jsme si "
 "užívali jeho vývoj.<br><br>Kontaktujte nás na:<br><highlight>http://www."
 "bodhilinux.com</><br><br>"
@@ -9547,58 +9546,51 @@ msgid "Delay"
 msgstr ""
 
 #: src/modules/shot/e_mod_delay.c:61
-#, fuzzy, c-format
+#, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f sek"
 
 #: src/modules/shot/e_mod_edit.c:1968
-#, fuzzy
 msgid "Tools"
-msgstr "Popisky"
+msgstr "Nástroje"
 
 #: src/modules/shot/e_mod_edit.c:1980
-#, fuzzy
 msgid "Select crop area"
-msgstr "Vyberte"
+msgstr "Výběr pro ořezání"
 
 #: src/modules/shot/e_mod_edit.c:1981
-#, fuzzy
 msgid "Modify objects"
-msgstr "Upravit"
+msgstr "Upravit objekty"
 
 #: src/modules/shot/e_mod_edit.c:1982
-#, fuzzy
 msgid "Delete objects"
-msgstr "Mazání dokončeno"
+msgstr "Smazať objekty"
 
 #: src/modules/shot/e_mod_edit.c:1991
-#, fuzzy
 msgid "Single arrow line"
-msgstr "Použít jednoduché kliknutí myší"
+msgstr "Jednosměrní čára"
 
 #: src/modules/shot/e_mod_edit.c:1992
 msgid "Double arrow line"
-msgstr ""
+msgstr "Dvousměrní čára"
 
 #: src/modules/shot/e_mod_edit.c:1993
-#, fuzzy
 msgid "Plain line"
-msgstr "Plochý"
+msgstr "Jednoduchá čára"
 
 #: src/modules/shot/e_mod_edit.c:1994
 msgid "Solid box"
-msgstr ""
+msgstr "Plný obdelník"
 
 #: src/modules/shot/e_mod_edit.c:1996
 msgid "Malloc"
-msgstr ""
+msgstr "Kočka"
 
 #: src/modules/shot/e_mod_edit.c:1997
 msgid "Malloc (evil)"
-msgstr ""
+msgstr "Kočka 2"
 
 #: src/modules/shot/e_mod_edit.c:1998
-#, fuzzy
 msgid "Pointing finger"
 msgstr "Ukazatel"
 
@@ -9608,60 +9600,55 @@ msgstr ""
 
 #: src/modules/shot/e_mod_edit.c:2001
 msgid "Foot"
-msgstr ""
+msgstr "Chodidlo"
 
 #: src/modules/shot/e_mod_edit.c:2002
 msgid "Silly walk"
-msgstr ""
+msgstr "Bláznivá chůze"
 
 #: src/modules/shot/e_mod_edit.c:2003
-#, fuzzy
 msgid "Box outline"
-msgstr "Obrys:"
+msgstr "Obdelník s obrysem"
 
 #: src/modules/shot/e_mod_edit.c:2004
-#, fuzzy
 msgid "Circle outline"
-msgstr "Skrolování kroužením"
+msgstr "Kružnice"
 
 #: src/modules/shot/e_mod_edit.c:2006
-#, fuzzy
 msgid "Plain text"
-msgstr "Plochý"
+msgstr "Holý text"
 
 #: src/modules/shot/e_mod_edit.c:2007
-#, fuzzy
 msgid "Text box"
-msgstr "Text"
+msgstr "Text box"
 
 #: src/modules/shot/e_mod_edit.c:2008
 msgid "Text thought bubble"
-msgstr ""
+msgstr "Text v bublině"
 
 #: src/modules/shot/e_mod_edit.c:2009
 msgid "Text thought bubble 2"
-msgstr ""
+msgstr "Text v bublině 2"
 
 #: src/modules/shot/e_mod_edit.c:2011
 msgid "Speech bubble"
-msgstr ""
+msgstr "Popisek"
 
 #: src/modules/shot/e_mod_edit.c:2012
 msgid "Speech bubble 2"
-msgstr ""
+msgstr "Popisek 2"
 
 #: src/modules/shot/e_mod_edit.c:2013
 msgid "Kaboom splat"
-msgstr ""
+msgstr "Popisek 3"
 
 #: src/modules/shot/e_mod_edit.c:2014
 msgid "Pow explode"
-msgstr ""
+msgstr "Popisek 4"
 
 #: src/modules/shot/e_mod_edit.c:2022
-#, fuzzy
 msgid "Color"
-msgstr "Barvy"
+msgstr "Barva"
 
 #: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
@@ -9676,9 +9663,8 @@ msgid "Cannot initialize network"
 msgstr "Nemohu inicializovat síť"
 
 #: src/modules/shot/e_mod_main.c:392
-#, fuzzy
 msgid "Take Screenshot with Delay"
-msgstr "Sejmi snímek obrazovky"
+msgstr "Snímek obrazovky s prodlevou"
 
 #: src/modules/shot/e_mod_preview.c:93
 msgid "Quality"
@@ -9693,9 +9679,8 @@ msgid "Share"
 msgstr "Sdílet"
 
 #: src/modules/shot/e_mod_save.c:204
-#, fuzzy
 msgid "Error - No Filemanager"
-msgstr "Správce souborů"
+msgstr "Chybí Správce souborů"
 
 #: src/modules/shot/e_mod_save.c:205
 msgid ""
@@ -9704,7 +9689,7 @@ msgid ""
 msgstr ""
 
 #: src/modules/shot/e_mod_share.c:149
-#, fuzzy, c-format
+#, c-format
 msgid "Uploaded %i%%"
 msgstr "Odesláno %s / %s"
 
@@ -9713,7 +9698,7 @@ msgid "Error - Upload Failed"
 msgstr "Chyba - odesílání selhalo"
 
 #: src/modules/shot/e_mod_share.c:164
-#, fuzzy, c-format
+#, c-format
 msgid "Upload failed with status code:<ps/>%i"
 msgstr "Odesílání selhalo s návratovou hodnotou:<br>%i"
 
@@ -9730,19 +9715,17 @@ msgid "Screenshot is available at this location:"
 msgstr "Snímek obrazovky je dostupný zde:"
 
 #: src/modules/shot/e_mod_share.c:266
-#, fuzzy
 msgid "Hide"
-msgstr "Automatické skrývání"
+msgstr "Skrýt"
 
 #: src/modules/shot/e_mod_share.c:315
 msgid "Confirm Share"
 msgstr "Potvrdit sdílení"
 
 #: src/modules/shot/e_mod_share.c:317
-#, fuzzy
 msgid ""
 "Are you sure you want to upload this image<ps/>publically to these services?"
-msgstr "Jste si jistí, že chcete vymazat tento zdroj pro iBar?"
+msgstr "Jste si jistí, že chcete nahrát tento soubor <ps/> veřejně na tyhle serveri?"
 
 #: src/modules/shot/e_mod_share.c:320
 msgid "Imgur.com"

@@ -49,7 +49,7 @@ msgid ""
 "<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2024, Vývojový tím Moksha</><br><br>Dúfame, že si "
+"<title>Copyright &copy; 2026, Vývojový tím Moksha</><br><br>Dúfame, že si "
 "užívate tento softvér tak, ako sme si my užili jeho vývoj.<br><br>Neváhajte "
 "nás kontaktovať na: <br><hilight>http://www.bodhilinux.com</><br><br>"
 
