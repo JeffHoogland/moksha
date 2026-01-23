@@ -1,19 +1,45 @@
 shotdir = $(MDIR)/shot
 shot_DATA = shot/e-module-shot.edj \
-	    shot/module.desktop
+	    shot/module.desktop \
+	    shot/data/shotedit.edj \
+	    shot/data/Puk-Regular.ttf \
+	    shot/data/Yantiq.ttf \
+	    shot/data/intuitive.ttf \
+	    shot/data/IndieFlower.ttf \
+	    shot/data/shots.desktop
 
-EXTRA_DIST += $(shot_DATA)
+CLEANFILES += shot/data/shotedit.edj
+
+EXTRA_DIST += $(shot_DATA) \
+	      shot/data/shotedit.edc
+
+SHOT_EDJE_FLAGS = $(EDJE_FLAGS) -id $(srcdir)/shot/data
+shot/data/%.edj: shot/data/%.edc Makefile
+	$(EDJE_CC) $(SHOT_EDJE_FLAGS) $< $@
 
 shotpkgdir = $(MDIR)/shot/$(MODULE_ARCH)
 shotpkg_LTLIBRARIES = shot/module.la
 
 shot_module_la_CFLAGS = $(AM_CFLAGS)
 shot_module_la_SOURCES = shot/e_mod_main.c \
-                         shot/e_mod_main.h \
-                         shot/e_mod_config.c
+                         shot/e_mod_preview.c \
+                         shot/e_mod_share.c \
+                         shot/e_mod_edit.c \
+                         shot/e_mod_delay.c \
+                         shot/e_mod_save.c \
+                         shot/e_mod_main.h
 
 shot_module_la_CFLAGS += @ELM_CFLAGS@
 shot_module_la_LIBADD = @ELM_LIBS@
+
+shotpkg_PROGRAMS = shot/upload
+shot_upload_SOURCES = shot/upload.c
+
+shot_upload_CFLAGS = \
+	$(AM_CFLAGS) \
+	@ELM_CFLAGS@
+
+shot_upload_LDADD = @ELM_LIBS@
 
 if HAVE_ENOTIFY
 shot_module_la_CFLAGS += @ENOTIFY_CFLAGS@
@@ -21,5 +47,5 @@ shot_module_la_LIBADD += @ENOTIFY_LIBS@
 endif 
 
 .PHONY: shot install-shot
-shot: $(shotpkg_LTLIBRARIES) $(shot_DATA)
-install-shot: install-shotDATA install-shotpkgLTLIBRARIES
+shot: $(shotpkg_LTLIBRARIES) $(shot_DATA)  $(shotpkg_PROGRAMS)
+install-shot: install-shotDATA install-shotpkgLTLIBRARIES install-shotpkgPROGRAMS

@@ -1736,7 +1736,7 @@ group "E_Config" struct {
         group "E_Config_Module" struct {
             value "name" string: "clipboard";
             value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
+            value "delayed" uchar: 1;
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
@@ -1897,7 +1897,7 @@ group "E_Config" struct {
         }
         group "E_Config_Module" struct {
             value "name" string: "fileman";
-            value "enabled" uchar: 0;
+            value "enabled" uchar: 1;
             value "delayed" uchar: 1;
             value "priority" int: 0;
         }

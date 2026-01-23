@@ -25,7 +25,7 @@ e_about_new(E_Container *con)
    snprintf
      (buf, sizeof(buf), "%s%s",
      _(
-       "<title>Copyright &copy; 2025, by the Moksha "
+       "<title>Copyright &copy; 2026, by the Moksha "
        "Development Team</><br>"
        "<br>"
        "We hope you enjoy using this software as much as we enjoyed "

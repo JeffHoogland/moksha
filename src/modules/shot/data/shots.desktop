@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Screenshots
+Comment=My saved screenshots
+Type=Link
+X-Enlightenment-Type=Mount
+URL=file:$E_HOME_DIR/shots
+Icon=user-bookmarks
+NotShowIn=GNOME;KDE;LXDE;ROX;XFCE;

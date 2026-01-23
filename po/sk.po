@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha 0.4.1.17786\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-10-10 18:24+0200\n"
+"POT-Creation-Date: 2026-01-20 18:22+0100\n"
 "PO-Revision-Date: 2025-01-01 08:29+0100\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -30,7 +30,7 @@ msgstr "O desktope Moksha"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:113
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
+#: src/modules/fileman/e_fwin.c:2587
 msgid "Close"
 msgstr "Zatvoriť"
 
@@ -44,12 +44,12 @@ msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2025, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2026, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2024, Vývojový tím Moksha</><br><br>Dúfame, že si "
+"<title>Copyright &copy; 2026, Vývojový tím Moksha</><br><br>Dúfame, že si "
 "užívate tento softvér tak, ako sme si my užili jeho vývoj.<br><br>Neváhajte "
 "nás kontaktovať na: <br><hilight>http://www.bodhilinux.com</><br><br>"
 
@@ -106,7 +106,6 @@ msgstr "Ste si istý, že chcete skončiť?"
 #: src/bin/e_actions.c:2496 src/bin/e_actions.c:2561 src/bin/e_actions.c:2626
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10521
 #: src/bin/e_screensaver.c:193 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:318
 msgid "Yes"
 msgstr "Áno"
 
@@ -155,7 +154,7 @@ msgstr "Ste si istý, že chcete prepnúť počítač do režimu spánku?"
 #: src/bin/e_actions.c:3158 src/bin/e_actions.c:3163 src/bin/e_actions.c:3168
 #: src/bin/e_actions.c:3467 src/bin/e_actions.c:3471 src/bin/e_actions.c:3476
 #: src/bin/e_actions.c:3482 src/bin/e_actions.c:3488 src/bin/e_actions.c:3494
-#: src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_main.c:400
 msgid "Window : Actions"
 msgstr "Okno : Operácie"
 
@@ -557,7 +556,7 @@ msgstr "Prejsť do okna... alebo na štart..."
 #: src/bin/e_actions.c:3645 src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:986 src/modules/shot/e_mod_main.c:1317
+#: src/modules/shot/e_mod_main.c:384 src/modules/shot/e_mod_main.c:392
 msgid "Screen"
 msgstr "Obrazovka"
 
@@ -867,9 +866,9 @@ msgstr "Vybrať"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:318 src/modules/shot/e_mod_main.c:514
-#: src/modules/shot/e_mod_main.c:779 src/modules/shot/e_mod_main.c:805
-#: src/modules/shot/e_mod_main.c:1047 src/modules/xkbswitch/e_mod_config.c:587
+#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:120
+#: src/modules/shot/e_mod_share.c:267 src/modules/shot/e_mod_share.c:326
+#: src/modules/xkbswitch/e_mod_config.c:587
 msgid "Cancel"
 msgstr "Zrušiť"
 
@@ -1011,8 +1010,8 @@ msgstr "Základné"
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10790 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
-#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:519
+#: src/bin/e_module.c:839 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1021,7 +1020,7 @@ msgstr "Základné"
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:586
+#: src/modules/shot/e_mod_delay.c:79 src/modules/xkbswitch/e_mod_config.c:586
 msgid "OK"
 msgstr "OK"
 
@@ -1252,6 +1251,7 @@ msgid "Cut"
 msgstr "Vystrihnúť"
 
 #: src/bin/e_entry.c:514 src/bin/e_fm.c:9123 src/bin/e_fm.c:11650
+#: src/modules/shot/e_mod_preview.c:113
 msgid "Copy"
 msgstr "Kopírovať"
 
@@ -1534,7 +1534,7 @@ msgid "Eject"
 msgstr "Vysunúť"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
-#: src/modules/ibar/e_mod_main.c:1683
+#: src/modules/ibar/e_mod_main.c:1822
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -1695,7 +1695,7 @@ msgid "Yes to all"
 msgstr "Áno na všetko"
 
 #: src/bin/e_fm.c:10525 src/modules/xkbswitch/e_mod_config.c:402
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:633
 msgid "Warning"
 msgstr "Upozornenia"
@@ -1850,7 +1850,7 @@ msgstr "Ďalšie:"
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:215
 #: src/modules/conf_theme/e_int_config_theme.c:1434
-#: src/modules/conf_theme/e_int_config_xsettings.c:540
+#: src/modules/conf_theme/e_int_config_xsettings.c:548
 msgid "Preview"
 msgstr "Náhľad"
 
@@ -2540,15 +2540,14 @@ msgstr "Vyžadovať umiestnenie"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:466 src/modules/ibar/e_mod_main.c:1676
+#: src/modules/ibar/e_mod_main.c:474 src/modules/ibar/e_mod_main.c:1815
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:848
+#: src/modules/connman/e_mod_main.c:459 src/modules/tasks/e_mod_main.c:848
 #: src/modules/xkbswitch/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:396
-#: src/modules/notification/e_mod_main.c:343
-#: src/modules/notification/e_mod_main.c:457
+#: src/modules/notification/e_mod_main.c:342
+#: src/modules/notification/e_mod_main.c:454
 #: src/modules/clipboard/e_mod_main.c:303
 #: src/modules/clipboard/e_mod_main.c:455 src/modules/places/e_mod_main.c:518
 msgid "Settings"
@@ -2642,7 +2641,7 @@ msgstr "Veľkosť, umiestnenie a zámky"
 #: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:990
+#: src/modules/everything/evry_view.c:1628
 msgid "All"
 msgstr "Všetko"
 
@@ -2750,7 +2749,7 @@ msgstr "Nastavenie Modulov"
 msgid "Load"
 msgstr "Zapnúť"
 
-#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:620
+#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:621
 msgid "Unload"
 msgstr "Vypnúť"
 
@@ -3599,12 +3598,12 @@ msgstr ""
 "problému<br><br>modulu vo vašej konfigurácii. Dialóg nastavenie modulu vám "
 "vyberie<br>moduly znova."
 
-#: src/bin/e_module.c:185
+#: src/bin/e_module.c:186
 #, c-format
 msgid "Loading Module: %s"
 msgstr "Spúšťanie modulov: %s"
 
-#: src/bin/e_module.c:234
+#: src/bin/e_module.c:235
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3613,11 +3612,11 @@ msgstr ""
 "Došlo k chybe pri načítaní modulu: %s<br>Žiadny modul s názvom %s nebol "
 "nájdený v<br>priečinkoch s modulmi.<br>"
 
-#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
+#: src/bin/e_module.c:238 src/bin/e_module.c:251 src/bin/e_module.c:269
 msgid "Error loading Module"
 msgstr "Chyba pri nahrávaní modulu"
 
-#: src/bin/e_module.c:245 src/bin/e_module.c:262
+#: src/bin/e_module.c:246 src/bin/e_module.c:263
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3626,11 +3625,11 @@ msgstr ""
 "Došlo k chybe pri načítaní modulu: %s<br>Úplná cesta k modulu je:"
 "<br>%s<br>Došlo k chybe:<br>%s<br>"
 
-#: src/bin/e_module.c:267
+#: src/bin/e_module.c:268
 msgid "Module does not contain all needed functions."
 msgstr "Modul neobsahuje všetky potrebné funkcie."
 
-#: src/bin/e_module.c:282
+#: src/bin/e_module.c:283
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3639,23 +3638,23 @@ msgstr ""
 "Chyba API Modulu<br>Chyba pri inicializácii modulu: %s<br>Je potrebný API "
 "modul minimálne vo verzii: %i.<br>API modul v Moksha je vo verzii: %i.<br>"
 
-#: src/bin/e_module.c:287
+#: src/bin/e_module.c:288
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Moksha %s Modul"
 
-#: src/bin/e_module.c:615
+#: src/bin/e_module.c:616
 msgid "What action should be taken with this module?<br>"
 msgstr "Aká operácia s modulom by mala byť vykonaná?<br>"
 
-#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:622 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:697
 #: src/modules/clipboard/e_mod_main.c:785
 msgid "Keep"
 msgstr "Ponechať"
 
-#: src/bin/e_module.c:823
+#: src/bin/e_module.c:824
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3665,11 +3664,11 @@ msgstr ""
 "a pády.<br>Prosím, odstráňte ich pred hlásením akýchkoľvek chýb."
 "<br><br>Zoznam neštandardných modulov:<br><br>"
 
-#: src/bin/e_module.c:835
+#: src/bin/e_module.c:836
 msgid "Unstable module tainting"
 msgstr "Chyba pri nahrávaní modulu"
 
-#: src/bin/e_module.c:839
+#: src/bin/e_module.c:840
 msgid "I know"
 msgstr "I know"
 
@@ -3796,7 +3795,7 @@ msgid "Rename Shelf"
 msgstr "Premenovať lištu"
 
 #: src/bin/e_shelf.c:2476 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1670
+#: src/modules/ibar/e_mod_main.c:468 src/modules/ibar/e_mod_main.c:1809
 msgid "Contents"
 msgstr "Obsah"
 
@@ -5773,7 +5772,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:444
+#: src/modules/notification/e_mod_main.c:441
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5903,8 +5902,8 @@ msgid "Quick Launcher"
 msgstr "Rýchle spúšťanie"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:309
-#: src/modules/shot/e_mod_main.c:1288 src/modules/shot/e_mod_main.c:1317
-#: src/modules/shot/e_mod_main.c:1329
+#: src/modules/shot/e_mod_main.c:357 src/modules/shot/e_mod_main.c:384
+#: src/modules/shot/e_mod_main.c:405
 msgid "Take Screenshot"
 msgstr "Snímka obrazovky"
 
@@ -6192,7 +6191,7 @@ msgid "Themes"
 msgstr "Témy"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:571
+#: src/modules/conf_theme/e_int_config_xsettings.c:579
 #: src/modules/everything/evry_config.c:447
 #: src/modules/everything/evry_config.c:473
 msgid "Icons"
@@ -6353,13 +6352,11 @@ msgid "e.g. Saving to disk"
 msgstr "napr. Uloženie na disk"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:973
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "Nízka"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:971
 msgid "Medium"
 msgstr "Stredná"
 
@@ -6371,7 +6368,6 @@ msgid "%.0f s"
 msgstr "%.0f sek"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:969
 msgid "High"
 msgstr "Vysoká"
 
@@ -7073,7 +7069,7 @@ msgid "Assign"
 msgstr "Priradiť"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:434
+#: src/modules/notification/e_mod_main.c:431
 #: src/modules/clipboard/e_mod_main.c:442
 msgid "Clear"
 msgstr "Vyčistiť"
@@ -7109,24 +7105,24 @@ msgstr ""
 msgid "Application Theme Settings"
 msgstr "Nastavenie témy ikon"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:515
-#: src/modules/conf_theme/e_int_config_xsettings.c:559
+#: src/modules/conf_theme/e_int_config_xsettings.c:523
+#: src/modules/conf_theme/e_int_config_xsettings.c:567
 msgid "Match Moksha theme if possible"
 msgstr "Prispôsobiť Mokshu téme ak je to možné"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:524
+#: src/modules/conf_theme/e_int_config_xsettings.c:532
 msgid "Enable X Application Settings"
 msgstr "Povoliť nastavenie X aplikácií"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:528
+#: src/modules/conf_theme/e_int_config_xsettings.c:536
 msgid "GTK Applications"
 msgstr "GTK aplikácie"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:563
+#: src/modules/conf_theme/e_int_config_xsettings.c:571
 msgid "Enable icon theme for applications"
 msgstr "Povoliť tému ikon pre aplikácie"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:567
+#: src/modules/conf_theme/e_int_config_xsettings.c:575
 msgid "Enable icon theme for Moksha"
 msgstr "Povoliť tému ikon pre Mokshu"
 
@@ -8862,29 +8858,29 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Ste si istý, že chcete zmazať tento zdroj?"
 
-#: src/modules/ibar/e_mod_main.c:333 src/modules/ibar/e_mod_main.c:3121
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:341 src/modules/ibar/e_mod_main.c:3267
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1659
+#: src/modules/ibar/e_mod_main.c:457 src/modules/ibar/e_mod_main.c:1798
 msgid "Create new Icon"
 msgstr "Vytvoriť novú ikonu"
 
-#: src/modules/ibar/e_mod_main.c:1690
+#: src/modules/ibar/e_mod_main.c:1829
 msgid "Add to bar"
 msgstr "Pridať do iBar sekcie"
 
-#: src/modules/ibar/e_mod_main.c:1696
+#: src/modules/ibar/e_mod_main.c:1835
 msgid "Remove from bar"
 msgstr "Odstrániť z iBar sekcie"
 
-#: src/modules/ibar/e_mod_main.c:1702
+#: src/modules/ibar/e_mod_main.c:1841
 #, c-format
 msgid "Icon %s"
 msgstr "Ikon %s"
 
-#: src/modules/ibar/e_mod_main.c:3159
+#: src/modules/ibar/e_mod_main.c:3305
 msgid "Focus IBar"
 msgstr "Aktivácia IBar-u"
 
@@ -9549,252 +9545,203 @@ msgstr "Systray nemôže pracovať na lište, ktorá je nastavená pod všetkým
 msgid "Systray"
 msgstr "Systray"
 
-#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1230
-msgid "Screenshot"
-msgstr "Snímka obrazovky"
-
-#: src/modules/shot/e_mod_main.c:101
-msgid "Screenshot in: "
-msgstr "Snímka za: "
-
-#: src/modules/shot/e_mod_main.c:116
-msgid "Screenshot stored in"
-msgstr "Snímka uložená v"
-
-#: src/modules/shot/e_mod_main.c:311
-msgid "Error - Folder does not exist"
-msgstr "Chyba - Priečinok neexistuje"
-
-#: src/modules/shot/e_mod_main.c:313
-msgid ""
-"Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
-"Take Screenshot<br><br>Would you like to set up it now?"
+#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
+msgid "Select action to take with screenshot"
 msgstr ""
-"Zmena priečinku v nastavení modulu 'Snímka Obrazovky'<br><br>Menu-Nastavenie-"
-"Všetko-Pokročilé-Snímka Obrazovky<br><br>Prajete si nastaviť teraz?"
 
-#: src/modules/shot/e_mod_main.c:359
-msgid "Error saving screenshot file"
-msgstr "Chyba pri ukladaní súboru snímku obrazovky"
-
-#: src/modules/shot/e_mod_main.c:360
-#, c-format
-msgid "Path: %s"
-msgstr "Cesta: %s"
-
-#: src/modules/shot/e_mod_main.c:420 src/modules/shot/e_mod_main.c:430
-msgid "Error - Unknown format"
-msgstr "Chyba - Neznámy formát"
-
-#: src/modules/shot/e_mod_main.c:421
-msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
-msgstr "Prosím, použite 'Najvyššiu kvalitu'<br>pre kopírovanie do schránky."
-
-#: src/modules/shot/e_mod_main.c:431
-msgid ""
-"File has an unspecified extension.<br>Please use '.jpg' or '.png' "
-"extensions<br>only as other formats are not<br>supported currently."
+#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
+msgid "Delay"
 msgstr ""
-"Súbor má nešpecifikovanú príponu.<br>Používajte iba prípony '.jpg' alebo '."
-"png',<br>pretože iné formáty nie sú v<br>súčasnosti podporované."
 
-#: src/modules/shot/e_mod_main.c:498
-msgid "Select screenshot save location"
-msgstr "Zvoliť cestu pre uloženie snímok"
-
-#: src/modules/shot/e_mod_main.c:512 src/modules/shot/e_mod_main.c:1041
-msgid "Save"
-msgstr "Uložiť"
-
-#: src/modules/shot/e_mod_main.c:618
+#: src/modules/shot/e_mod_delay.c:61
 #, c-format
-msgid "Uploaded %s / %s"
-msgstr "Nahrané %s / %s"
+msgid "%1.1f sec"
+msgstr "%1.1f sek"
 
-#: src/modules/shot/e_mod_main.c:639
-msgid "Error - Upload Failed"
-msgstr "Chyba pri uploade"
+#: src/modules/shot/e_mod_edit.c:1968
+msgid "Tools"
+msgstr "Nástroje"
 
-#: src/modules/shot/e_mod_main.c:640
-#, c-format
-msgid "Upload failed with status code:<br>%i"
-msgstr "Upload zlyhal s kom:<br>%i"
+#: src/modules/shot/e_mod_edit.c:1980
+msgid "Select crop area"
+msgstr "Výrez"
 
-#: src/modules/shot/e_mod_main.c:689
-msgid "Error - Can't create file"
-msgstr "Chyba - Nie je možné vytvoriť súbor"
+#: src/modules/shot/e_mod_edit.c:1981
+msgid "Modify objects"
+msgstr "Upraviť objekty"
 
-#: src/modules/shot/e_mod_main.c:690
-#, c-format
-msgid "Cannot create temporary file '%s': %s"
-msgstr "Nie je možné vytvoriť dočasný súbor '%s': %s"
+#: src/modules/shot/e_mod_edit.c:1982
+msgid "Delete objects"
+msgstr "Vymazať objekty"
 
-#: src/modules/shot/e_mod_main.c:708
-msgid "Error - Can't open file"
-msgstr "Chyba - Nie je možné otvoriť súbor"
+#: src/modules/shot/e_mod_edit.c:1991
+msgid "Single arrow line"
+msgstr "Jednosmerná čiara"
 
-#: src/modules/shot/e_mod_main.c:709
-#, c-format
-msgid "Cannot open temporary file '%s': %s"
-msgstr "Nie je možné otvoriť dočasný súbor '%s': %s"
+#: src/modules/shot/e_mod_edit.c:1992
+msgid "Double arrow line"
+msgstr "Obojsmerná čiara"
 
-#: src/modules/shot/e_mod_main.c:717
-msgid "Error - Bad size"
-msgstr "Chyba - Nesprávna veľkosť"
+#: src/modules/shot/e_mod_edit.c:1993
+msgid "Plain line"
+msgstr "Obyčajná čiara"
 
-#: src/modules/shot/e_mod_main.c:718
-#, c-format
-msgid "Cannot get size of file '%s'"
-msgstr "Nie je možné získať veľkosť súboru '%s'"
+#: src/modules/shot/e_mod_edit.c:1994
+msgid "Solid box"
+msgstr "Plný obdĺžnik"
 
-#: src/modules/shot/e_mod_main.c:728
-msgid "Error - Can't allocate memory"
-msgstr "Chyba - nie je možné alokovať pamäť"
+#: src/modules/shot/e_mod_edit.c:1996
+msgid "Malloc"
+msgstr "Kocúr"
 
-#: src/modules/shot/e_mod_main.c:729
-#, c-format
-msgid "Cannot allocate memory for picture: %s"
-msgstr "Nemôže alokovať pamäť pre obrázok: %s"
+#: src/modules/shot/e_mod_edit.c:1997
+msgid "Malloc (evil)"
+msgstr "Kocúr 2"
 
-#: src/modules/shot/e_mod_main.c:736
-msgid "Error - Can't read picture"
-msgstr "Chyba - Nie je možné načítať obrázok"
+#: src/modules/shot/e_mod_edit.c:1998
+msgid "Pointing finger"
+msgstr "Ukazovateľ"
 
-#: src/modules/shot/e_mod_main.c:737
-msgid "Cannot read picture"
-msgstr "Nie je možné načítať obrázok"
-
-#: src/modules/shot/e_mod_main.c:759
-msgid "Uploading screenshot"
-msgstr "Upload obrázku"
-
-#: src/modules/shot/e_mod_main.c:764
-msgid "Uploading ..."
-msgstr "Upload ..."
-
-#: src/modules/shot/e_mod_main.c:769
-msgid "Screenshot is available at this location:"
-msgstr "Obrázok bol uložený na link:"
-
-#: src/modules/shot/e_mod_main.c:778
-msgid "Copy link"
-msgstr "Kopírovať link"
-
-#: src/modules/shot/e_mod_main.c:802
-msgid "Confirm Share"
-msgstr "Potvrdiť upload"
-
-#: src/modules/shot/e_mod_main.c:803
-msgid ""
-"This image will be uploaded<br>to enlightenment.org. It will be publicly "
-"visible."
+#: src/modules/shot/e_mod_edit.c:1999
+msgid "Enlightenment logo"
 msgstr ""
-"Snímok bude uložený na<br>enlightenment.org. Bude prístupný verejnosti."
 
-#: src/modules/shot/e_mod_main.c:805
-msgid "Confirm"
-msgstr "Potvrdiť"
+#: src/modules/shot/e_mod_edit.c:2001
+msgid "Foot"
+msgstr "Chodidlo"
 
-#: src/modules/shot/e_mod_main.c:906
-msgid "Where to put Screenshot..."
-msgstr "Kam uložiť snímku..."
+#: src/modules/shot/e_mod_edit.c:2002
+msgid "Silly walk"
+msgstr "Smiešna chôdza"
 
-#: src/modules/shot/e_mod_main.c:958
-msgid "Quality"
-msgstr "Kvalita"
+#: src/modules/shot/e_mod_edit.c:2003
+msgid "Box outline"
+msgstr "Obdĺžnik s obrysom"
 
-#: src/modules/shot/e_mod_main.c:967
-msgid "Perfect"
-msgstr "Najvyššia"
+#: src/modules/shot/e_mod_edit.c:2004
+msgid "Circle outline"
+msgstr "Kružnica"
 
-#: src/modules/shot/e_mod_main.c:1043
-msgid "Share"
-msgstr "Zdieľať"
+#: src/modules/shot/e_mod_edit.c:2006
+msgid "Plain text"
+msgstr "Obyčajný text"
 
-#: src/modules/shot/e_mod_main.c:1045 src/modules/clipboard/e_mod_config.c:221
-#: src/modules/clipboard/e_mod_main.c:361
-#: src/modules/clipboard/e_mod_main.c:955
-#: src/modules/clipboard/e_mod_main.c:956
-#: src/modules/clipboard/e_mod_main.c:957
-msgid "Clipboard"
-msgstr "Správca schránky"
+#: src/modules/shot/e_mod_edit.c:2007
+msgid "Text box"
+msgstr "Textové pole"
 
-#: src/modules/shot/e_mod_main.c:1227
-#, c-format
-msgid ""
-"Select the screenshot mode... <br>Delay time is set in the Screenshot module "
-"settings<br>The current delay time: <b> %d s</b>"
-msgstr ""
-"Vyber režim snímky obrazovky... <br>Časovač je možné nastaviť v nastaveniach "
-"modulu <br>Aktuálna hodnota je: <b> %d s</b>"
+#: src/modules/shot/e_mod_edit.c:2008
+msgid "Text thought bubble"
+msgstr "Textová bublinka"
 
-#: src/modules/shot/e_mod_main.c:1236
-msgid "Instant shot"
-msgstr "Okamžitá snímka"
+#: src/modules/shot/e_mod_edit.c:2009
+msgid "Text thought bubble 2"
+msgstr "Textová bublinka 2"
 
-#: src/modules/shot/e_mod_main.c:1237
-msgid "Delayed shot"
-msgstr "Snímka s časovačom"
+#: src/modules/shot/e_mod_edit.c:2011
+msgid "Speech bubble"
+msgstr "Popisok"
 
-#: src/modules/shot/e_mod_main.c:1277 src/modules/shot/e_mod_main.c:1325
+#: src/modules/shot/e_mod_edit.c:2012
+msgid "Speech bubble 2"
+msgstr "Popisok 2"
+
+#: src/modules/shot/e_mod_edit.c:2013
+msgid "Kaboom splat"
+msgstr "Popisok 3"
+
+#: src/modules/shot/e_mod_edit.c:2014
+msgid "Pow explode"
+msgstr "Popisok 4"
+
+#: src/modules/shot/e_mod_edit.c:2022
+msgid "Color"
+msgstr "Farba"
+
+#: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
 msgstr "Snímka okna"
 
-#: src/modules/shot/e_mod_main.c:1305
+#: src/modules/shot/e_mod_main.c:374
 msgid "Shot Error"
 msgstr "Chyba snímky"
 
-#: src/modules/shot/e_mod_main.c:1306
+#: src/modules/shot/e_mod_main.c:375
 msgid "Cannot initialize network"
 msgstr "Nie je možné inicializovať sieť"
 
-#: src/modules/shot/e_mod_main.c:1335 src/modules/shot/e_mod_config.c:47
-msgid "Screenshot Settings"
-msgstr "Nastavenie snímky obrazovky"
+#: src/modules/shot/e_mod_main.c:392
+msgid "Take Screenshot with Delay"
+msgstr "Snímka obrazovky s oneskorením"
 
-#: src/modules/shot/e_mod_config.c:100
-msgid " Show the screenshot mode dialog"
-msgstr " Zobraziť ponuku režimov"
+#: src/modules/shot/e_mod_preview.c:93
+msgid "Quality"
+msgstr "Kvalita"
 
-#: src/modules/shot/e_mod_config.c:103
-msgid " Screenshot guide (quality/share/save)"
-msgstr " Sprievodca snímkou (kvalita/zdieľanie/uloženie)"
+#: src/modules/shot/e_mod_preview.c:109
+msgid "Save"
+msgstr "Uložiť"
 
-#: src/modules/shot/e_mod_config.c:106
-msgid " Show notifications"
-msgstr " Zobraziť notifikácie"
+#: src/modules/shot/e_mod_preview.c:111
+msgid "Share"
+msgstr "Zdieľať"
 
-#: src/modules/shot/e_mod_config.c:109
-msgid " Copy to Clipboard"
-msgstr " Kopírovať do schránky"
+#: src/modules/shot/e_mod_save.c:204
+msgid "Error - No Filemanager"
+msgstr "Chyba - chýba Správca súborov"
 
-#: src/modules/shot/e_mod_config.c:112
-msgid " Launch app after screenshot"
-msgstr " Otvoriť snímku v aplikácii"
+#: src/modules/shot/e_mod_save.c:205
+msgid ""
+"No filemanager action and/or module was found.<br>Cannot show the location "
+"of your screenshots."
+msgstr ""
 
-#: src/modules/shot/e_mod_config.c:115
-msgid "Application for opening:"
-msgstr "Otvoriť v aplikácii:"
+#: src/modules/shot/e_mod_share.c:149
+#, c-format
+msgid "Uploaded %i%%"
+msgstr "Nahrané %s / %s"
 
-#: src/modules/shot/e_mod_config.c:121
-msgid "Folder for saving screenshots:"
-msgstr "Priečinok pre ukladanie:"
+#: src/modules/shot/e_mod_share.c:163
+msgid "Error - Upload Failed"
+msgstr "Chyba pri uploade"
 
-#: src/modules/shot/e_mod_config.c:127
-msgid "Delay time [s]"
-msgstr "Časovač [s]"
+#: src/modules/shot/e_mod_share.c:164
+#, c-format
+msgid "Upload failed with status code:<ps/>%i"
+msgstr "Nahranie zlyhalo s kódom:<br>%i"
 
-#: src/modules/shot/e_mod_config.c:132
-msgid "Image quality [50-90 = jpg, 100 = png]"
-msgstr "Kvalita obrázku [50-90 = jpg, 100 = png]"
+#: src/modules/shot/e_mod_share.c:246
+msgid "Uploading screenshot"
+msgstr "Nahratie obrázku"
 
-#: src/modules/shot/e_mod_config.c:139
-msgid "Info"
-msgstr "Info"
+#: src/modules/shot/e_mod_share.c:252
+msgid "Uploading ..."
+msgstr "Nahrávanie ..."
 
-#: src/modules/shot/e_mod_config.c:140
-msgid "Alt+PrtSc: screenshot active window"
-msgstr "Alt+PrtSc: snímka aktívneho okna"
+#: src/modules/shot/e_mod_share.c:257
+msgid "Screenshot is available at this location:"
+msgstr "Snímok bol uložený do priečinku:"
+
+#: src/modules/shot/e_mod_share.c:266
+msgid "Hide"
+msgstr "Skryť"
+
+#: src/modules/shot/e_mod_share.c:315
+msgid "Confirm Share"
+msgstr "Potvrdiť upload"
+
+#: src/modules/shot/e_mod_share.c:317
+msgid ""
+"Are you sure you want to upload this image<ps/>publically to these services?"
+msgstr "Ste si istý, že chcete tento snímok<ps/>nahrať verejne na server?"
+
+#: src/modules/shot/e_mod_share.c:320
+msgid "Imgur.com"
+msgstr ""
+
+#: src/modules/shot/e_mod_share.c:323
+msgid "E.org"
+msgstr ""
 
 #: src/modules/tasks/e_mod_main.c:340 src/modules/tasks/e_mod_main.c:855
 msgid "Tasks"
@@ -9979,8 +9926,8 @@ msgid "Variant"
 msgstr "Variant"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:278
-#: src/modules/notification/e_mod_main.c:374
+#: src/modules/notification/e_mod_main.c:277
+#: src/modules/notification/e_mod_main.c:373
 msgid "Notification"
 msgstr "Notifikácia"
 
@@ -10000,32 +9947,32 @@ msgstr ""
 "Chyba počas inicializácie DBus! Skontrolujte prosím, či je D-Bus správne "
 "nainštalovaný a beží"
 
-#: src/modules/notification/e_mod_main.c:426
+#: src/modules/notification/e_mod_main.c:423
 #: src/modules/clipboard/e_mod_main.c:424
 msgid "Empty"
 msgstr "Prázdne"
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:617
 msgid "Enter Presentation Mode"
 msgstr "Vstup do režimu Prezentácie"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:618
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha je v režime <br>prezentácie<br>."
 
-#: src/modules/notification/e_mod_main.c:632
+#: src/modules/notification/e_mod_main.c:622
 msgid "Exited Presentation Mode"
 msgstr "Ukončenie režimu prezentácie"
 
-#: src/modules/notification/e_mod_main.c:633
+#: src/modules/notification/e_mod_main.c:623
 msgid "Presentation mode is over."
 msgstr "Režim prezentácie je ukončený."
 
-#: src/modules/notification/e_mod_main.c:647
+#: src/modules/notification/e_mod_main.c:637
 msgid "Enter Offline Mode"
 msgstr "Vstup do offline režimu"
 
-#: src/modules/notification/e_mod_main.c:648
+#: src/modules/notification/e_mod_main.c:638
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10033,11 +9980,11 @@ msgstr ""
 "Moksha je v <b>offline</b> režime.<br>Počas offline režimu,budú zastavené "
 "moduly ktoré využívajú vzdialené služby."
 
-#: src/modules/notification/e_mod_main.c:654
+#: src/modules/notification/e_mod_main.c:644
 msgid "Exited Offline Mode"
 msgstr "Ukončenie offline režimu"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:645
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10045,7 +9992,7 @@ msgstr ""
 "Teraz v <b>online</b> režime.<br>Moduly používajúce sieť znovu spustia bežné "
 "úlohy."
 
-#: src/modules/notification/e_mod_main.c:713
+#: src/modules/notification/e_mod_main.c:703
 msgid "Notification expired!"
 msgstr "Platnosť notifikácie vypršala!"
 
@@ -10173,6 +10120,14 @@ msgstr " Zruš neviditeľné znaky"
 #: src/modules/clipboard/e_mod_config.c:217
 msgid " Trim Newlines"
 msgstr " Zruš znak konca riadku"
+
+#: src/modules/clipboard/e_mod_config.c:221
+#: src/modules/clipboard/e_mod_main.c:361
+#: src/modules/clipboard/e_mod_main.c:955
+#: src/modules/clipboard/e_mod_main.c:956
+#: src/modules/clipboard/e_mod_main.c:957
+msgid "Clipboard"
+msgstr "Správca schránky"
 
 #: src/modules/clipboard/e_mod_config.c:227
 msgid " Save History"
@@ -10448,6 +10403,151 @@ msgstr "Stlmiť hlasitosť"
 #: src/modules/separator/e_mod_main.c:122
 msgid "Separator"
 msgstr "Oddeľovač"
+
+#~ msgid "Screenshot"
+#~ msgstr "Snímka obrazovky"
+
+#~ msgid "Screenshot in: "
+#~ msgstr "Snímka za: "
+
+#~ msgid "Screenshot stored in"
+#~ msgstr "Snímka uložená v"
+
+#~ msgid "Error - Folder does not exist"
+#~ msgstr "Chyba - Priečinok neexistuje"
+
+#~ msgid ""
+#~ "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-"
+#~ "Advanced-Take Screenshot<br><br>Would you like to set up it now?"
+#~ msgstr ""
+#~ "Zmena priečinku v nastavení modulu 'Snímka Obrazovky'<br><br>Menu-"
+#~ "Nastavenie-Všetko-Pokročilé-Snímka Obrazovky<br><br>Prajete si nastaviť "
+#~ "teraz?"
+
+#~ msgid "Error saving screenshot file"
+#~ msgstr "Chyba pri ukladaní súboru snímku obrazovky"
+
+#, c-format
+#~ msgid "Path: %s"
+#~ msgstr "Cesta: %s"
+
+#~ msgid "Error - Unknown format"
+#~ msgstr "Chyba - Neznámy formát"
+
+#~ msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
+#~ msgstr "Prosím, použite 'Najvyššiu kvalitu'<br>pre kopírovanie do schránky."
+
+#~ msgid ""
+#~ "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
+#~ "extensions<br>only as other formats are not<br>supported currently."
+#~ msgstr ""
+#~ "Súbor má nešpecifikovanú príponu.<br>Používajte iba prípony '.jpg' alebo "
+#~ "'.png',<br>pretože iné formáty nie sú v<br>súčasnosti podporované."
+
+#~ msgid "Select screenshot save location"
+#~ msgstr "Zvoliť cestu pre uloženie snímok"
+
+#~ msgid "Error - Can't create file"
+#~ msgstr "Chyba - Nie je možné vytvoriť súbor"
+
+#, c-format
+#~ msgid "Cannot create temporary file '%s': %s"
+#~ msgstr "Nie je možné vytvoriť dočasný súbor '%s': %s"
+
+#~ msgid "Error - Can't open file"
+#~ msgstr "Chyba - Nie je možné otvoriť súbor"
+
+#, c-format
+#~ msgid "Cannot open temporary file '%s': %s"
+#~ msgstr "Nie je možné otvoriť dočasný súbor '%s': %s"
+
+#~ msgid "Error - Bad size"
+#~ msgstr "Chyba - Nesprávna veľkosť"
+
+#, c-format
+#~ msgid "Cannot get size of file '%s'"
+#~ msgstr "Nie je možné získať veľkosť súboru '%s'"
+
+#~ msgid "Error - Can't allocate memory"
+#~ msgstr "Chyba - nie je možné alokovať pamäť"
+
+#, c-format
+#~ msgid "Cannot allocate memory for picture: %s"
+#~ msgstr "Nemôže alokovať pamäť pre obrázok: %s"
+
+#~ msgid "Error - Can't read picture"
+#~ msgstr "Chyba - Nie je možné načítať obrázok"
+
+#~ msgid "Cannot read picture"
+#~ msgstr "Nie je možné načítať obrázok"
+
+#~ msgid "Copy link"
+#~ msgstr "Kopírovať link"
+
+#~ msgid ""
+#~ "This image will be uploaded<br>to enlightenment.org. It will be publicly "
+#~ "visible."
+#~ msgstr ""
+#~ "Snímok bude uložený na<br>enlightenment.org. Bude prístupný verejnosti."
+
+#~ msgid "Confirm"
+#~ msgstr "Potvrdiť"
+
+#~ msgid "Where to put Screenshot..."
+#~ msgstr "Kam uložiť snímku..."
+
+#~ msgid "Perfect"
+#~ msgstr "Najvyššia"
+
+#, c-format
+#~ msgid ""
+#~ "Select the screenshot mode... <br>Delay time is set in the Screenshot "
+#~ "module settings<br>The current delay time: <b> %d s</b>"
+#~ msgstr ""
+#~ "Vyber režim snímky obrazovky... <br>Časovač je možné nastaviť v "
+#~ "nastaveniach modulu <br>Aktuálna hodnota je: <b> %d s</b>"
+
+#~ msgid "Instant shot"
+#~ msgstr "Okamžitá snímka"
+
+#~ msgid "Delayed shot"
+#~ msgstr "Snímka s časovačom"
+
+#~ msgid "Screenshot Settings"
+#~ msgstr "Nastavenie snímky obrazovky"
+
+#~ msgid " Show the screenshot mode dialog"
+#~ msgstr " Zobraziť ponuku režimov"
+
+#~ msgid " Screenshot guide (quality/share/save)"
+#~ msgstr " Sprievodca snímkou (kvalita/zdieľanie/uloženie)"
+
+#~ msgid " Show notifications"
+#~ msgstr " Zobraziť notifikácie"
+
+#~ msgid " Copy to Clipboard"
+#~ msgstr " Kopírovať do schránky"
+
+#~ msgid " Launch app after screenshot"
+#~ msgstr " Otvoriť snímku v aplikácii"
+
+#~ msgid "Application for opening:"
+#~ msgstr "Otvoriť v aplikácii:"
+
+#~ msgid "Folder for saving screenshots:"
+#~ msgstr "Priečinok pre ukladanie:"
+
+#~ msgid "Delay time [s]"
+#~ msgstr "Časovač [s]"
+
+#~ msgid "Image quality [50-90 = jpg, 100 = png]"
+#~ msgstr "Kvalita obrázku [50-90 = jpg, 100 = png]"
+
+#~ msgid "Info"
+#~ msgstr "Info"
+
+#~ msgid "Alt+PrtSc: screenshot active window"
+#~ msgstr "Alt+PrtSc: snímka aktívneho okna"
 
 #~ msgid "Moksha Settings Write Problems"
 #~ msgstr "Problémy so zápisom nastavení Moksha"
