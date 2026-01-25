@@ -13,7 +13,7 @@
 # rustyBSD <rustyBSD@gmx.fr>, 2015.
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
-# similar <similar@orange.fr>, 2020, 2021, 2022, 2023, 2024, 2025.
+# similar <similar@orange.fr>, 2020, 2021, 2022, 2023, 2024, 2025, 2026.
 #
 msgid ""
 msgstr ""
