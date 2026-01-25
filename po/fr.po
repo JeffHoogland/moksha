@@ -13,14 +13,14 @@
 # rustyBSD <rustyBSD@gmx.fr>, 2015.
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
-# similar <similar@orange.fr>, 2020, 2021, 2022, 2023, 2024, 2025.
+# similar <similar@orange.fr>, 2020, 2021, 2022, 2023, 2024, 2025, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2026-01-20 18:22+0100\n"
-"PO-Revision-Date: 2025-04-19 10:13+0200\n"
+"PO-Revision-Date: 2026-01-25 12:07+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_about.c:18
@@ -56,14 +56,13 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2026, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2025, par l'équipe de développement de Moksha</"
+"<title>Copyright &copy; 2026, par l'équipe de développement de Moksha</"
 "><br><br>Nous espérons que vous aurez autant de plaisir à utiliser ce "
 "logiciel que nous en avons eu à l'écrire.<br><br>Pour nous contacter, "
 "visitez :<br><hilight>https://www.bodhilinux.com</><br><br>"
@@ -1387,8 +1386,8 @@ msgstr "%s a été interrompu par le signal numéro %i."
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
-"***Le reste de la sortie a été tronqué. Enregistrez la sortie pour tout voir."
-"***\n"
+"***Le reste de la sortie a été tronqué. Enregistrez la sortie pour tout "
+"voir.***\n"
 
 #: src/bin/e_exec.c:1049 src/bin/e_exec.c:1127 src/bin/e_exec.c:1134
 msgid "Error Logs"
@@ -8228,16 +8227,16 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
-"right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
-"down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
-"hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
-"</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
-"toggle thumb view modes"
+"<hilight>&lt;return&gt;</hilight> run action<br>    "
+"<hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>    "
+"<hilight>&lt;tab&gt;</hilight> toggle between selectors<br>    "
+"<hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on "
+"plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning "
+"with 'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through "
+"plugins<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> go to first/last "
+"item<br>    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this "
+"page ;)<br>    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view "
+"modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
 msgstr ""
 "  L'omnipotence selon <hilight>Omni</hilight>...<br>  Tapez juste les "
 "premières lettres de ce que vous recherchez. <br>  Utilisez les touches "
@@ -8247,18 +8246,18 @@ msgstr ""
 "s'affichera pas lors de la prochaine utilisation d'<hilight>Omni</hilight>."
 "<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de "
 "dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    "
-"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;"
-"Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
-"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;"
-"Ctrl+Tabulation&gt;</hilight> complète la saisie (ça dépend du "
+"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    "
+"<hilight>&lt;Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    "
+"<hilight>&lt;tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    "
+"<hilight>&lt;Ctrl+Tabulation&gt;</hilight> complète la saisie (ça dépend du "
 "greffon)<br>    <hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon "
 "commençant par la lettre « ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / "
-"droite&gt;</hilight> circule parmi les greffons<br>    <hilight>&lt;"
-"ctrl+Flèche haut / bas&gt;</hilight> va au premier / dernier élément<br>    "
-"<hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage (quitter cette "
-"page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage "
-"de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode "
-"d'affichage des vignettes"
+"droite&gt;</hilight> circule parmi les greffons<br>    "
+"<hilight>&lt;ctrl+Flèche haut / bas&gt;</hilight> va au premier / dernier "
+"élément<br>    <hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage "
+"(quitter cette page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le "
+"mode d'affichage de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> "
+"commute le mode d'affichage des vignettes"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -9576,128 +9575,116 @@ msgstr "Zone de notification"
 
 #: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
 msgid "Select action to take with screenshot"
-msgstr ""
+msgstr "Choisir l'action à appliquer à la capture"
 
 #: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
 msgid "Delay"
-msgstr ""
+msgstr "Delai"
 
 #: src/modules/shot/e_mod_delay.c:61
-#, fuzzy, c-format
+#, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f s"
 
 #: src/modules/shot/e_mod_edit.c:1968
-#, fuzzy
 msgid "Tools"
-msgstr "Infobulles"
+msgstr "Outils"
 
 #: src/modules/shot/e_mod_edit.c:1980
-#, fuzzy
 msgid "Select crop area"
-msgstr "Choisissez"
+msgstr "Choisir la zone à recadrer"
 
 #: src/modules/shot/e_mod_edit.c:1981
-#, fuzzy
 msgid "Modify objects"
-msgstr "Modifier"
+msgstr "Modifier des objets"
 
 #: src/modules/shot/e_mod_edit.c:1982
-#, fuzzy
 msgid "Delete objects"
-msgstr "Suppression accomplie"
+msgstr "Supprimer des objets"
 
 #: src/modules/shot/e_mod_edit.c:1991
-#, fuzzy
 msgid "Single arrow line"
-msgstr "Utiliser le simple clic"
+msgstr "Ligne à flèche directionnelle"
 
 #: src/modules/shot/e_mod_edit.c:1992
 msgid "Double arrow line"
-msgstr ""
+msgstr "Ligne à flèche bidirectionnelle"
 
 #: src/modules/shot/e_mod_edit.c:1993
-#, fuzzy
 msgid "Plain line"
-msgstr "En plein"
+msgstr "Ligne simple"
 
 #: src/modules/shot/e_mod_edit.c:1994
 msgid "Solid box"
-msgstr ""
+msgstr "Rectangle plein"
 
 #: src/modules/shot/e_mod_edit.c:1996
 msgid "Malloc"
-msgstr ""
+msgstr "Malloc"
 
 #: src/modules/shot/e_mod_edit.c:1997
 msgid "Malloc (evil)"
-msgstr ""
+msgstr "Malloc (en pétard)"
 
 #: src/modules/shot/e_mod_edit.c:1998
-#, fuzzy
 msgid "Pointing finger"
-msgstr "Pointeur"
+msgstr "Doigt pointé"
 
 #: src/modules/shot/e_mod_edit.c:1999
 msgid "Enlightenment logo"
-msgstr ""
+msgstr "Logo Enlightenment"
 
 #: src/modules/shot/e_mod_edit.c:2001
 msgid "Foot"
-msgstr ""
+msgstr "Pied"
 
 #: src/modules/shot/e_mod_edit.c:2002
 msgid "Silly walk"
-msgstr ""
+msgstr "Démarche ridicule"
 
 #: src/modules/shot/e_mod_edit.c:2003
-#, fuzzy
 msgid "Box outline"
-msgstr "Contour :"
+msgstr "Contour rectangulaire"
 
 #: src/modules/shot/e_mod_edit.c:2004
-#, fuzzy
 msgid "Circle outline"
-msgstr "Défilement circulaire"
+msgstr "Contour circulaire"
 
 #: src/modules/shot/e_mod_edit.c:2006
-#, fuzzy
 msgid "Plain text"
-msgstr "En plein"
+msgstr "Texte simple"
 
 #: src/modules/shot/e_mod_edit.c:2007
-#, fuzzy
 msgid "Text box"
-msgstr "Texte"
+msgstr "Encadrement"
 
 #: src/modules/shot/e_mod_edit.c:2008
 msgid "Text thought bubble"
-msgstr ""
+msgstr "Bulle pensée"
 
 #: src/modules/shot/e_mod_edit.c:2009
 msgid "Text thought bubble 2"
-msgstr ""
+msgstr "Bulle pensée 2"
 
 #: src/modules/shot/e_mod_edit.c:2011
 msgid "Speech bubble"
-msgstr ""
+msgstr "Bulle parlée"
 
 #: src/modules/shot/e_mod_edit.c:2012
 msgid "Speech bubble 2"
-msgstr ""
+msgstr "Bulle parlée 2"
 
 #: src/modules/shot/e_mod_edit.c:2013
 msgid "Kaboom splat"
-msgstr ""
+msgstr "Splash"
 
 #: src/modules/shot/e_mod_edit.c:2014
 msgid "Pow explode"
-msgstr ""
+msgstr "Explosion"
 
 #: src/modules/shot/e_mod_edit.c:2022
-#, fuzzy
 msgid "Color"
-msgstr "Couleurs"
+msgstr "Couleur"
 
 #: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
@@ -9712,9 +9699,8 @@ msgid "Cannot initialize network"
 msgstr "Impossible d'initialiser le réseau"
 
 #: src/modules/shot/e_mod_main.c:392
-#, fuzzy
 msgid "Take Screenshot with Delay"
-msgstr "Capturer l'écran"
+msgstr "Capture d'écran en différé"
 
 #: src/modules/shot/e_mod_preview.c:93
 msgid "Quality"
@@ -9729,29 +9715,30 @@ msgid "Share"
 msgstr "Partager"
 
 #: src/modules/shot/e_mod_save.c:204
-#, fuzzy
 msgid "Error - No Filemanager"
-msgstr "Gestionnaire de fichiers"
+msgstr "Erreur : pas de gestionnaire de fichiers"
 
 #: src/modules/shot/e_mod_save.c:205
 msgid ""
 "No filemanager action and/or module was found.<br>Cannot show the location "
 "of your screenshots."
 msgstr ""
+"Aucune action et/ou module de gestion de fichiers n'est disponible."
+"<br>Impossible d'afficher l'emplacement de vos captures."
 
 #: src/modules/shot/e_mod_share.c:149
-#, fuzzy, c-format
+#, c-format
 msgid "Uploaded %i%%"
-msgstr "%s / %s téléversés"
+msgstr "%i%% téléversés"
 
 #: src/modules/shot/e_mod_share.c:163
 msgid "Error - Upload Failed"
 msgstr "Erreur : échec du téléversement"
 
 #: src/modules/shot/e_mod_share.c:164
-#, fuzzy, c-format
+#, c-format
 msgid "Upload failed with status code:<ps/>%i"
-msgstr "Le téléversement a échoué avec le code d'état :<br>%i"
+msgstr "Le téléversement a échoué avec le code d'état :<ps>%i"
 
 #: src/modules/shot/e_mod_share.c:246
 msgid "Uploading screenshot"
@@ -9766,27 +9753,27 @@ msgid "Screenshot is available at this location:"
 msgstr "La capture est disponible ici :"
 
 #: src/modules/shot/e_mod_share.c:266
-#, fuzzy
 msgid "Hide"
-msgstr "Masquage automatique"
+msgstr "Masquer"
 
 #: src/modules/shot/e_mod_share.c:315
 msgid "Confirm Share"
 msgstr "Confirmer le partage"
 
 #: src/modules/shot/e_mod_share.c:317
-#, fuzzy
 msgid ""
 "Are you sure you want to upload this image<ps/>publically to these services?"
-msgstr "Voulez-vous vraiment supprimer cette source ?"
+msgstr ""
+"Voulez-vous vraiment téléverser de façon publique<ps/>cette image vers ces "
+"services ?"
 
 #: src/modules/shot/e_mod_share.c:320
 msgid "Imgur.com"
-msgstr ""
+msgstr "Imgur.com"
 
 #: src/modules/shot/e_mod_share.c:323
 msgid "E.org"
-msgstr ""
+msgstr "E.org"
 
 #: src/modules/tasks/e_mod_main.c:340 src/modules/tasks/e_mod_main.c:855
 msgid "Tasks"
@@ -10490,8 +10477,8 @@ msgstr "Séparateur"
 #~ "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 #~ "extensions<br>only as other formats are not<br>supported currently."
 #~ msgstr ""
-#~ "L'extension du fichier n'est pas spécifiée.<br>Utilisez « .jpg » ou « ."
-#~ "png »<br>car les autres formats ne sont<br>pas pris en charge."
+#~ "L'extension du fichier n'est pas spécifiée.<br>Utilisez « .jpg » ou "
+#~ "« .png »<br>car les autres formats ne sont<br>pas pris en charge."
 
 #~ msgid "Select screenshot save location"
 #~ msgstr "Sélection de l'emplacement d'enregistrement"

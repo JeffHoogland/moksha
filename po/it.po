@@ -43,14 +43,13 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2026, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2025, del Development Team di Moksha.</><br><br>Ci "
+"<title>Copyright &copy; 2026, del Development Team di Moksha.</><br><br>Ci "
 "auguriamo che vi piacerà usare questo software tanto quanto a noi è piaciuto "
 "scriverlo.<br><br>Per contattarci visitate:<br><hilight>http://www."
 "bodhilinux.com</><br><br>"
@@ -9637,128 +9636,116 @@ msgstr "Systray"
 
 #: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
 msgid "Select action to take with screenshot"
-msgstr ""
+msgstr "Scegli l'azione da prendere con lo screenshot"
 
 #: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
 msgid "Delay"
-msgstr ""
+msgstr "Ritardo"
 
 #: src/modules/shot/e_mod_delay.c:61
-#, fuzzy, c-format
+#, c-format
 msgid "%1.1f sec"
-msgstr "%1.1f s"
+msgstr "%1.1f sec"
 
 #: src/modules/shot/e_mod_edit.c:1968
-#, fuzzy
 msgid "Tools"
-msgstr "Tooltip"
+msgstr "Strumenti"
 
 #: src/modules/shot/e_mod_edit.c:1980
-#, fuzzy
 msgid "Select crop area"
-msgstr "Selezionare un'opzione"
+msgstr "Seleziona l'area da ritagliare"
 
 #: src/modules/shot/e_mod_edit.c:1981
-#, fuzzy
 msgid "Modify objects"
-msgstr "Modifica"
+msgstr "Modifica oggetti"
 
 #: src/modules/shot/e_mod_edit.c:1982
-#, fuzzy
 msgid "Delete objects"
-msgstr "Eliminazione eseguita"
+msgstr "Elimina oggetti"
 
 #: src/modules/shot/e_mod_edit.c:1991
-#, fuzzy
 msgid "Single arrow line"
-msgstr "Singolo clic del mouse"
+msgstr "Linea da freccia singola"
 
 #: src/modules/shot/e_mod_edit.c:1992
 msgid "Double arrow line"
-msgstr ""
+msgstr "Linea da freccia doppia"
 
 #: src/modules/shot/e_mod_edit.c:1993
-#, fuzzy
 msgid "Plain line"
-msgstr "Liscio"
+msgstr "Linea liscia"
 
 #: src/modules/shot/e_mod_edit.c:1994
 msgid "Solid box"
-msgstr ""
+msgstr "Rettangolo pieno"
 
 #: src/modules/shot/e_mod_edit.c:1996
 msgid "Malloc"
-msgstr ""
+msgstr "Malloc"
 
 #: src/modules/shot/e_mod_edit.c:1997
 msgid "Malloc (evil)"
-msgstr ""
+msgstr "Malloc (cattivo)"
 
 #: src/modules/shot/e_mod_edit.c:1998
-#, fuzzy
 msgid "Pointing finger"
-msgstr "Segue puntatore"
+msgstr "Dito indice"
 
 #: src/modules/shot/e_mod_edit.c:1999
 msgid "Enlightenment logo"
-msgstr ""
+msgstr "logo Enlightenment"
 
 #: src/modules/shot/e_mod_edit.c:2001
 msgid "Foot"
-msgstr ""
+msgstr "Piede"
 
 #: src/modules/shot/e_mod_edit.c:2002
 msgid "Silly walk"
-msgstr ""
+msgstr "Camminata bizzarra"
 
 #: src/modules/shot/e_mod_edit.c:2003
-#, fuzzy
 msgid "Box outline"
-msgstr "Contorno:"
+msgstr "Bordo rettangolo"
 
 #: src/modules/shot/e_mod_edit.c:2004
-#, fuzzy
 msgid "Circle outline"
-msgstr "Scorrimento circolare"
+msgstr "Bordo del cerchio"
 
 #: src/modules/shot/e_mod_edit.c:2006
-#, fuzzy
 msgid "Plain text"
-msgstr "Liscio"
+msgstr "Testo semplice"
 
 #: src/modules/shot/e_mod_edit.c:2007
-#, fuzzy
 msgid "Text box"
-msgstr "Testo"
+msgstr "Area testo"
 
 #: src/modules/shot/e_mod_edit.c:2008
 msgid "Text thought bubble"
-msgstr ""
+msgstr "Testo su fumetto"
 
 #: src/modules/shot/e_mod_edit.c:2009
 msgid "Text thought bubble 2"
-msgstr ""
+msgstr "Testo su fumetto 2"
 
 #: src/modules/shot/e_mod_edit.c:2011
 msgid "Speech bubble"
-msgstr ""
+msgstr "Fumetto a bolla"
 
 #: src/modules/shot/e_mod_edit.c:2012
 msgid "Speech bubble 2"
-msgstr ""
+msgstr "Fumetto a bolla 2"
 
 #: src/modules/shot/e_mod_edit.c:2013
 msgid "Kaboom splat"
-msgstr ""
+msgstr "schianto Kaboom"
 
 #: src/modules/shot/e_mod_edit.c:2014
 msgid "Pow explode"
-msgstr ""
+msgstr "Pow esplosione"
 
 #: src/modules/shot/e_mod_edit.c:2022
-#, fuzzy
 msgid "Color"
-msgstr "Colori"
+msgstr "Colore"
 
 #: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
@@ -9773,9 +9760,8 @@ msgid "Cannot initialize network"
 msgstr "Non riesco ad inizializzare la rete"
 
 #: src/modules/shot/e_mod_main.c:392
-#, fuzzy
 msgid "Take Screenshot with Delay"
-msgstr "Scatta istantanea"
+msgstr "Scatta istantanea con ritardo"
 
 #: src/modules/shot/e_mod_preview.c:93
 msgid "Quality"
@@ -9787,21 +9773,22 @@ msgstr "Salva"
 
 #: src/modules/shot/e_mod_preview.c:111
 msgid "Share"
-msgstr "Condivisione"
+msgstr "Condividi"
 
 #: src/modules/shot/e_mod_save.c:204
-#, fuzzy
 msgid "Error - No Filemanager"
-msgstr "File manager"
+msgstr "Errore - File manager assente"
 
 #: src/modules/shot/e_mod_save.c:205
 msgid ""
 "No filemanager action and/or module was found.<br>Cannot show the location "
 "of your screenshots."
 msgstr ""
+"Nessuna azione e/o modulo del file manager trovati.<br>Non posso mostrare dove "
+"si trovano i tuoi screenshot"
 
 #: src/modules/shot/e_mod_share.c:149
-#, fuzzy, c-format
+#, c-format
 msgid "Uploaded %i%%"
 msgstr "Caricati %s / %s"
 
@@ -9810,7 +9797,7 @@ msgid "Error - Upload Failed"
 msgstr "Errore - upload fallito"
 
 #: src/modules/shot/e_mod_share.c:164
-#, fuzzy, c-format
+#, c-format
 msgid "Upload failed with status code:<ps/>%i"
 msgstr "L'upload è fallito col seguente codice d'uscita:<br>%i"
 
@@ -9827,27 +9814,27 @@ msgid "Screenshot is available at this location:"
 msgstr "L'immagine è disponibile in questa locazione:"
 
 #: src/modules/shot/e_mod_share.c:266
-#, fuzzy
 msgid "Hide"
-msgstr "Scomparsa automatica"
+msgstr "Nascondi"
 
 #: src/modules/shot/e_mod_share.c:315
 msgid "Confirm Share"
 msgstr "Conferma condivisione"
 
 #: src/modules/shot/e_mod_share.c:317
-#, fuzzy
 msgid ""
 "Are you sure you want to upload this image<ps/>publically to these services?"
-msgstr "Siete sicuri di voler rimuovere questa sorgente per Ibar?"
+msgstr ""
+"Siete sicuri di voler fare l'upload di questa immagine visibile "
+"pubblicamente su questi servizi?"
 
 #: src/modules/shot/e_mod_share.c:320
 msgid "Imgur.com"
-msgstr ""
+msgstr "Imgur.com"
 
 #: src/modules/shot/e_mod_share.c:323
 msgid "E.org"
-msgstr ""
+msgstr "E.org"
 
 #: src/modules/tasks/e_mod_main.c:340 src/modules/tasks/e_mod_main.c:855
 msgid "Tasks"
