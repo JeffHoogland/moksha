@@ -67,14 +67,13 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2026, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Urheberrechte &copy; 2024 beim Moksha Entwicklungsteam</><br><br>Wir "
+"<title>Urheberrechte &copy; 2026 beim Moksha Entwicklungsteam</><br><br>Wir "
 "hoffen, ihnen macht das Benutzen dieser Software so viel Spaß, wie uns das "
 "Schreiben.<br><br>Um uns zu Kontaktieren, besuchen Sie bitte:"
 "<br><hilight>http://www.bodhilinux.com</><br><br>"
@@ -9617,60 +9616,53 @@ msgid "Delay"
 msgstr ""
 
 #: src/modules/shot/e_mod_delay.c:61
-#, fuzzy, c-format
+#, c-format
 msgid "%1.1f sec"
-msgstr "%1.1f s"
+msgstr "%1.1f sek"
 
 #: src/modules/shot/e_mod_edit.c:1968
-#, fuzzy
 msgid "Tools"
-msgstr "Kurzinfos"
+msgstr "Werkzeuge"
 
 #: src/modules/shot/e_mod_edit.c:1980
-#, fuzzy
 msgid "Select crop area"
-msgstr "Eins auswählen"
+msgstr "Fläche zum ausschneiden auswählen"
 
 #: src/modules/shot/e_mod_edit.c:1981
-#, fuzzy
 msgid "Modify objects"
-msgstr "Ändern"
+msgstr "Werkzeuge zum bearbeiten"
 
 #: src/modules/shot/e_mod_edit.c:1982
-#, fuzzy
 msgid "Delete objects"
-msgstr "Löschen beendet"
+msgstr "Werkzeuge zum löschen"
 
 #: src/modules/shot/e_mod_edit.c:1991
-#, fuzzy
 msgid "Single arrow line"
-msgstr "Einzelner Mausklick"
+msgstr "Linie mit Pfeil an einem Ende"
 
 #: src/modules/shot/e_mod_edit.c:1992
 msgid "Double arrow line"
-msgstr ""
+msgstr "Linie mit Pfeil an beiden Ende"
 
 #: src/modules/shot/e_mod_edit.c:1993
-#, fuzzy
 msgid "Plain line"
-msgstr "Flach"
+msgstr "Linie"
 
 #: src/modules/shot/e_mod_edit.c:1994
 msgid "Solid box"
-msgstr ""
+msgstr "Rechteck"
 
 #: src/modules/shot/e_mod_edit.c:1996
 msgid "Malloc"
-msgstr ""
+msgstr "Malloc"
 
 #: src/modules/shot/e_mod_edit.c:1997
 msgid "Malloc (evil)"
-msgstr ""
+msgstr "Malloc (böse)"
 
 #: src/modules/shot/e_mod_edit.c:1998
-#, fuzzy
 msgid "Pointing finger"
-msgstr "Mauszeiger"
+msgstr "Zeigefinger"
 
 #: src/modules/shot/e_mod_edit.c:1999
 msgid "Enlightenment logo"
@@ -9678,60 +9670,55 @@ msgstr ""
 
 #: src/modules/shot/e_mod_edit.c:2001
 msgid "Foot"
-msgstr ""
+msgstr "Fuß"
 
 #: src/modules/shot/e_mod_edit.c:2002
 msgid "Silly walk"
-msgstr ""
+msgstr "Alberner Spaziergang"
 
 #: src/modules/shot/e_mod_edit.c:2003
-#, fuzzy
 msgid "Box outline"
-msgstr "Umriss:"
+msgstr "Rahmen"
 
 #: src/modules/shot/e_mod_edit.c:2004
-#, fuzzy
 msgid "Circle outline"
-msgstr "Kreisförmiges Scrollen"
+msgstr "Kreis"
 
 #: src/modules/shot/e_mod_edit.c:2006
-#, fuzzy
 msgid "Plain text"
-msgstr "Flach"
+msgstr "Text"
 
 #: src/modules/shot/e_mod_edit.c:2007
-#, fuzzy
 msgid "Text box"
-msgstr "Text"
+msgstr "Textbox"
 
 #: src/modules/shot/e_mod_edit.c:2008
 msgid "Text thought bubble"
-msgstr ""
+msgstr "Gedankenblase"
 
 #: src/modules/shot/e_mod_edit.c:2009
 msgid "Text thought bubble 2"
-msgstr ""
+msgstr "Textgedankenblase 2"
 
 #: src/modules/shot/e_mod_edit.c:2011
 msgid "Speech bubble"
-msgstr ""
+msgstr "Sprechblase"
 
 #: src/modules/shot/e_mod_edit.c:2012
 msgid "Speech bubble 2"
-msgstr ""
+msgstr "Sprechblase 2"
 
 #: src/modules/shot/e_mod_edit.c:2013
 msgid "Kaboom splat"
-msgstr ""
+msgstr "Kaboom! Patsch!"
 
 #: src/modules/shot/e_mod_edit.c:2014
 msgid "Pow explode"
-msgstr ""
+msgstr "Zack! Explosion"
 
 #: src/modules/shot/e_mod_edit.c:2022
-#, fuzzy
 msgid "Color"
-msgstr "Farben"
+msgstr "Farbe"
 
 #: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
@@ -9746,9 +9733,8 @@ msgid "Cannot initialize network"
 msgstr "Netzwerk kann nicht initialisiert werden"
 
 #: src/modules/shot/e_mod_main.c:392
-#, fuzzy
 msgid "Take Screenshot with Delay"
-msgstr "Bildschirmfoto machen"
+msgstr "Bildschirmfoto mit Verzögerung aufnehmen"
 
 #: src/modules/shot/e_mod_preview.c:93
 msgid "Quality"
@@ -9763,20 +9749,21 @@ msgid "Share"
 msgstr "Teilen"
 
 #: src/modules/shot/e_mod_save.c:204
-#, fuzzy
 msgid "Error - No Filemanager"
-msgstr "Dateimanager"
+msgstr "Fehler - Kein Dateimanager"
 
 #: src/modules/shot/e_mod_save.c:205
 msgid ""
 "No filemanager action and/or module was found.<br>Cannot show the location "
 "of your screenshots."
 msgstr ""
+"Es wurde keine Filemanager Aktion und/oder kein Modul gefunden. <br>Der "
+"Speicherort des Bildschirmfotos kann nicht angezeigt werden."
 
 #: src/modules/shot/e_mod_share.c:149
-#, fuzzy, c-format
+#, c-format
 msgid "Uploaded %i%%"
-msgstr "%s & %s hochgeladen"
+msgstr "Hochladen %i%%"
 
 #: src/modules/shot/e_mod_share.c:163
 msgid "Error - Upload Failed"
@@ -9784,9 +9771,9 @@ msgstr "Fehler - Hochladen fehlgeschlagen"
 
 # No need to translate "code" as code is a widely used term in germany without any proper translation.
 #: src/modules/shot/e_mod_share.c:164
-#, fuzzy, c-format
+#, c-format
 msgid "Upload failed with status code:<ps/>%i"
-msgstr "Hochladen fehlgeschlagen mit Statuscode:<br>%i"
+msgstr "Hochladen fehlgeschlagen mit Statuscode:<ps/>%i"
 
 #: src/modules/shot/e_mod_share.c:246
 msgid "Uploading screenshot"
@@ -9801,9 +9788,8 @@ msgid "Screenshot is available at this location:"
 msgstr "Bildschirmfoto ist an dieser Ort verfügbar:"
 
 #: src/modules/shot/e_mod_share.c:266
-#, fuzzy
 msgid "Hide"
-msgstr "Automatisches Verstecken"
+msgstr "Verstecken"
 
 #: src/modules/shot/e_mod_share.c:315
 msgid "Confirm Share"
@@ -9813,7 +9799,7 @@ msgstr "Teilen bestätigen"
 #, fuzzy
 msgid ""
 "Are you sure you want to upload this image<ps/>publically to these services?"
-msgstr "Möchten Sie diese IBar-Quelle wirklich löschen?"
+msgstr "Sind Sie sicher, dass Sie dieses Bild<ps/>öffentlich auf diese Dienste hochladen möchten?"
 
 #: src/modules/shot/e_mod_share.c:320
 msgid "Imgur.com"
