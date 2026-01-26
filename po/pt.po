@@ -1,24 +1,24 @@
 # Portuguese translation for Moksha.
-# Copyright (C) 2025 Bodhi Linux
+# Copyright (C) 2026 Bodhi Linux
 # This file is public domain.
 # Translators:
 # Sérgio Marques <smarquespt@gmail.com>, 2010-2015.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021-2025.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha 0.4.1\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2026-01-20 18:22+0100\n"
-"PO-Revision-Date: 2025-10-10 23:40+0100\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"PO-Revision-Date: 2026-01-26 11:05+0000\n"
+"Last-Translator: hugokarvalho@hotmail.com <Hugo Carvalho>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -45,14 +45,13 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2026, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Direitos de autor &copy; 2025, pela equipa de desenvolvimento do "
+"<title>Direitos de autor &copy; 2026, pela equipa de desenvolvimento do "
 "Moksha</><br><br>Esperamos que goste de utilizar este software tanto quanto "
 "nós gostamos de o desenvolver<br><br>Para nos contactar, visite a página:"
 "<br><hilight>https://www.bodhilinux.com</><br><br>"
@@ -8196,16 +8195,16 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
-"right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
-"down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
-"hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
-"</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
-"toggle thumb view modes"
+"<hilight>&lt;return&gt;</hilight> run action<br>    "
+"<hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>    "
+"<hilight>&lt;tab&gt;</hilight> toggle between selectors<br>    "
+"<hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on "
+"plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning "
+"with 'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through "
+"plugins<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> go to first/last "
+"item<br>    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this "
+"page ;)<br>    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view "
+"modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
 msgstr ""
 "  Muito bem, aqui vai uma pequena explicação acerca do <hilight>Início "
 "rápido</hilight>...<br>  Basta digitar algumas letras do que está a procurar."
@@ -9530,128 +9529,116 @@ msgstr "Área de notificação do sistema"
 
 #: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
 msgid "Select action to take with screenshot"
-msgstr ""
+msgstr "Selecionar ação a ser realizada com a captura de ecrã"
 
 #: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
 msgid "Delay"
-msgstr ""
+msgstr "Atraso"
 
 #: src/modules/shot/e_mod_delay.c:61
-#, fuzzy, c-format
+#, c-format
 msgid "%1.1f sec"
-msgstr "%1.1f s"
+msgstr "%1.1f seg"
 
 #: src/modules/shot/e_mod_edit.c:1968
-#, fuzzy
 msgid "Tools"
-msgstr "Ajudas"
+msgstr "Ferramentas"
 
 #: src/modules/shot/e_mod_edit.c:1980
-#, fuzzy
 msgid "Select crop area"
-msgstr "Selecionar"
+msgstr "Recorte"
 
 #: src/modules/shot/e_mod_edit.c:1981
-#, fuzzy
 msgid "Modify objects"
-msgstr "Modificar"
+msgstr "Modificar objetos"
 
 #: src/modules/shot/e_mod_edit.c:1982
-#, fuzzy
 msgid "Delete objects"
-msgstr "Eliminação concluída"
+msgstr "Eliminar objetos"
 
 #: src/modules/shot/e_mod_edit.c:1991
-#, fuzzy
 msgid "Single arrow line"
-msgstr "Clique único"
+msgstr "Linha de seta simples"
 
 #: src/modules/shot/e_mod_edit.c:1992
 msgid "Double arrow line"
-msgstr ""
+msgstr "Linha de seta dupla"
 
 #: src/modules/shot/e_mod_edit.c:1993
-#, fuzzy
 msgid "Plain line"
-msgstr "Simples"
+msgstr "Linha simples"
 
 #: src/modules/shot/e_mod_edit.c:1994
 msgid "Solid box"
-msgstr ""
+msgstr "Retângulo sólido"
 
 #: src/modules/shot/e_mod_edit.c:1996
 msgid "Malloc"
-msgstr ""
+msgstr "Gato"
 
 #: src/modules/shot/e_mod_edit.c:1997
 msgid "Malloc (evil)"
-msgstr ""
+msgstr "Gato 2"
 
 #: src/modules/shot/e_mod_edit.c:1998
-#, fuzzy
 msgid "Pointing finger"
-msgstr "Cursor"
+msgstr "Indicador"
 
 #: src/modules/shot/e_mod_edit.c:1999
 msgid "Enlightenment logo"
-msgstr ""
+msgstr "Logótipo do Enlightenment"
 
 #: src/modules/shot/e_mod_edit.c:2001
 msgid "Foot"
-msgstr ""
+msgstr "Pé"
 
 #: src/modules/shot/e_mod_edit.c:2002
 msgid "Silly walk"
-msgstr ""
+msgstr "Andar engraçado"
 
 #: src/modules/shot/e_mod_edit.c:2003
-#, fuzzy
 msgid "Box outline"
-msgstr "Contorno:"
+msgstr "Contorno retangular"
 
 #: src/modules/shot/e_mod_edit.c:2004
-#, fuzzy
 msgid "Circle outline"
-msgstr "Deslocamento circular"
+msgstr "Contorno circular"
 
 #: src/modules/shot/e_mod_edit.c:2006
-#, fuzzy
 msgid "Plain text"
-msgstr "Simples"
+msgstr "Texto simples"
 
 #: src/modules/shot/e_mod_edit.c:2007
-#, fuzzy
 msgid "Text box"
-msgstr "Texto"
+msgstr "Caixa de texto"
 
 #: src/modules/shot/e_mod_edit.c:2008
 msgid "Text thought bubble"
-msgstr ""
+msgstr "Balão de texto"
 
 #: src/modules/shot/e_mod_edit.c:2009
 msgid "Text thought bubble 2"
-msgstr ""
+msgstr "Balão de texto 2"
 
 #: src/modules/shot/e_mod_edit.c:2011
 msgid "Speech bubble"
-msgstr ""
+msgstr "Legenda"
 
 #: src/modules/shot/e_mod_edit.c:2012
 msgid "Speech bubble 2"
-msgstr ""
+msgstr "Legenda 2"
 
 #: src/modules/shot/e_mod_edit.c:2013
 msgid "Kaboom splat"
-msgstr ""
+msgstr "Legenda 3"
 
 #: src/modules/shot/e_mod_edit.c:2014
 msgid "Pow explode"
-msgstr ""
+msgstr "Legenda 4"
 
 #: src/modules/shot/e_mod_edit.c:2022
-#, fuzzy
 msgid "Color"
-msgstr "Cores"
+msgstr "Cor"
 
 #: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
@@ -9666,9 +9653,8 @@ msgid "Cannot initialize network"
 msgstr "Não foi possível iniciar a rede"
 
 #: src/modules/shot/e_mod_main.c:392
-#, fuzzy
 msgid "Take Screenshot with Delay"
-msgstr "Capturar o ecrã"
+msgstr "Captura de ecrã com atraso"
 
 #: src/modules/shot/e_mod_preview.c:93
 msgid "Quality"
@@ -9683,29 +9669,30 @@ msgid "Share"
 msgstr "Partilha"
 
 #: src/modules/shot/e_mod_save.c:204
-#, fuzzy
 msgid "Error - No Filemanager"
-msgstr "Gestor de ficheiros"
+msgstr "Erro - Sem gestor de ficheiros"
 
 #: src/modules/shot/e_mod_save.c:205
 msgid ""
 "No filemanager action and/or module was found.<br>Cannot show the location "
 "of your screenshots."
 msgstr ""
+"Não foi encontrada nenhuma ação e/ou módulo do gestor de ficheiros.<br>Não é "
+"possível mostrar a localização das suas capturas de ecrã."
 
 #: src/modules/shot/e_mod_share.c:149
-#, fuzzy, c-format
+#, c-format
 msgid "Uploaded %i%%"
-msgstr "Enviados %s / %s"
+msgstr "Enviados %i%%"
 
 #: src/modules/shot/e_mod_share.c:163
 msgid "Error - Upload Failed"
 msgstr "Erro - Falha ao enviar"
 
 #: src/modules/shot/e_mod_share.c:164
-#, fuzzy, c-format
+#, c-format
 msgid "Upload failed with status code:<ps/>%i"
-msgstr "Ocorreu um erro ao enviar. Código:<br>%i"
+msgstr "Falha no envio com código de estado:<ps/>%i"
 
 #: src/modules/shot/e_mod_share.c:246
 msgid "Uploading screenshot"
@@ -9720,27 +9707,25 @@ msgid "Screenshot is available at this location:"
 msgstr "A captura está disponível neste local:"
 
 #: src/modules/shot/e_mod_share.c:266
-#, fuzzy
 msgid "Hide"
-msgstr "Ocultar automaticamente"
+msgstr "Ocultar"
 
 #: src/modules/shot/e_mod_share.c:315
 msgid "Confirm Share"
 msgstr "Confirmação de partilha"
 
 #: src/modules/shot/e_mod_share.c:317
-#, fuzzy
 msgid ""
 "Are you sure you want to upload this image<ps/>publically to these services?"
-msgstr "Pretende eliminar este recurso?"
+msgstr "Pretende carregar esta imagem<ps/>publicamente nestes serviços?"
 
 #: src/modules/shot/e_mod_share.c:320
 msgid "Imgur.com"
-msgstr ""
+msgstr "Imgur.com"
 
 #: src/modules/shot/e_mod_share.c:323
 msgid "E.org"
-msgstr ""
+msgstr "E.org"
 
 #: src/modules/tasks/e_mod_main.c:340 src/modules/tasks/e_mod_main.c:855
 msgid "Tasks"
