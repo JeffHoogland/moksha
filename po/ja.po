@@ -9585,29 +9585,25 @@ msgid "Delay"
 msgstr ""
 
 #: src/modules/shot/e_mod_delay.c:61
-#, fuzzy, c-format
+#, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f 秒"
 
 #: src/modules/shot/e_mod_edit.c:1968
-#, fuzzy
 msgid "Tools"
-msgstr "ツールチップ"
+msgstr "ツール"
 
 #: src/modules/shot/e_mod_edit.c:1980
-#, fuzzy
 msgid "Select crop area"
-msgstr "一つ選んでください"
+msgstr "範囲の選択"
 
 #: src/modules/shot/e_mod_edit.c:1981
-#, fuzzy
 msgid "Modify objects"
-msgstr "変更"
+msgstr "オブジェクトの修正"
 
 #: src/modules/shot/e_mod_edit.c:1982
-#, fuzzy
 msgid "Delete objects"
-msgstr "削除終了"
+msgstr "オブジェクトの削除"
 
 #: src/modules/shot/e_mod_edit.c:1991
 #, fuzzy
@@ -9642,7 +9638,7 @@ msgstr "ポインタ"
 
 #: src/modules/shot/e_mod_edit.c:1999
 msgid "Enlightenment logo"
-msgstr ""
+msgstr "Enlightenment ロゴ"
 
 #: src/modules/shot/e_mod_edit.c:2001
 msgid "Foot"
@@ -9663,13 +9659,12 @@ msgid "Circle outline"
 msgstr "円形スクロール"
 
 #: src/modules/shot/e_mod_edit.c:2006
-#, fuzzy
 msgid "Plain text"
-msgstr "普通"
+msgstr "プレーンテキスト"
 
 #: src/modules/shot/e_mod_edit.c:2007
 msgid "Text box"
-msgstr ""
+msgstr "テキストボックス"
 
 #: src/modules/shot/e_mod_edit.c:2008
 msgid "Text thought bubble"
@@ -9696,9 +9691,8 @@ msgid "Pow explode"
 msgstr ""
 
 #: src/modules/shot/e_mod_edit.c:2022
-#, fuzzy
 msgid "Color"
-msgstr "配色"
+msgstr "色"
 
 #: src/modules/shot/e_mod_main.c:346 src/modules/shot/e_mod_main.c:400
 msgid "Take Shot"
@@ -9714,9 +9708,8 @@ msgid "Cannot initialize network"
 msgstr "ネットワークを初期化できません"
 
 #: src/modules/shot/e_mod_main.c:392
-#, fuzzy
 msgid "Take Screenshot with Delay"
-msgstr "スクリーンショットを撮る"
+msgstr "遅延して撮影する"
 
 #: src/modules/shot/e_mod_preview.c:93
 msgid "Quality"
@@ -9731,9 +9724,8 @@ msgid "Share"
 msgstr "共有"
 
 #: src/modules/shot/e_mod_save.c:204
-#, fuzzy
 msgid "Error - No Filemanager"
-msgstr "ファイルマネージャ"
+msgstr "エラー - ファイルマネージャなし"
 
 #: src/modules/shot/e_mod_save.c:205
 msgid ""
@@ -9744,16 +9736,16 @@ msgstr ""
 #: src/modules/shot/e_mod_share.c:149
 #, c-format
 msgid "Uploaded %i%%"
-msgstr ""
+msgstr "%i%% のアップロード完了"
 
 #: src/modules/shot/e_mod_share.c:163
 msgid "Error - Upload Failed"
 msgstr "エラー - アップロード失敗"
 
 #: src/modules/shot/e_mod_share.c:164
-#, fuzzy, c-format
+#, c-format
 msgid "Upload failed with status code:<ps/>%i"
-msgstr "アップロード失敗 - ステータスコード:<br>%i"
+msgstr "アップロード失敗 - ステータスコード:<ps/>%i"
 
 #: src/modules/shot/e_mod_share.c:246
 msgid "Uploading screenshot"
@@ -9768,9 +9760,8 @@ msgid "Screenshot is available at this location:"
 msgstr "スクリーンショットは次の場所から利用できます。"
 
 #: src/modules/shot/e_mod_share.c:266
-#, fuzzy
 msgid "Hide"
-msgstr "自動隠蔽"
+msgstr "隠す"
 
 #
 #: src/modules/shot/e_mod_share.c:315
@@ -9778,10 +9769,9 @@ msgid "Confirm Share"
 msgstr "共有の確認"
 
 #: src/modules/shot/e_mod_share.c:317
-#, fuzzy
 msgid ""
 "Are you sure you want to upload this image<ps/>publically to these services?"
-msgstr "この IBar を本当に削除しますか."
+msgstr "この画像を<ps/>これらのサービスに公開してアップロードしてもよろしいですか？"
 
 #: src/modules/shot/e_mod_share.c:320
 msgid "Imgur.com"
