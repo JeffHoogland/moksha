@@ -375,6 +375,7 @@ e_xkb_layout_set(const E_Config_XKB_Layout *cl)
              break;
           }
      }
+   _e_xkb_update_event(e_config->xkb.cur_group);
    e_config_save_queue();
 }
 
