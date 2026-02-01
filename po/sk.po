@@ -9604,7 +9604,7 @@ msgstr "Ukazovateľ"
 
 #: src/modules/shot/e_mod_edit.c:1999
 msgid "Enlightenment logo"
-msgstr ""
+msgstr "Enlightenment logo"
 
 #: src/modules/shot/e_mod_edit.c:2001
 msgid "Foot"
@@ -9695,6 +9695,8 @@ msgid ""
 "No filemanager action and/or module was found.<br>Cannot show the location "
 "of your screenshots."
 msgstr ""
+"Nebola nájdená žiadna akcia správcu súborov a/alebo modul.<br>"
+"Nie je možné zobraziť umiestnenie vašich snímok obrazovky."
 
 #: src/modules/shot/e_mod_share.c:149
 #, c-format
@@ -9737,11 +9739,11 @@ msgstr "Ste si istý, že chcete tento snímok<ps/>nahrať verejne na server?"
 
 #: src/modules/shot/e_mod_share.c:320
 msgid "Imgur.com"
-msgstr ""
+msgstr "Imgur.com"
 
 #: src/modules/shot/e_mod_share.c:323
 msgid "E.org"
-msgstr ""
+msgstr "E.org"
 
 #: src/modules/tasks/e_mod_main.c:340 src/modules/tasks/e_mod_main.c:855
 msgid "Tasks"

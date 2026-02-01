@@ -9687,6 +9687,8 @@ msgid ""
 "No filemanager action and/or module was found.<br>Cannot show the location "
 "of your screenshots."
 msgstr ""
+"Nebyla nalezena žádná akce správce souborů a/nebo modul.<br>Nelze zobrazit umístění"
+"vašich snímků obrazovky."
 
 #: src/modules/shot/e_mod_share.c:149
 #, c-format
@@ -9729,11 +9731,11 @@ msgstr "Jste si jistí, že chcete nahrát tento soubor <ps/> veřejně na tyhle
 
 #: src/modules/shot/e_mod_share.c:320
 msgid "Imgur.com"
-msgstr ""
+msgstr "Imgur.com"
 
 #: src/modules/shot/e_mod_share.c:323
 msgid "E.org"
-msgstr ""
+msgstr "E.org"
 
 #: src/modules/tasks/e_mod_main.c:340 src/modules/tasks/e_mod_main.c:855
 msgid "Tasks"
