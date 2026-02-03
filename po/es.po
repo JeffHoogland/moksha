@@ -9689,7 +9689,6 @@ msgid "Screenshot is available at this location:"
 msgstr "La captura de pantalla está disponible en esta ubicación:"
 
 #: src/modules/shot/e_mod_share.c:266
-#, fuzzy
 msgid "Hide"
 msgstr "Ocultar"
 
@@ -9698,7 +9697,6 @@ msgid "Confirm Share"
 msgstr "Confirmar compartición"
 
 #: src/modules/shot/e_mod_share.c:317
-#, fuzzy
 msgid ""
 "Are you sure you want to upload this image<ps/>publically to these services?"
 msgstr "¿¿Estás seguro de que deseas subir esta imagen<ps/>públicamente a estos servicios?"
