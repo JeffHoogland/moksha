@@ -56,6 +56,8 @@ _cb_key_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
 
    if (!strcmp(ev->key, "Escape"))
      E_FREE_FUNC(win, evas_object_del);
+   if (!strcmp(ev->key, "c") && evas_key_modifier_is_set(ev->modifiers, "Control"))
+     _win_copy_cb(NULL, NULL);
 }
 
 void
