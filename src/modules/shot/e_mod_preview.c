@@ -53,11 +53,14 @@ static void
 _cb_key_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    Evas_Event_Key_Down *ev = event;
-
+   
+   /* ESC: dialog del */
    if (!strcmp(ev->key, "Escape"))
      E_FREE_FUNC(win, evas_object_del);
+   /* CTRL C: copy to clipboard */
    if (!strcmp(ev->key, "c") && evas_key_modifier_is_set(ev->modifiers, "Control"))
      _win_copy_cb(NULL, NULL);
+   /* CTRL S: save to file */
    if (!strcmp(ev->key, "s") && evas_key_modifier_is_set(ev->modifiers, "Control"))
      _win_save_cb(NULL, NULL);
 }
