@@ -184,38 +184,38 @@ elm_main(int argc, char **argv)
                                                _upload_complete_cb, NULL);
                   if ((h1) && (h2) && (h3))
                     {
-                       switch (server)
-                         {
-                            case 0:
-                              break;
-                            case 1: 
-                              url_up = ecore_con_url_new(IMGUR);
-                              if (url_up)
-                                {
-                                   ecore_con_url_additional_header_add(url_up, "Authorization",
-                                              "Client-ID 67aecc7e6662370");
-                                   ecore_con_url_http_version_set
-                                     (url_up, ECORE_CON_URL_HTTP_VERSION_1_0);
-                                   ecore_con_url_post
-                                     (url_up, fdata, fsize, IMGUR_STRING);
-                                   elm_run();
-                                }
-                              break;
-                            case 2:
-                              url_up = ecore_con_url_new(E_ORG);
-                              if (url_up)
-                                {
-                                   ecore_con_url_http_version_set
-                                   (url_up, ECORE_CON_URL_HTTP_VERSION_1_0);
-                                   ecore_con_url_post
-                                   (url_up, fdata, fsize, E_ORG_STRING);
-                                   elm_run();
-                                }
-                              break;
+                      switch (server)
+                        {
+                           case 0:
+                             break;
+                           case 1:
+                             url_up = ecore_con_url_new(IMGUR);
+                             if (url_up)
+                               {
+                                  ecore_con_url_additional_header_add(url_up, "Authorization",
+                                             "Client-ID 67aecc7e6662370");
+                                  ecore_con_url_http_version_set
+                                    (url_up, ECORE_CON_URL_HTTP_VERSION_1_0);
+                                  ecore_con_url_post
+                                    (url_up, fdata, fsize, IMGUR_STRING);
+                                  elm_run();
+                               }
+                             break;
+                           case 2:
+                             url_up = ecore_con_url_new(E_ORG);
+                             if (url_up)
+                               {
+                                  ecore_con_url_http_version_set
+                                  (url_up, ECORE_CON_URL_HTTP_VERSION_1_0);
+                                  ecore_con_url_post
+                                  (url_up, fdata, fsize, E_ORG_STRING);
+                                  elm_run();
+                               }
+                             break;
                            default:
-                              break;
-                       }
-                   }
+                             break;
+                        }
+                    }
                   ecore_event_handler_del(h1);
                   ecore_event_handler_del(h2);
                   ecore_event_handler_del(h3);
