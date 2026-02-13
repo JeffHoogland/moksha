@@ -9701,7 +9701,7 @@ msgstr ""
 #: src/modules/shot/e_mod_share.c:149
 #, c-format
 msgid "Uploaded %i%%"
-msgstr "Nahrané %s / %s"
+msgstr "Nahrané %i%%"
 
 #: src/modules/shot/e_mod_share.c:163
 msgid "Error - Upload Failed"

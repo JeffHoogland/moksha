@@ -9693,7 +9693,7 @@ msgstr ""
 #: src/modules/shot/e_mod_share.c:149
 #, c-format
 msgid "Uploaded %i%%"
-msgstr "Odesláno %s / %s"
+msgstr "Odesláno %i%%"
 
 #: src/modules/shot/e_mod_share.c:163
 msgid "Error - Upload Failed"
