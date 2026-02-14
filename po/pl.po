@@ -9638,7 +9638,7 @@ msgstr "Zwykły tekst"
 
 #: src/modules/shot/e_mod_edit.c:2007
 msgid "Text box"
-msgstr "Obszar tekstowy
+msgstr "Obszar tekstowy"
 
 #: src/modules/shot/e_mod_edit.c:2008
 msgid "Text thought bubble"
