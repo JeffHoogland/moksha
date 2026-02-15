@@ -176,7 +176,6 @@ save_show(Eina_Bool copy)
    const char *dirs[] = { "shots", NULL };
    time_t tt;
    struct tm *tm;
-   E_Action *a;
 
    ecore_file_mksubdirs(e_user_dir_get(), dirs);
    time(&tt);
@@ -194,16 +193,25 @@ save_show(Eina_Bool copy)
    if (!ecore_file_exists(path2)) ecore_file_cp(path, path2);
    if (!copy)
      {
-        a = e_action_find("fileman");
-        if (a)
+        char exec[PATH_MAX];
+        const char *home;
+        E_Zone *zone = NULL;
+        E_Exec_Instance *exe_inst = NULL;
+
+        zone = e_util_zone_current_get(e_manager_current_get());
+        home = "$E_HOME_DIR/shots";
+
+        if (home)
           {
-             a->func.go(NULL, "$E_HOME_DIR/shots");
-          }
-        else
-          e_util_dialog_show
-            (_("Error - No Filemanager"),
-             _("No filemanager action and/or module was found.<br>"
-               "Cannot show the location of your screenshots."));
+            int ret = snprintf(exec, sizeof(exec), "xdg-open %s", home);
+            if ((ret >= 0))
+              exe_inst = e_exec(zone, NULL, exec, NULL, NULL);
+            if (!exe_inst)
+              e_util_dialog_show
+               (_("Error - No Filemanager"),
+                _("No filemanager action and/or module was found.<br>"
+                  "Cannot show the location of your screenshots."));
+         }
      }
    preview_abort();
 }
