@@ -127,6 +127,25 @@ imgur_link_from_string(const char *s)
    return out;
 }
 
+static char *
+url_to_https(const char *url)
+{
+    if (!url) return NULL;
+
+    if (strncmp(url, "http://", 7) != 0)
+       return strdup(url);
+
+    Eina_Strbuf *buf = eina_strbuf_new();
+    if (!buf) return NULL;
+
+    eina_strbuf_append(buf, url);
+    eina_strbuf_insert(buf, "s", 4);
+    char *result = strdup(eina_strbuf_string_get(buf));
+    eina_strbuf_free(buf);
+
+    return result;
+}
+
 static Eina_Bool
 _img_write_out_cb(void *data, int ev_type __UNUSED__, void *event)
 {
@@ -154,7 +173,9 @@ _img_write_out_cb(void *data, int ev_type __UNUSED__, void *event)
           {
              const char *r = l + 2;
              // finished - got final url
-             if (!url_ret) url_ret = strdup(r);
+             char *url = url_to_https(r);
+             if (!url_ret) url_ret = strdup(url);
+             free(url);
           }
         else if ((l[0] == 'E') && (l[1] == ' '))
           {
