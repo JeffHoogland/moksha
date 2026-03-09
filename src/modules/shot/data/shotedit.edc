@@ -120,8 +120,12 @@ collections {
           rel1.offset: _x1 _y1; \
           rel2.offset: _x2 _y2; \
           rel2.relative: _rel; \
-          color: 255 255 255 255; \
+          color: 200 200 200 255; \
           offscale; \
+        } \
+        description { state: "in" 0.0; \
+           inherit: "default"; \
+           color: 255 255 255 255; \
         } \
       } \
       part { name: "mod-"_name"2"; type: RECT; \
@@ -132,8 +136,12 @@ collections {
           rel1.offset: _x3 _y3; \
           rel2.offset: _x4 _y4; \
           rel2.relative: _rel; \
-          color: 255 255 255 255; \
+          color: 200 200 200 255; \
           offscale; \
+        } \
+        description { state: "in" 0.0; \
+           inherit: "default"; \
+           color: 255 255 255 255; \
         } \
       } \
       part { name: "mod-"_name"h1"; type: RECT; \
@@ -162,15 +170,25 @@ collections {
       } \
       program { signal: "mouse,down,1"; source: "mod-"_name"h*"; \
         action: SIGNAL_EMIT "action,resize,"_name",begin" "e"; \
+      } \
+      program { signal: "mouse,in"; source: "mod-"_name"h*"; \
+        action: STATE_SET "in" 0.0; \
+        target: "mod-"_name"1"; \
+        target: "mod-"_name"2"; \
+      } \
+      program { signal: "mouse,out"; source: "mod-"_name"h*"; \
+        action: STATE_SET "default" 0.0; \
+        target: "mod-"_name"1"; \
+        target: "mod-"_name"2"; \
       }
 
-      HANDLE("tl", "rel1", "rel1", 0.0 0.0, -18, -4, 17, -1, -4, -18, -1, 17,
+      HANDLE("tl", "rel1", "rel1", 0.0 0.0, 0, -4, 17, -1, -4, 0, -1, 17,
              -36, -36, 17, -1, -36, -36,  -1, 17)
-      HANDLE("tr", "rel2", "rel1", 1.0 0.0, -18, -4, 17, -1,  0, -18,  3, 17,
+      HANDLE("tr", "rel2", "rel1", 1.0 0.0, -18, -4, 0, -1, 0, 0,  3, 17,
              -18, -36, 35, -1,   0, -36,  35, 35)
-      HANDLE("bl", "rel1", "rel2", 0.0 1.0, -18,  0, 17,  3, -4, -18, -1, 17,
+      HANDLE("bl", "rel1", "rel2", 0.0 1.0, 0, 0, 17, 3, -4, -18, -1, 0,
              -36,   0, 17, 35, -36, -18,  -1, 35)
-      HANDLE("br", "rel2", "rel2", 1.0 1.0, -18,  0, 17,  3,  0, -18,  3, 17,
+      HANDLE("br", "rel2", "rel2", 1.0 1.0, -18, 0, 0, 3, 0, -18,  3, 0,
              -18,   0, 35, 35,   0, -36,  35, 35)
     }
   }
