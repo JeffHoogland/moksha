@@ -27,7 +27,7 @@ static Tool_Mode tool_mode = TOOL_NONE;
 static int color_sel = 0;
 Tool_Color color[2] =
 {
-   { 255, 255, 255, 255 },
+   { 255, 0, 0, 255 },
    {   0,   0,   0, 255 }
 };
 
