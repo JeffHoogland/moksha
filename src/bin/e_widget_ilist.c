@@ -712,7 +712,7 @@ e_widget_ilist_nth_value_get(Evas_Object *obj, int n)
  * Return if the given item returned by e_widget_ilist_items_get()
  * is a header.
  *
- * This avoid expensive lookups to the nth element, however it's not
+ * This avoids expensive lookups to the nth element, however it's not
  * able to check any validity on the given pointer and may crash. Be
  * sure to use only with valid return of e_widget_ilist_items_get().
  */
@@ -725,7 +725,7 @@ e_widget_ilist_item_is_header(const E_Ilist_Item *it)
 /**
  * Return the label of given item returned by e_widget_ilist_items_get().
  *
- * This avoid expensive lookups to the nth element, however it's not
+ * This avoids expensive lookups to the nth element, however it's not
  * able to check any validity on the given pointer and may crash. Be
  * sure to use only with valid return of e_widget_ilist_items_get().
  */
@@ -738,7 +738,7 @@ e_widget_ilist_item_label_get(const E_Ilist_Item *it)
 /**
  * Return the icon of given item returned by e_widget_ilist_items_get().
  *
- * This avoid expensive lookups to the nth element, however it's not
+ * This avoids expensive lookups to the nth element, however it's not
  * able to check any validity on the given pointer and may crash. Be
  * sure to use only with valid return of e_widget_ilist_items_get().
  *
@@ -753,7 +753,7 @@ e_widget_ilist_item_icon_get(const E_Ilist_Item *it)
 /**
  * Return the end of given item returned by e_widget_ilist_items_get().
  *
- * This avoid expensive lookups to the nth element, however it's not
+ * This avoids expensive lookups to the nth element, however it's not
  * able to check any validity on the given pointer and may crash. Be
  * sure to use only with valid return of e_widget_ilist_items_get().
  *
@@ -768,7 +768,7 @@ e_widget_ilist_item_end_get(const E_Ilist_Item *it)
 /**
  * Return the data of given item returned by e_widget_ilist_items_get().
  *
- * This avoid expensive lookups to the nth element, however it's not
+ * This avoids expensive lookups to the nth element, however it's not
  * able to check any validity on the given pointer and may crash. Be
  * sure to use only with valid return of e_widget_ilist_items_get().
  *
