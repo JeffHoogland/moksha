@@ -49,6 +49,7 @@ e_int_config_transitions(E_Container *con, const char *params __UNUSED__)
    return cfd;
 }
 
+
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
@@ -201,7 +202,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    EINA_LIST_FOREACH(e_theme_transition_list(), l, t)
      {
         if (!t) continue;
-        t[0] = toupper(t[0]);
         e_widget_ilist_append(il, NULL, t, _trans_cb_changed, cfdata, NULL);
      }
 
@@ -216,7 +216,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    il = _trans_preview_add(cfdata, evas, 200, ((200 * zone->h) / zone->w));
    e_widget_framelist_object_append(of, il);
    e_widget_table_object_append(o, of, 0, 1, 2, 1, 1, 1, 1, 1);
-
 
    return o;
 }
@@ -274,15 +273,14 @@ static void
 _trans_cb_changed(void *data)
 {
    E_Config_Dialog_Data *cfdata;
-   char *t;
+   const char *t;
    int sel;
 
    cfdata = data;
    sel = e_widget_ilist_selected_get(cfdata->event_list);
 
-   t = (char *)e_widget_ilist_selected_label_get(cfdata->trans_list);
+   t = e_widget_ilist_selected_label_get(cfdata->trans_list);
    if (!t) return;
-   t[0] = tolower(t[0]);
 
    if (!strcmp(t, _("None"))) t = NULL;
    switch (sel)
