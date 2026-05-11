@@ -207,6 +207,14 @@ preview_dialog_show(E_Zone *zone, E_Border *bd, const char *params, void *dst,
         elm_win_center(win, 1, 1);
         evas_object_show(win);
         //~ e_win_border_icon_set(win, "screenshot");
+        Ecore_X_Window xwin;
+        E_Border *border;
+
+        xwin = elm_win_xwindow_get(win);
+
+        border = e_border_find_by_client_window(xwin);
+        border->internal_icon = eina_stringshare_add("screenshot");
+
         if (!e_widget_focus_get(o_bg)) e_widget_focus_set(o_box, 1);
         //~ if (bd)
           //~ {
