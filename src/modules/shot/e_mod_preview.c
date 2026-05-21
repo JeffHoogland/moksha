@@ -81,6 +81,8 @@ preview_dialog_show(E_Zone *zone, E_Border *bd, const char *params, void *dst,
    int w, h;
    char smode[128], squal[128], sscreen[128];
    Evas_Modifier_Mask mask;
+   Ecore_X_Window xwin;
+   E_Border *border;
 
    win = o = elm_win_add(NULL, NULL, ELM_WIN_BASIC);
    evas = evas_object_evas_get(o);
@@ -206,12 +208,8 @@ preview_dialog_show(E_Zone *zone, E_Border *bd, const char *params, void *dst,
         evas_object_resize(win, minw, minh);
         elm_win_center(win, 1, 1);
         evas_object_show(win);
-        //~ e_win_border_icon_set(win, "screenshot");
-        Ecore_X_Window xwin;
-        E_Border *border;
 
         xwin = elm_win_xwindow_get(win);
-
         border = e_border_find_by_client_window(xwin);
         border->internal_icon = eina_stringshare_add("screenshot");
 
