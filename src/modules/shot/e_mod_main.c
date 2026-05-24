@@ -99,7 +99,7 @@ _shot_now(E_Zone *zone, E_Border *bd, const char *params)
    Ecore_X_Window_Attributes watt;
    Ecore_X_Colormap colormap;
 
-   if (preview_have() || share_have() || (snap)) return;
+   if (share_have() || (snap)) return;
    if ((!zone) && (!bd)) return;
 
    Ecore_Evas *ee = ecore_evas_buffer_new(1, 1);
