@@ -36,7 +36,6 @@ set_color(Evas_Object *o, int r, int g, int b, int a)
    evas_object_color_set(o, r, g, b, a);
 }
 
-/* animation */
 static Eina_Bool
 animate(void *data, double pos)
 {
@@ -49,7 +48,6 @@ animate(void *data, double pos)
        return ECORE_CALLBACK_CANCEL;
      }
 
-   /* easing */
    double g = 1.0 - pow(1.0 - pos, 3.0);
 
    int size = 60 + (int)(g * 120);
@@ -95,7 +93,7 @@ animate(void *data, double pos)
        set_color(squares[i], 255, 140, 0, alpha);
      }
 
-    return ECORE_CALLBACK_RENEW;
+   return ECORE_CALLBACK_RENEW;
 }
 
 int find_cur(void)
@@ -103,7 +101,6 @@ int find_cur(void)
    App *app;
    app = E_NEW(App, 1);
 
-   /* overlay window */
    app->ee = ecore_evas_new(NULL, 0, 0, 1, 1, NULL);
    
    if (!app->ee)
@@ -123,14 +120,6 @@ int find_cur(void)
    app->square1 = evas_object_rectangle_add(app->evas);
    app->square2 = evas_object_rectangle_add(app->evas);
    app->square3 = evas_object_rectangle_add(app->evas);
-
-   evas_object_show(app->square1);
-   evas_object_show(app->square2);
-   evas_object_show(app->square3);
-
-   evas_object_color_set(app->square1, 255, 140, 0, 255);
-   evas_object_color_set(app->square2, 255, 140, 0, 255);
-   evas_object_color_set(app->square3, 255, 140, 0, 255);
 
    ecore_animator_timeline_add(DURATION, animate, app);
 
