@@ -40,6 +40,12 @@ static Eina_Bool
 animate(void *data, double pos)
 {
    App *app = data;
+   E_Manager *man = e_manager_current_get();
+   E_Container *con;
+   E_Zone *zone;
+   Eina_List *l;
+   int base, size, min_size, max_size;
+   int x, y, cx, cy;
 
    if (pos >= 1.0)
      {
@@ -50,16 +56,28 @@ animate(void *data, double pos)
 
    double g = 1.0 - pow(1.0 - pos, 3.0);
 
-   int size = 60 + (int)(g * 120);
+   con = e_container_current_get(e_manager_current_get());
+   EINA_LIST_FOREACH(man->containers, l, con)
+     {
+       zone = e_container_zone_at_point_get(con, app->mx, app->my);
+       if (zone) break;
+     }
 
-   int x = app->mx - size / 2;
-   int y = app->my - size / 2;
+   base = MIN(zone->w, zone->h);
+
+   min_size = base * 0.06;
+   max_size = base * 0.16;
+
+   size = min_size + (int)(g * (max_size - min_size));
+
+   x = app->mx - size / 2;
+   y = app->my - size / 2;
 
    ecore_evas_move(app->ee, x, y);
    ecore_evas_resize(app->ee, size, size);
 
-   int cx = size / 2;
-   int cy = size / 2;
+   cx = size / 2;
+   cy = size / 2;
 
    Evas_Object *squares[3] = {
        app->square1,
@@ -116,7 +134,6 @@ int find_cur(void)
    ecore_evas_show(app->ee);
 
    app->evas = ecore_evas_get(app->ee);
-   
    app->square1 = evas_object_rectangle_add(app->evas);
    app->square2 = evas_object_rectangle_add(app->evas);
    app->square3 = evas_object_rectangle_add(app->evas);
