@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha 0.4.1.17786\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2026-01-20 18:22+0100\n"
+"POT-Creation-Date: 2026-06-13 07:08+0200\n"
 "PO-Revision-Date: 2025-01-01 08:30+0100\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Czech\n"
@@ -870,8 +870,8 @@ msgstr "Vybrat"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:120
-#: src/modules/shot/e_mod_share.c:267 src/modules/shot/e_mod_share.c:326
+#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:140
+#: src/modules/shot/e_mod_share.c:288 src/modules/shot/e_mod_share.c:347
 #: src/modules/xkbswitch/e_mod_config.c:587
 msgid "Cancel"
 msgstr "Zrušit"
@@ -1254,7 +1254,7 @@ msgid "Cut"
 msgstr "Vystřihnout"
 
 #: src/bin/e_entry.c:514 src/bin/e_fm.c:9123 src/bin/e_fm.c:11650
-#: src/modules/shot/e_mod_preview.c:113
+#: src/modules/shot/e_mod_preview.c:131
 msgid "Copy"
 msgstr "Kopírovat"
 
@@ -2392,9 +2392,9 @@ msgstr "Statický"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
-#: src/modules/conf_theme/e_int_config_transitions.c:199
-#: src/modules/conf_theme/e_int_config_transitions.c:254
-#: src/modules/conf_theme/e_int_config_transitions.c:287
+#: src/modules/conf_theme/e_int_config_transitions.c:200
+#: src/modules/conf_theme/e_int_config_transitions.c:253
+#: src/modules/conf_theme/e_int_config_transitions.c:285
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:99
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:112
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:126
@@ -5389,7 +5389,7 @@ msgid "Signal Bindings Settings"
 msgstr "Nastavení vazeb na signály"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
-#: src/modules/conf_interaction/e_mod_main.c:17
+#: src/modules/conf_interaction/e_mod_main.c:156
 #: src/modules/conf_keybindings/e_mod_main.c:42
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
@@ -5459,6 +5459,7 @@ msgid "Idle effects"
 msgstr "Efekty nečinnosti"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:323
+#: src/modules/conf_interaction/e_mod_main.c:171
 msgid "Cursor"
 msgstr "Kurzor"
 
@@ -5538,13 +5539,17 @@ msgstr "Skrolování dvěma prsty"
 msgid "Circular scrolling"
 msgstr "Skrolování kroužením"
 
-#: src/modules/conf_interaction/e_mod_main.c:20
+#: src/modules/conf_interaction/e_mod_main.c:159
 msgid "Touch"
 msgstr "Dotek"
 
-#: src/modules/conf_interaction/e_mod_main.c:24
+#: src/modules/conf_interaction/e_mod_main.c:163
 msgid "Mouse and Touchpad"
 msgstr "Myš a Touchpas"
+
+#: src/modules/conf_interaction/e_mod_main.c:171
+msgid "Find Cursor"
+msgstr "Najít kurzor"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -7010,24 +7015,24 @@ msgstr "Zobrazovat úvodní obrazovku při přihlášení"
 msgid "Transition Settings"
 msgstr "Nastavení přechodů"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:173
+#: src/modules/conf_theme/e_int_config_transitions.c:174
 msgid "Events"
 msgstr "Události"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:181
+#: src/modules/conf_theme/e_int_config_transitions.c:182
 #: src/modules/conf_theme/e_mod_main.c:263
 msgid "Startup"
 msgstr "Spuštění"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:182
+#: src/modules/conf_theme/e_int_config_transitions.c:183
 msgid "Desk Change"
 msgstr "Změna plochy"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:183
+#: src/modules/conf_theme/e_int_config_transitions.c:184
 msgid "Background Change"
 msgstr "Změna pozadí"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:191
+#: src/modules/conf_theme/e_int_config_transitions.c:192
 #: src/modules/conf_theme/e_mod_main.c:257
 msgid "Transitions"
 msgstr "Přechody"
@@ -9537,11 +9542,11 @@ msgstr "Systray nemůže pracovat v panelu, který je nastaven, aby byl pod vš�
 msgid "Systray"
 msgstr "Upozorňovací oblast"
 
-#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
+#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:89
 msgid "Select action to take with screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
+#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:136
 msgid "Delay"
 msgstr ""
 
@@ -9666,74 +9671,75 @@ msgstr "Nemohu inicializovat síť"
 msgid "Take Screenshot with Delay"
 msgstr "Snímek obrazovky s prodlevou"
 
-#: src/modules/shot/e_mod_preview.c:93
+#: src/modules/shot/e_mod_preview.c:109
 msgid "Quality"
 msgstr "Kvalita"
 
-#: src/modules/shot/e_mod_preview.c:109
+#: src/modules/shot/e_mod_preview.c:125
 msgid "Save"
 msgstr "Uložit"
 
-#: src/modules/shot/e_mod_preview.c:111
+#: src/modules/shot/e_mod_preview.c:128
 msgid "Share"
 msgstr "Sdílet"
 
-#: src/modules/shot/e_mod_save.c:204
+#: src/modules/shot/e_mod_save.c:211
 msgid "Error - No Filemanager"
 msgstr "Chybí Správce souborů"
 
-#: src/modules/shot/e_mod_save.c:205
+#: src/modules/shot/e_mod_save.c:212
 msgid ""
 "No filemanager action and/or module was found.<br>Cannot show the location "
 "of your screenshots."
 msgstr ""
-"Nebyla nalezena žádná akce správce souborů a/nebo modul.<br>Nelze zobrazit umístění"
-"vašich snímků obrazovky."
+"Nebyla nalezena žádná akce správce souborů a/nebo modul.<br>Nelze zobrazit "
+"umístěnívašich snímků obrazovky."
 
-#: src/modules/shot/e_mod_share.c:149
+#: src/modules/shot/e_mod_share.c:168
 #, c-format
 msgid "Uploaded %i%%"
 msgstr "Odesláno %i%%"
 
-#: src/modules/shot/e_mod_share.c:163
+#: src/modules/shot/e_mod_share.c:184
 msgid "Error - Upload Failed"
 msgstr "Chyba - odesílání selhalo"
 
-#: src/modules/shot/e_mod_share.c:164
+#: src/modules/shot/e_mod_share.c:185
 #, c-format
 msgid "Upload failed with status code:<ps/>%i"
 msgstr "Odesílání selhalo s návratovou hodnotou:<br>%i"
 
-#: src/modules/shot/e_mod_share.c:246
+#: src/modules/shot/e_mod_share.c:267
 msgid "Uploading screenshot"
 msgstr "Odesílám snímek obrazovky"
 
-#: src/modules/shot/e_mod_share.c:252
+#: src/modules/shot/e_mod_share.c:273
 msgid "Uploading ..."
 msgstr "Odesílám ..."
 
-#: src/modules/shot/e_mod_share.c:257
+#: src/modules/shot/e_mod_share.c:278
 msgid "Screenshot is available at this location:"
 msgstr "Snímek obrazovky je dostupný zde:"
 
-#: src/modules/shot/e_mod_share.c:266
+#: src/modules/shot/e_mod_share.c:287
 msgid "Hide"
 msgstr "Skrýt"
 
-#: src/modules/shot/e_mod_share.c:315
+#: src/modules/shot/e_mod_share.c:336
 msgid "Confirm Share"
 msgstr "Potvrdit sdílení"
 
-#: src/modules/shot/e_mod_share.c:317
+#: src/modules/shot/e_mod_share.c:338
 msgid ""
 "Are you sure you want to upload this image<ps/>publically to these services?"
-msgstr "Jste si jistí, že chcete nahrát tento soubor <ps/> veřejně na tyhle serveri?"
+msgstr ""
+"Jste si jistí, že chcete nahrát tento soubor <ps/> veřejně na tyhle serveri?"
 
-#: src/modules/shot/e_mod_share.c:320
+#: src/modules/shot/e_mod_share.c:341
 msgid "Imgur.com"
 msgstr "Imgur.com"
 
-#: src/modules/shot/e_mod_share.c:323
+#: src/modules/shot/e_mod_share.c:344
 msgid "E.org"
 msgstr "E.org"
 

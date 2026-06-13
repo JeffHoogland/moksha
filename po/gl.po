@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2026-01-20 18:22+0100\n"
+"POT-Creation-Date: 2026-06-13 07:08+0200\n"
 "PO-Revision-Date: 2013-09-19 10:28+0000\n"
 "Last-Translator: Miguel Anxo Bouzada <mbouzada@gmail.com>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
@@ -879,8 +879,8 @@ msgstr "Seleccionar"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:120
-#: src/modules/shot/e_mod_share.c:267 src/modules/shot/e_mod_share.c:326
+#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:140
+#: src/modules/shot/e_mod_share.c:288 src/modules/shot/e_mod_share.c:347
 #: src/modules/xkbswitch/e_mod_config.c:587
 msgid "Cancel"
 msgstr "Cancelar"
@@ -1271,7 +1271,7 @@ msgid "Cut"
 msgstr "Cortar"
 
 #: src/bin/e_entry.c:514 src/bin/e_fm.c:9123 src/bin/e_fm.c:11650
-#: src/modules/shot/e_mod_preview.c:113
+#: src/modules/shot/e_mod_preview.c:131
 msgid "Copy"
 msgstr "Copiar"
 
@@ -2416,9 +2416,9 @@ msgstr "Estático"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
-#: src/modules/conf_theme/e_int_config_transitions.c:199
-#: src/modules/conf_theme/e_int_config_transitions.c:254
-#: src/modules/conf_theme/e_int_config_transitions.c:287
+#: src/modules/conf_theme/e_int_config_transitions.c:200
+#: src/modules/conf_theme/e_int_config_transitions.c:253
+#: src/modules/conf_theme/e_int_config_transitions.c:285
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:99
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:112
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:126
@@ -5422,7 +5422,7 @@ msgid "Signal Bindings Settings"
 msgstr "Preferencias da asociación de sinais"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
-#: src/modules/conf_interaction/e_mod_main.c:17
+#: src/modules/conf_interaction/e_mod_main.c:156
 #: src/modules/conf_keybindings/e_mod_main.c:42
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
@@ -5493,6 +5493,7 @@ msgid "Idle effects"
 msgstr "Efectos da inactividade"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:323
+#: src/modules/conf_interaction/e_mod_main.c:171
 msgid "Cursor"
 msgstr "Cursor"
 
@@ -5580,14 +5581,19 @@ msgstr "Desprazamento animado"
 msgid "Circular scrolling"
 msgstr "Desprazamento animado"
 
-#: src/modules/conf_interaction/e_mod_main.c:20
+#: src/modules/conf_interaction/e_mod_main.c:159
 msgid "Touch"
 msgstr "Táctil"
 
-#: src/modules/conf_interaction/e_mod_main.c:24
+#: src/modules/conf_interaction/e_mod_main.c:163
 #, fuzzy
 msgid "Mouse and Touchpad"
 msgstr "Man para o rato"
+
+#: src/modules/conf_interaction/e_mod_main.c:171
+#, fuzzy
+msgid "Find Cursor"
+msgstr "Cursor"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -7077,24 +7083,24 @@ msgstr "Amosar a pantalla de presentación no arranque"
 msgid "Transition Settings"
 msgstr "Preferencias de transición"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:173
+#: src/modules/conf_theme/e_int_config_transitions.c:174
 msgid "Events"
 msgstr "Eventos"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:181
+#: src/modules/conf_theme/e_int_config_transitions.c:182
 #: src/modules/conf_theme/e_mod_main.c:263
 msgid "Startup"
 msgstr "Arranque"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:182
+#: src/modules/conf_theme/e_int_config_transitions.c:183
 msgid "Desk Change"
 msgstr "Cambiar escritorio"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:183
+#: src/modules/conf_theme/e_int_config_transitions.c:184
 msgid "Background Change"
 msgstr "Cambiar fondo"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:191
+#: src/modules/conf_theme/e_int_config_transitions.c:192
 #: src/modules/conf_theme/e_mod_main.c:257
 msgid "Transitions"
 msgstr "Transicións"
@@ -9637,11 +9643,11 @@ msgstr "A bandexa do sistema non funciona nun panel que esta debaixo de todo."
 msgid "Systray"
 msgstr "Bandexa do sistema"
 
-#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
+#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:89
 msgid "Select action to take with screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
+#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:136
 msgid "Delay"
 msgstr ""
 
@@ -9779,75 +9785,75 @@ msgstr "Non se pode iniciar a rede"
 msgid "Take Screenshot with Delay"
 msgstr "Capturar pantalla"
 
-#: src/modules/shot/e_mod_preview.c:93
+#: src/modules/shot/e_mod_preview.c:109
 msgid "Quality"
 msgstr "Calidade"
 
-#: src/modules/shot/e_mod_preview.c:109
+#: src/modules/shot/e_mod_preview.c:125
 msgid "Save"
 msgstr "Gardar"
 
-#: src/modules/shot/e_mod_preview.c:111
+#: src/modules/shot/e_mod_preview.c:128
 msgid "Share"
 msgstr "Compartir"
 
-#: src/modules/shot/e_mod_save.c:204
+#: src/modules/shot/e_mod_save.c:211
 #, fuzzy
 msgid "Error - No Filemanager"
 msgstr "Xestor de ficheiros"
 
-#: src/modules/shot/e_mod_save.c:205
+#: src/modules/shot/e_mod_save.c:212
 msgid ""
 "No filemanager action and/or module was found.<br>Cannot show the location "
 "of your screenshots."
 msgstr ""
 
-#: src/modules/shot/e_mod_share.c:149
+#: src/modules/shot/e_mod_share.c:168
 #, fuzzy, c-format
 msgid "Uploaded %i%%"
 msgstr "Subido %s / %s"
 
-#: src/modules/shot/e_mod_share.c:163
+#: src/modules/shot/e_mod_share.c:184
 msgid "Error - Upload Failed"
 msgstr "Erro - Envío fallido"
 
-#: src/modules/shot/e_mod_share.c:164
+#: src/modules/shot/e_mod_share.c:185
 #, fuzzy, c-format
 msgid "Upload failed with status code:<ps/>%i"
 msgstr "A subida fallou co código de estado:<br>%i"
 
-#: src/modules/shot/e_mod_share.c:246
+#: src/modules/shot/e_mod_share.c:267
 msgid "Uploading screenshot"
 msgstr "Subindo captura de pantalla"
 
-#: src/modules/shot/e_mod_share.c:252
+#: src/modules/shot/e_mod_share.c:273
 msgid "Uploading ..."
 msgstr "Enviando ..."
 
-#: src/modules/shot/e_mod_share.c:257
+#: src/modules/shot/e_mod_share.c:278
 msgid "Screenshot is available at this location:"
 msgstr "A captura de pantalla está dispoñíbel nesta localización:"
 
-#: src/modules/shot/e_mod_share.c:266
+#: src/modules/shot/e_mod_share.c:287
 #, fuzzy
 msgid "Hide"
 msgstr "Agochar automaticamente"
 
-#: src/modules/shot/e_mod_share.c:315
+#: src/modules/shot/e_mod_share.c:336
 msgid "Confirm Share"
 msgstr "Confirmar compartición"
 
-#: src/modules/shot/e_mod_share.c:317
+#: src/modules/shot/e_mod_share.c:338
 #, fuzzy
 msgid ""
 "Are you sure you want to upload this image<ps/>publically to these services?"
 msgstr "Está seguro de quere eliminar esta fonte da barra?"
 
-#: src/modules/shot/e_mod_share.c:320
+#: src/modules/shot/e_mod_share.c:341
 msgid "Imgur.com"
 msgstr ""
 
-#: src/modules/shot/e_mod_share.c:323
+#: src/modules/shot/e_mod_share.c:344
 msgid "E.org"
 msgstr ""
 

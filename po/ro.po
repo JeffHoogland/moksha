@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2026-01-20 18:22+0100\n"
+"POT-Creation-Date: 2026-06-13 07:08+0200\n"
 "PO-Revision-Date: 2009-11-25 12:09+0000\n"
 "Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
 "Language-Team: Romanian <ro@li.org>\n"
@@ -941,8 +941,8 @@ msgstr "Selectați o imagine"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:120
-#: src/modules/shot/e_mod_share.c:267 src/modules/shot/e_mod_share.c:326
+#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:140
+#: src/modules/shot/e_mod_share.c:288 src/modules/shot/e_mod_share.c:347
 #: src/modules/xkbswitch/e_mod_config.c:587
 msgid "Cancel"
 msgstr "Renunță"
@@ -1344,7 +1344,7 @@ msgid "Cut"
 msgstr "Taie"
 
 #: src/bin/e_entry.c:514 src/bin/e_fm.c:9123 src/bin/e_fm.c:11650
-#: src/modules/shot/e_mod_preview.c:113
+#: src/modules/shot/e_mod_preview.c:131
 msgid "Copy"
 msgstr "Copiază"
 
@@ -2595,9 +2595,9 @@ msgstr "de stat"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
-#: src/modules/conf_theme/e_int_config_transitions.c:199
-#: src/modules/conf_theme/e_int_config_transitions.c:254
-#: src/modules/conf_theme/e_int_config_transitions.c:287
+#: src/modules/conf_theme/e_int_config_transitions.c:200
+#: src/modules/conf_theme/e_int_config_transitions.c:253
+#: src/modules/conf_theme/e_int_config_transitions.c:285
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:99
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:112
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:126
@@ -5831,7 +5831,7 @@ msgid "Signal Bindings Settings"
 msgstr "Legaturi Edge Setări"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
-#: src/modules/conf_interaction/e_mod_main.c:17
+#: src/modules/conf_interaction/e_mod_main.c:156
 #: src/modules/conf_keybindings/e_mod_main.c:42
 #: src/modules/xkbswitch/e_mod_main.c:72
 #, fuzzy
@@ -5913,6 +5913,7 @@ msgid "Idle effects"
 msgstr "efectele Idle"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:323
+#: src/modules/conf_interaction/e_mod_main.c:171
 #, fuzzy
 msgid "Cursor"
 msgstr "Arată Cursor"
@@ -6006,15 +6007,20 @@ msgstr "animaţi de defilare"
 msgid "Circular scrolling"
 msgstr "animaţi de defilare"
 
-#: src/modules/conf_interaction/e_mod_main.c:20
+#: src/modules/conf_interaction/e_mod_main.c:159
 #, fuzzy
 msgid "Touch"
 msgstr "atingeţi"
 
-#: src/modules/conf_interaction/e_mod_main.c:24
+#: src/modules/conf_interaction/e_mod_main.c:163
 #, fuzzy
 msgid "Mouse and Touchpad"
 msgstr "mouse-ul de mână"
+
+#: src/modules/conf_interaction/e_mod_main.c:171
+#, fuzzy
+msgid "Find Cursor"
+msgstr "Arată Cursor"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -7724,28 +7730,28 @@ msgstr "Afişează pe ecran Splash pe Autentificare"
 msgid "Transition Settings"
 msgstr "Setări de tranziţie"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:173
+#: src/modules/conf_theme/e_int_config_transitions.c:174
 #, fuzzy
 msgid "Events"
 msgstr "evenimente"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:181
+#: src/modules/conf_theme/e_int_config_transitions.c:182
 #: src/modules/conf_theme/e_mod_main.c:263
 #, fuzzy
 msgid "Startup"
 msgstr "Startup"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:182
+#: src/modules/conf_theme/e_int_config_transitions.c:183
 #, fuzzy
 msgid "Desk Change"
 msgstr "Schimbare de birou"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:183
+#: src/modules/conf_theme/e_int_config_transitions.c:184
 #, fuzzy
 msgid "Background Change"
 msgstr "Schimbarea de fond"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:191
+#: src/modules/conf_theme/e_int_config_transitions.c:192
 #: src/modules/conf_theme/e_mod_main.c:257
 #, fuzzy
 msgid "Transitions"
@@ -10605,11 +10611,11 @@ msgstr ""
 msgid "Systray"
 msgstr "systray"
 
-#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
+#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:89
 msgid "Select action to take with screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
+#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:136
 msgid "Delay"
 msgstr ""
 
@@ -10749,80 +10755,80 @@ msgstr ""
 msgid "Take Screenshot with Delay"
 msgstr "Ecrane de configurare"
 
-#: src/modules/shot/e_mod_preview.c:93
+#: src/modules/shot/e_mod_preview.c:109
 #, fuzzy
 msgid "Quality"
 msgstr "calitate"
 
-#: src/modules/shot/e_mod_preview.c:109
+#: src/modules/shot/e_mod_preview.c:125
 #, fuzzy
 msgid "Save"
 msgstr "salva"
 
-#: src/modules/shot/e_mod_preview.c:111
+#: src/modules/shot/e_mod_preview.c:128
 #, fuzzy
 msgid "Share"
 msgstr "ascuţit"
 
-#: src/modules/shot/e_mod_save.c:204
+#: src/modules/shot/e_mod_save.c:211
 #, fuzzy
 msgid "Error - No Filemanager"
 msgstr "filemanager"
 
-#: src/modules/shot/e_mod_save.c:205
+#: src/modules/shot/e_mod_save.c:212
 msgid ""
 "No filemanager action and/or module was found.<br>Cannot show the location "
 "of your screenshots."
 msgstr ""
 
-#: src/modules/shot/e_mod_share.c:149
+#: src/modules/shot/e_mod_share.c:168
 #, c-format
 msgid "Uploaded %i%%"
 msgstr ""
 
-#: src/modules/shot/e_mod_share.c:163
+#: src/modules/shot/e_mod_share.c:184
 #, fuzzy
 msgid "Error - Upload Failed"
 msgstr "Eroare de încărcare Modulul"
 
-#: src/modules/shot/e_mod_share.c:164
+#: src/modules/shot/e_mod_share.c:185
 #, c-format
 msgid "Upload failed with status code:<ps/>%i"
 msgstr ""
 
-#: src/modules/shot/e_mod_share.c:246
+#: src/modules/shot/e_mod_share.c:267
 msgid "Uploading screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_share.c:252
+#: src/modules/shot/e_mod_share.c:273
 msgid "Uploading ..."
 msgstr ""
 
-#: src/modules/shot/e_mod_share.c:257
+#: src/modules/shot/e_mod_share.c:278
 msgid "Screenshot is available at this location:"
 msgstr ""
 
-#: src/modules/shot/e_mod_share.c:266
+#: src/modules/shot/e_mod_share.c:287
 #, fuzzy
 msgid "Hide"
 msgstr "auto Hide"
 
-#: src/modules/shot/e_mod_share.c:315
+#: src/modules/shot/e_mod_share.c:336
 #, fuzzy
 msgid "Confirm Share"
 msgstr "Confirmă ștergerea"
 
-#: src/modules/shot/e_mod_share.c:317
+#: src/modules/shot/e_mod_share.c:338
 #, fuzzy
 msgid ""
 "Are you sure you want to upload this image<ps/>publically to these services?"
 msgstr "Sunteţi sigur că doriţi să ştergeţi această sursă de bar?"
 
-#: src/modules/shot/e_mod_share.c:320
+#: src/modules/shot/e_mod_share.c:341
 msgid "Imgur.com"
 msgstr ""
 
-#: src/modules/shot/e_mod_share.c:323
+#: src/modules/shot/e_mod_share.c:344
 msgid "E.org"
 msgstr ""
 

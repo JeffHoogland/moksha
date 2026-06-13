@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2026-01-20 18:22+0100\n"
+"POT-Creation-Date: 2026-06-13 07:08+0200\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -877,8 +877,8 @@ msgstr "선택"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:120
-#: src/modules/shot/e_mod_share.c:267 src/modules/shot/e_mod_share.c:326
+#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:140
+#: src/modules/shot/e_mod_share.c:288 src/modules/shot/e_mod_share.c:347
 #: src/modules/xkbswitch/e_mod_config.c:587
 msgid "Cancel"
 msgstr "취소"
@@ -1262,7 +1262,7 @@ msgid "Cut"
 msgstr "잘라내기"
 
 #: src/bin/e_entry.c:514 src/bin/e_fm.c:9123 src/bin/e_fm.c:11650
-#: src/modules/shot/e_mod_preview.c:113
+#: src/modules/shot/e_mod_preview.c:131
 msgid "Copy"
 msgstr "복사"
 
@@ -2398,9 +2398,9 @@ msgstr "고정"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
-#: src/modules/conf_theme/e_int_config_transitions.c:199
-#: src/modules/conf_theme/e_int_config_transitions.c:254
-#: src/modules/conf_theme/e_int_config_transitions.c:287
+#: src/modules/conf_theme/e_int_config_transitions.c:200
+#: src/modules/conf_theme/e_int_config_transitions.c:253
+#: src/modules/conf_theme/e_int_config_transitions.c:285
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:99
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:112
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:126
@@ -5377,7 +5377,7 @@ msgid "Signal Bindings Settings"
 msgstr "시그널 바인딩 설정"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
-#: src/modules/conf_interaction/e_mod_main.c:17
+#: src/modules/conf_interaction/e_mod_main.c:156
 #: src/modules/conf_keybindings/e_mod_main.c:42
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
@@ -5448,6 +5448,7 @@ msgid "Idle effects"
 msgstr "유휴 효과"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:323
+#: src/modules/conf_interaction/e_mod_main.c:171
 msgid "Cursor"
 msgstr "커서"
 
@@ -5535,14 +5536,19 @@ msgstr "스크롤 움직이기"
 msgid "Circular scrolling"
 msgstr "스크롤 움직이기"
 
-#: src/modules/conf_interaction/e_mod_main.c:20
+#: src/modules/conf_interaction/e_mod_main.c:159
 msgid "Touch"
 msgstr "터치"
 
-#: src/modules/conf_interaction/e_mod_main.c:24
+#: src/modules/conf_interaction/e_mod_main.c:163
 #, fuzzy
 msgid "Mouse and Touchpad"
 msgstr "마우스 잡는 손"
+
+#: src/modules/conf_interaction/e_mod_main.c:171
+#, fuzzy
+msgid "Find Cursor"
+msgstr "커서"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -7027,24 +7033,24 @@ msgstr "로그인 할 때 시작 화면 보기"
 msgid "Transition Settings"
 msgstr "화면 전환 설정"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:173
+#: src/modules/conf_theme/e_int_config_transitions.c:174
 msgid "Events"
 msgstr "이벤트"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:181
+#: src/modules/conf_theme/e_int_config_transitions.c:182
 #: src/modules/conf_theme/e_mod_main.c:263
 msgid "Startup"
 msgstr "시작"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:182
+#: src/modules/conf_theme/e_int_config_transitions.c:183
 msgid "Desk Change"
 msgstr "데스크 바꾸기"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:183
+#: src/modules/conf_theme/e_int_config_transitions.c:184
 msgid "Background Change"
 msgstr "배경 바꾸기"
 
-#: src/modules/conf_theme/e_int_config_transitions.c:191
+#: src/modules/conf_theme/e_int_config_transitions.c:192
 #: src/modules/conf_theme/e_mod_main.c:257
 msgid "Transitions"
 msgstr "화면 전환"
@@ -9574,11 +9580,11 @@ msgstr ""
 msgid "Systray"
 msgstr "시스템 표시줄"
 
-#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:74
+#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:89
 msgid "Select action to take with screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:117
+#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:136
 msgid "Delay"
 msgstr ""
 
@@ -9716,75 +9722,75 @@ msgstr "네트워크를 초기화 할 수 없습니다"
 msgid "Take Screenshot with Delay"
 msgstr "화면 찍기"
 
-#: src/modules/shot/e_mod_preview.c:93
+#: src/modules/shot/e_mod_preview.c:109
 msgid "Quality"
 msgstr "품질"
 
-#: src/modules/shot/e_mod_preview.c:109
+#: src/modules/shot/e_mod_preview.c:125
 msgid "Save"
 msgstr "저장"
 
-#: src/modules/shot/e_mod_preview.c:111
+#: src/modules/shot/e_mod_preview.c:128
 msgid "Share"
 msgstr "공유"
 
-#: src/modules/shot/e_mod_save.c:204
+#: src/modules/shot/e_mod_save.c:211
 #, fuzzy
 msgid "Error - No Filemanager"
 msgstr "파일 관리자"
 
-#: src/modules/shot/e_mod_save.c:205
+#: src/modules/shot/e_mod_save.c:212
 msgid ""
 "No filemanager action and/or module was found.<br>Cannot show the location "
 "of your screenshots."
 msgstr ""
 
-#: src/modules/shot/e_mod_share.c:149
+#: src/modules/shot/e_mod_share.c:168
 #, fuzzy, c-format
 msgid "Uploaded %i%%"
 msgstr "%s / %s 업로드 완료"
 
-#: src/modules/shot/e_mod_share.c:163
+#: src/modules/shot/e_mod_share.c:184
 msgid "Error - Upload Failed"
 msgstr "오류 - 업로드 실패"
 
-#: src/modules/shot/e_mod_share.c:164
+#: src/modules/shot/e_mod_share.c:185
 #, fuzzy, c-format
 msgid "Upload failed with status code:<ps/>%i"
 msgstr "%i 상태 코드로 업로드에 실패했습니다"
 
-#: src/modules/shot/e_mod_share.c:246
+#: src/modules/shot/e_mod_share.c:267
 msgid "Uploading screenshot"
 msgstr "스크린 샷 업로드 중"
 
-#: src/modules/shot/e_mod_share.c:252
+#: src/modules/shot/e_mod_share.c:273
 msgid "Uploading ..."
 msgstr "업로드 중 ..."
 
-#: src/modules/shot/e_mod_share.c:257
+#: src/modules/shot/e_mod_share.c:278
 msgid "Screenshot is available at this location:"
 msgstr "스크린샷은 다음 위치에서 찾을 수 있습니다:"
 
-#: src/modules/shot/e_mod_share.c:266
+#: src/modules/shot/e_mod_share.c:287
 #, fuzzy
 msgid "Hide"
 msgstr "자동 숨기기"
 
-#: src/modules/shot/e_mod_share.c:315
+#: src/modules/shot/e_mod_share.c:336
 msgid "Confirm Share"
 msgstr "공유 확인"
 
-#: src/modules/shot/e_mod_share.c:317
+#: src/modules/shot/e_mod_share.c:338
 #, fuzzy
 msgid ""
 "Are you sure you want to upload this image<ps/>publically to these services?"
 msgstr "이 표시줄의 원본을 삭제하시겠습니까?"
 
-#: src/modules/shot/e_mod_share.c:320
+#: src/modules/shot/e_mod_share.c:341
 msgid "Imgur.com"
 msgstr ""
 
-#: src/modules/shot/e_mod_share.c:323
+#: src/modules/shot/e_mod_share.c:344
 msgid "E.org"
 msgstr ""
 
