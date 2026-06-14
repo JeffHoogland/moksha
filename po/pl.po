@@ -5570,7 +5570,7 @@ msgstr "Mysz i Touchpad"
 
 #: src/modules/conf_interaction/e_mod_main.c:171
 msgid "Find Cursor"
-msgstr "Znajdź kurso"
+msgstr "Znajdź kursor"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
