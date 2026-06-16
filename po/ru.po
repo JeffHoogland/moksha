@@ -5553,9 +5553,8 @@ msgid "Mouse and Touchpad"
 msgstr "Мышь и тачпад"
 
 #: src/modules/conf_interaction/e_mod_main.c:171
-#, fuzzy
 msgid "Find Cursor"
-msgstr "Курсор"
+msgstr "Найти курсор"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
