@@ -49,7 +49,7 @@ struct _E_Container
    E_Manager           *manager;
 
    unsigned int         num;
-   const char	       *name;
+   const char          *name;
 
    Ecore_Evas          *bg_ecore_evas;
    Evas                *bg_evas;
