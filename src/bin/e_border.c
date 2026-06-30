@@ -129,6 +129,7 @@ static void      _e_border_cb_drag_finished(E_Drag *drag,
 static Eina_Bool _e_border_cb_desk_window_profile_change(void *data,
                                                          int   ev_type,
                                                          void *ev);
+static Eina_Bool _e_border_cb_resume(void *data, int type, void *ev);
 static void      _e_border_eval(E_Border *bd);
 static void      _e_border_eval0(E_Border *bd);
 static void      _e_border_container_layout_hook(E_Container *con);
@@ -495,6 +496,8 @@ e_border_new(E_Container *con,
                          _e_border_cb_mouse_move, bd);
    E_LIST_HANDLER_APPEND(bd->handlers, ECORE_EVENT_MOUSE_WHEEL,
                          _e_border_cb_mouse_wheel, bd);
+   E_LIST_HANDLER_APPEND(bd->handlers, E_EVENT_SYS_RESUME,
+                         _e_border_cb_resume, NULL);
 
    bd->client.icccm.title = NULL;
    bd->client.icccm.name = NULL;
@@ -7285,6 +7288,40 @@ _e_border_cb_desk_window_profile_change(void *data  __UNUSED__,
           }
      }
    return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool _e_border_cb_resume(void *data __UNUSED__, int type __UNUSED__, void *ev __UNUSED__)
+{
+   E_Border *bd;
+   Eina_List *l;
+
+   /* Reset focus after resume event */
+   focused = NULL;
+   focusing = NULL;
+   focus_next = eina_list_free(focus_next);  /* reset focus on all desk borders */
+
+   EINA_LIST_FOREACH(borders, l, bd)
+     {
+       if (bd->visible && !bd->iconic && (bd->desk == e_desk_current_get(bd->zone)))
+         {
+           bd->want_focus = 1;
+           bd->changed = 1;
+           bd->focused = 0; /* force re-eval */
+         }
+     }
+
+   /* Choose the last focused window from focus_stack */
+   if (focus_stack)
+     {
+        bd = eina_list_data_get(focus_stack);
+        if (bd && bd->visible)
+          e_border_focus_set(bd, 1, 1);
+     }
+
+   /* warp pointer or force grab */
+   e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
+
+   return ECORE_CALLBACK_DONE;
 }
 
 static Eina_Bool
