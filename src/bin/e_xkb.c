@@ -253,13 +253,7 @@ e_xkb_update(int cur_group)
    else if (e_config->xkb.default_model)
      {
         eina_strbuf_append(buf, " -model '");
-        if (strcmp(e_config->xkb.default_model, "default"))
-          eina_strbuf_append(buf, e_config->xkb.default_model);
-        else if ((e_config->xkb.default_model) &&
-                 (strcmp(e_config->xkb.default_model, "default")))
-          eina_strbuf_append(buf, e_config->xkb.default_model);
-        else
-          eina_strbuf_append(buf, "default");
+        eina_strbuf_append(buf, e_config->xkb.default_model);
         eina_strbuf_append(buf, "'");
      }
 
