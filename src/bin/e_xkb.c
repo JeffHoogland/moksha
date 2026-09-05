@@ -144,8 +144,8 @@ border_xkb_add(int cur_group)
                    /* libreoffice hack for icccm name and class */
                    if (e_util_glob_match(bd->client.icccm.name, "libreoffice"))
                      {
-                       rem->name = eina_stringshare_add("soffice");
-                       rem->class = eina_stringshare_add("Soffice");
+                        eina_stringshare_replace(&rem->name, "soffice");
+                        eina_stringshare_replace(&rem->class, "Soffice");
                      }
                    e_remember_use(rem);
                    e_remember_update(bd);
