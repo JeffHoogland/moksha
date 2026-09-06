@@ -112,7 +112,7 @@ border_xkb_add(int cur_group)
            if (rem)
              {
                /* delete rem if the first layout is set */
-               if (cur_group == 0 && rem->apply == (1 << 17))
+               if (cur_group == 0 && rem->apply == E_REMEMBER_APPLY_XKB)
                  {
                    e_remember_del(bd->remember);
                    bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
