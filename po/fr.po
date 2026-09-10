@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2026-07-27 17:18+0200\n"
-"PO-Revision-Date: 2026-07-26 09:17+0200\n"
+"PO-Revision-Date: 2026-09-10 14:34+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -64,7 +64,7 @@ msgid ""
 msgstr ""
 "<title>Copyright &copy; 2026, par l'équipe de développement de Moksha</"
 "><br><br>Nous espérons que vous aurez autant de plaisir à utiliser ce "
-"logiciel que nous en avons eu à l'écrire.<br><br>Pour nous contacter, "
+"logiciel que nous en avons eu à le concevoir.<br><br>Pour nous contacter, "
 "visitez :<br><hilight>https://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
@@ -106,7 +106,7 @@ msgstr "Non"
 
 #: src/bin/e_actions.c:2161
 msgid "Action Params Syntax Error"
-msgstr "Erreur de syntaxe des paramètres d'action"
+msgstr "Erreur de syntaxe dans les paramètres d'action"
 
 #: src/bin/e_actions.c:2279 src/bin/e_actions.c:3555 src/bin/e_int_menus.c:269
 msgid "Exit"
@@ -952,7 +952,7 @@ msgstr "Non signé."
 
 #: src/bin/e_config.c:220
 msgid "Feature not implemented."
-msgstr "Pas encore implémenté."
+msgstr "Fonctionnalité non implémentée."
 
 #: src/bin/e_config.c:223
 msgid "PRNG was not seeded."
@@ -1151,7 +1151,7 @@ msgid ""
 "time the window starts up, and does not<br>change."
 msgstr ""
 "La fenêtre pour laquelle vous voulez créer<br>une icône ne possède ni nom ni "
-"classe.<br> Sans ces propriétés, vous devez utiliser le<br>titre de la "
+"classe.<br>Sans ces propriétés, vous devez utiliser le<br>titre de la "
 "fenêtre à la place. Cela ne fonctionnera<br>qu'à condition que le titre de "
 "cette fenêtre<br>reste le même qu'au premier lancement."
 
@@ -1386,8 +1386,8 @@ msgstr "%s a été interrompu par le signal numéro %i."
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
-"***Le reste de la sortie a été tronqué. Enregistrez la sortie pour tout voir."
-"***\n"
+"***Le reste de la sortie a été tronqué. Enregistrez la sortie pour tout "
+"voir.***\n"
 
 #: src/bin/e_exec.c:1049 src/bin/e_exec.c:1127 src/bin/e_exec.c:1134
 msgid "Error Logs"
@@ -1967,7 +1967,7 @@ msgstr ""
 
 #: src/bin/e_grab_dialog.c:128
 msgid "Mouse Binding Sequence"
-msgstr "Séquence du raccourci souris"
+msgstr "Séquence de raccourci souris"
 
 #: src/bin/e_grab_dialog.c:135
 msgid "Key Binding Sequence"
@@ -2074,7 +2074,7 @@ msgstr "Verrous génériques"
 
 #: src/bin/e_int_border_locks.c:285
 msgid "Prevent this window from moving on its own"
-msgstr "Empêcher la fenêtre de s'auto-redimensionner"
+msgstr "Empêcher cette fenêtre de se déplacer toute seule"
 
 #: src/bin/e_int_border_locks.c:287
 msgid "Prevent this window from being changed by me"
@@ -3571,8 +3571,8 @@ msgid ""
 "loading the<br>module named: %s. This module has been disabled<br>and will "
 "not be loaded."
 msgstr ""
-"Moksha a planté en phase d'initialisation et<br> a été relancé. Le module %s "
-"qui est à l'origine de<br> l'erreur a été désactivé. Il ne sera pas rechargé."
+"Moksha a planté en phase d'initialisation et<br>a été relancé. Le module %s "
+"qui est à l'origine de<br>l'erreur a été désactivé. Il ne sera pas rechargé."
 
 #: src/bin/e_main.c:1943 src/bin/e_main.c:1959
 msgid "Moksha crashed early on start and has been restarted"
@@ -3586,8 +3586,8 @@ msgid ""
 "not be loaded."
 msgstr ""
 "Moksha a planté en phase d'initialisation et a été relancé.<br>Le module "
-"nommé %s est à l'origine de l'erreur.<br><br> Ce module a été désactivé et "
-"ne sera pas rechargé."
+"nommé %s est à l'origine de l'erreur.<br><br>Ce module a été désactivé et ne "
+"sera pas rechargé."
 
 #: src/bin/e_main.c:1952
 msgid ""
@@ -3805,7 +3805,7 @@ msgstr "Déplacer les gadgets"
 
 #: src/bin/e_shelf.c:2382
 msgid "A shelf with that name and id already exists!"
-msgstr "Un rayon avec ce nom et ID existe déjà !"
+msgstr "Un rayon avec ces nom et ID existe déjà !"
 
 #: src/bin/e_shelf.c:2401
 msgid "Rename Shelf"
@@ -5526,7 +5526,7 @@ msgstr "Souris"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:373
 msgid "Enable Devices Extras"
-msgstr "Activer les paramètres supplémentaires"
+msgstr "Activer fonctionnalités supplémentaires"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:388
 msgid "Tap to click"
@@ -6286,7 +6286,7 @@ msgstr "%1.0f images/s"
 
 #: src/modules/conf_performance/e_int_config_performance.c:113
 msgid "Application priority"
-msgstr "Priorité des applications"
+msgstr "Priorité de l'application"
 
 #: src/modules/conf_performance/e_int_config_performance.c:119
 msgid "Allow module load delay"
@@ -6607,7 +6607,7 @@ msgstr "Texte de l'entrée"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:110
 msgid "Entry Text Disabled"
-msgstr "Texte de l'entrée désactivée"
+msgstr "Texte de l'entrée désactivé"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:111
 msgid "Label Text"
@@ -8232,16 +8232,16 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
-"right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
-"down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
-"hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
-"</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
-"toggle thumb view modes"
+"<hilight>&lt;return&gt;</hilight> run action<br>    "
+"<hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>    "
+"<hilight>&lt;tab&gt;</hilight> toggle between selectors<br>    "
+"<hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on "
+"plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning "
+"with 'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through "
+"plugins<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> go to first/last "
+"item<br>    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this "
+"page ;)<br>    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view "
+"modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
 msgstr ""
 "  L'omnipotence selon <hilight>Omni</hilight>...<br>  Tapez juste les "
 "premières lettres de ce que vous recherchez. <br>  Utilisez les touches "
@@ -8251,18 +8251,18 @@ msgstr ""
 "s'affichera pas lors de la prochaine utilisation d'<hilight>Omni</hilight>."
 "<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de "
 "dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    "
-"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;"
-"Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
-"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;"
-"Ctrl+Tabulation&gt;</hilight> complète la saisie (ça dépend du "
+"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    "
+"<hilight>&lt;Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    "
+"<hilight>&lt;tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    "
+"<hilight>&lt;Ctrl+Tabulation&gt;</hilight> complète la saisie (ça dépend du "
 "greffon)<br>    <hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon "
 "commençant par la lettre « ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / "
-"droite&gt;</hilight> circule parmi les greffons<br>    <hilight>&lt;"
-"ctrl+Flèche haut / bas&gt;</hilight> va au premier / dernier élément<br>    "
-"<hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage (quitter cette "
-"page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage "
-"de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode "
-"d'affichage des vignettes"
+"droite&gt;</hilight> circule parmi les greffons<br>    "
+"<hilight>&lt;ctrl+Flèche haut / bas&gt;</hilight> va au premier / dernier "
+"élément<br>    <hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage "
+"(quitter cette page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le "
+"mode d'affichage de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> "
+"commute le mode d'affichage des vignettes"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -8484,7 +8484,7 @@ msgstr "« cp+rm » à la place de « mv »"
 
 #: src/modules/fileman/e_mod_config.c:409
 msgid "Use Alternate Selection Modifiers"
-msgstr "Autres modificateurs de sélection"
+msgstr "Utiliser d'autres modificateurs de sélection"
 
 #: src/modules/fileman/e_mod_config.c:412
 msgid "Allow Navigation On Desktop"
@@ -8587,7 +8587,7 @@ msgstr "Fond"
 
 #: src/modules/gadman/e_mod_config.c:22
 msgid "Overlay (Key Toggle)"
-msgstr "Surimpression (action d'activation)"
+msgstr "Surimpression (avec action d'activation)"
 
 #: src/modules/gadman/e_mod_config.c:79 src/modules/gadman/e_mod_config.c:156
 #: src/modules/gadman/e_mod_main.c:163
@@ -9067,27 +9067,27 @@ msgstr "Afficher le pop-up de la miniature des bureaux"
 
 #: src/modules/pager/e_mod_main.c:2973
 msgid "Popup Desk Right"
-msgstr "Bureau à droite du pop-up"
+msgstr "Pop-up à droite du bureau"
 
 #: src/modules/pager/e_mod_main.c:2975
 msgid "Popup Desk Left"
-msgstr "Bureau à gauche du pop-up"
+msgstr "Pop-up à gauche du bureau"
 
 #: src/modules/pager/e_mod_main.c:2977
 msgid "Popup Desk Up"
-msgstr "Bureau au-dessus du pop-up"
+msgstr "Pop-up en haut du bureau"
 
 #: src/modules/pager/e_mod_main.c:2979
 msgid "Popup Desk Down"
-msgstr "Bureau en dessous du pop-up"
+msgstr "Pop-up en bas du bureau"
 
 #: src/modules/pager/e_mod_main.c:2981
 msgid "Popup Desk Next"
-msgstr "Bureau suivant"
+msgstr "Pop-up au bureau suivant"
 
 #: src/modules/pager/e_mod_main.c:2983
 msgid "Popup Desk Previous"
-msgstr "Bureau précédent"
+msgstr "Pop-up au bureau précédent"
 
 #: src/modules/syscon/e_int_config_syscon.c:43
 msgid "System Controls Settings"
@@ -10082,7 +10082,7 @@ msgstr "Forcer le délai pour toutes les notifications"
 #: src/modules/notification/e_mod_config.c:122
 #, c-format
 msgid "%.1f s"
-msgstr "%1.1f s"
+msgstr "%.1f s"
 
 #: src/modules/notification/e_mod_config.c:137
 msgid "Popup Orientation"
@@ -10502,8 +10502,8 @@ msgstr "Séparateur"
 #~ "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 #~ "extensions<br>only as other formats are not<br>supported currently."
 #~ msgstr ""
-#~ "L'extension du fichier n'est pas spécifiée.<br>Utilisez « .jpg » ou « ."
-#~ "png »<br>car les autres formats ne sont<br>pas pris en charge."
+#~ "L'extension du fichier n'est pas spécifiée.<br>Utilisez « .jpg » ou "
+#~ "« .png »<br>car les autres formats ne sont<br>pas pris en charge."
 
 #~ msgid "Select screenshot save location"
 #~ msgstr "Sélection de l'emplacement d'enregistrement"
