@@ -96,9 +96,9 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
                        _e_xkb_str_eq(cl->variant, bd->remember->prop.cl_variant))
                      {
                         bd->cl = cl;
-                        _e_xkb_from_focus = EINA_TRUE;   /* >>> NOVÉ <<< */
+                        _e_xkb_from_focus = EINA_TRUE;
                         e_xkb_layout_set(bd->cl);
-                        _e_xkb_from_focus = EINA_FALSE;  /* >>> NOVÉ <<< */
+                        _e_xkb_from_focus = EINA_FALSE;
                         break;
                      }
                  }
@@ -210,8 +210,8 @@ e_xkb_update(int cur_group)
 
    if (cur_group != -1)
      {
-         if ((e_config->xkb.wins_xkb == XKB_PER_APP) &&
-            (!_e_xkb_from_focus))
+        if ((e_config->xkb.wins_xkb == XKB_PER_APP) &&
+           (!_e_xkb_from_focus))
           {
              border_xkb_add(cur_group);
           }
