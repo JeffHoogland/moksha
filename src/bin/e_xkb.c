@@ -115,6 +115,9 @@ border_xkb_add(int cur_group)
      {
        if (bd->focused)
          {
+           bd->cl = eina_list_nth(e_config->xkb.used_layouts, cur_group);
+           if (!bd->cl) return;
+
            rem = bd->remember;
            if (!rem && cur_group > 0)
              rem = e_remember_new();
@@ -124,7 +127,7 @@ border_xkb_add(int cur_group)
                if (cur_group == 0 && rem->apply == E_REMEMBER_APPLY_XKB)
                  {
                    e_remember_del(bd->remember);
-                   bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
+                   bd->remember = NULL;
                  }
                else if (cur_group != _e_xkb_cur_group)
                  {
