@@ -3,6 +3,7 @@
 static void _e_xkb_update_event(int);
 static int _e_xkb_cur_group = -1;
 static Ecore_Exe *cur_exe;
+static Eina_Bool _e_xkb_from_focus = EINA_FALSE;
 
 EAPI int E_EVENT_XKB_CHANGED = 0;
 
@@ -76,7 +77,12 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
                   }
                 if (!found)
                   bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
-                e_xkb_layout_set(bd->cl);
+                if (bd->cl)
+                  {
+                     _e_xkb_from_focus = EINA_TRUE;
+                     e_xkb_layout_set(bd->cl);
+                     _e_xkb_from_focus = EINA_FALSE;
+                  }
                 return ECORE_CALLBACK_RENEW;
              }
 
@@ -90,11 +96,10 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
                        _e_xkb_str_eq(cl->variant, bd->remember->prop.cl_variant))
                      {
                         bd->cl = cl;
-                        if (bd->cl)
-                          {
-                             e_xkb_layout_set(bd->cl);
-                             break;
-                          }
+                        _e_xkb_from_focus = EINA_TRUE;   /* >>> NOVÉ <<< */
+                        e_xkb_layout_set(bd->cl);
+                        _e_xkb_from_focus = EINA_FALSE;  /* >>> NOVÉ <<< */
+                        break;
                      }
                  }
              }
@@ -205,7 +210,8 @@ e_xkb_update(int cur_group)
 
    if (cur_group != -1)
      {
-        if (e_config->xkb.wins_xkb == XKB_PER_APP)
+         if ((e_config->xkb.wins_xkb == XKB_PER_APP) &&
+            (!_e_xkb_from_focus))
           {
              border_xkb_add(cur_group);
           }
