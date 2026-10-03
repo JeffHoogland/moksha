@@ -7,6 +7,14 @@ static Ecore_Exe *cur_exe;
 EAPI int E_EVENT_XKB_CHANGED = 0;
 
 static Eina_Bool
+_e_xkb_str_eq(const char *a, const char *b)
+{
+   if (a == b) return EINA_TRUE;
+   if ((!a) || (!b)) return EINA_FALSE;
+   return !strcmp(a, b);
+}
+
+static Eina_Bool
 _e_xkb_init_timer(void *data)
 {
    Eina_List *l;
@@ -42,7 +50,7 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
    E_Border *bd;
    Eina_List *l, *ll;
    E_Config_XKB_Layout *cl;
-   Eina_Bool found = EINA_FALSE;
+   Eina_Bool found;
 
    if (e_config->xkb.wins_xkb == XKB_GLOBAL) return ECORE_CALLBACK_RENEW;
 
@@ -57,9 +65,10 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
            /* set the layout from stock, no need to remember it */
            if (bd->cl)
              {
+                found = EINA_FALSE;
                 EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
                   {
-                     if ((bd->cl == cl) && (!strcmp(bd->cl->name, cl->name)))
+                     if ((bd->cl == cl))
                        {
                           found = EINA_TRUE;
                           break;
@@ -76,9 +85,9 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
              {
                EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
                  {
-                   if (!strcmp(cl->name, bd->remember->prop.cl_name) &&
-                       !strcmp(cl->model, bd->remember->prop.cl_model) &&
-                       !strcmp(cl->variant, bd->remember->prop.cl_variant))
+                   if (_e_xkb_str_eq(cl->name, bd->remember->prop.cl_name) &&
+                       _e_xkb_str_eq(cl->model, bd->remember->prop.cl_model) &&
+                       _e_xkb_str_eq(cl->variant, bd->remember->prop.cl_variant))
                      {
                         bd->cl = cl;
                         if (bd->cl)
