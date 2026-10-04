@@ -211,6 +211,9 @@ static void             _e_fwin_zone_focus_out(void *data,
 static void             _e_fwin_zone_focus_in(void *data,
                                                    Evas *evas,
                                                    void *event_info);
+static void             _e_fwin_zone_view_mode_changed(void *data,
+                                                       Evas_Object *obj,
+                                                       void *event_info);
 static Eina_Bool        _e_fwin_zone_move_resize(void *data,
                                                  int type,
                                                  void *event);
@@ -459,6 +462,8 @@ e_fwin_zone_new(E_Zone *zone, void *p)
    evas_object_smart_callback_add(o, "icon_mouse_in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
    evas_object_smart_callback_add(o, "icon_mouse_out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
+   evas_object_smart_callback_add(o, "view_mode_changed",
+                                  _e_fwin_zone_view_mode_changed, fwin);
    e_fm2_underlay_hide(o);
    evas_object_show(o);
 
@@ -1929,6 +1934,22 @@ _e_fwin_cb_page_obj_del(void *data,
 }
 
 /* fwin zone callbacks */
+/* desktop: remember the view mode picked from the menu across restarts */
+static void
+_e_fwin_zone_view_mode_changed(void *data,
+                               Evas_Object *obj __UNUSED__,
+                               void *event_info)
+{
+   E_Fwin *fwin = data;
+   E_Fm2_View_Mode mode;
+
+   if ((!fwin) || (!fwin->path) || (!event_info)) return;
+   mode = (E_Fm2_View_Mode)(*(char *)event_info);
+   if (fwin->path->desktop_mode == mode) return;
+   fwin->path->desktop_mode = mode;
+   e_config_save_queue();
+}
+
 static void
 _e_fwin_zone_cb_mouse_down(void *data,
                            Evas *evas       __UNUSED__,

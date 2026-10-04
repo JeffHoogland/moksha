@@ -320,9 +320,8 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Custom Icons"), 2, rg);
    e_widget_framelist_object_append(of, ob);
-/*    ob = e_widget_radio_add(evas, _("Custom Grid Icons"), 3, rg); */
-/*    e_widget_disabled_set(ob, 1); */
-/*    e_widget_framelist_object_append(of, ob); */
+   ob = e_widget_radio_add(evas, _("Custom Grid Icons"), 3, rg);
+   e_widget_framelist_object_append(of, ob);
 /*    ob = e_widget_radio_add(evas, _("Custom Smart Grid Icons"), 4, rg); */
 /*    e_widget_disabled_set(ob, 1); */
 /*    e_widget_framelist_object_append(of, ob); */

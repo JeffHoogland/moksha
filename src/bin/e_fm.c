@@ -366,6 +366,7 @@ static void          _e_fm2_toggle_inherit_dir_props(void *data, E_Menu *m, E_Me
 static void          _e_fm2_view_menu_pre(void *data, E_Menu *m);
 static void          _e_fm2_view_menu_grid_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_view_menu_custom_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void          _e_fm2_view_menu_grid_move_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_view_menu_list_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_view_menu_use_default_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_view_menu_set_background_cb(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -632,6 +633,14 @@ _e_fm2_view_mode_get(const E_Fm2_Smart_Data *sd)
         (mode <= E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS)))
      return E_FM2_VIEW_MODE_GRID_ICONS;
    return mode;
+}
+
+/* "Grid Move" view: grid with movable icons (icons snap to grid cells).
+ * with too many icons _e_fm2_view_mode_get() falls back to plain grid */
+static inline Eina_Bool
+_e_fm2_grid_move_enabled(const E_Fm2_Smart_Data *sd)
+{
+   return (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS);
 }
 
 static inline Evas_Coord
@@ -3937,34 +3946,100 @@ _e_fm2_icons_place_icons(E_Fm2_Smart_Data *sd)
 }
 
 static void
+_e_fm2_grid_metrics_get(E_Fm2_Smart_Data *sd, Evas_Coord *gw, Evas_Coord *gh, int *cols)
+{
+   Eina_List *l;
+   E_Fm2_Icon *ic;
+   Evas_Coord w = 0, h = 0;
+   int c = 1;
+
+   EINA_LIST_FOREACH(sd->icons, l, ic)
+     {
+        if (ic->w > w) w = ic->w;
+        if (ic->h > h) h = ic->h;
+     }
+   if (w > 0) c = sd->w / w;
+   if (c < 1) c = 1;
+   *gw = w;
+   *gh = h;
+   *cols = c;
+}
+
+/* cell (col,row) the icon currently sits in (from its placed geometry) */
+static void
+_e_fm2_grid_cell_get(const E_Fm2_Icon *ic, Evas_Coord gw, Evas_Coord gh, int *col, int *row)
+{
+   Evas_Coord cx = ic->x + (ic->w / 2);
+   Evas_Coord cy = ic->y + (ic->h / 2);
+
+   *col = (gw > 0) ? (cx / gw) : 0;
+   *row = (gh > 0) ? (cy / gh) : 0;
+   if (*col < 0) *col = 0;
+   if (*row < 0) *row = 0;
+}
+
+static void
+_e_fm2_grid_icon_cell_set(E_Fm2_Icon *ic, Evas_Coord gw, Evas_Coord gh, int col, int row)
+{
+   ic->x = (col * gw) + ((gw - ic->w) / 2);
+   ic->y = (row * gh) + (gh - ic->h);
+}
+
+/* cell requested by the saved position of the icon. returns EINA_FALSE if
+ * the icon has no saved position or the cell doesn't fit into current width */
+static Eina_Bool
+_e_fm2_grid_saved_cell_get(const E_Fm2_Icon *ic, Evas_Coord gw, Evas_Coord gh, int cols, int *col, int *row)
+{
+   if ((!ic->saved_pos) || (gw <= 0) || (gh <= 0)) return EINA_FALSE;
+   *col = (ic->saved_x + (gw / 2)) / gw;
+   *row = (ic->saved_y + (gh / 2)) / gh;
+   if (*row < 0) *row = 0;
+   if (*row > 100000) *row = 100000;
+   if ((*col < 0) || (*col >= cols)) return EINA_FALSE;
+   return EINA_TRUE;
+}
+
+static void
 _e_fm2_icons_place_grid_icons(E_Fm2_Smart_Data *sd)
 {
    Eina_List *l;
    E_Fm2_Icon *ic;
-   Evas_Coord x, y, gw, gh;
-   int cols = 1, col;
+   Eina_Hash *cells = NULL;
+   Evas_Coord gw, gh;
+   int cols, col, row, key, next = 0;
 
-   gw = 0; gh = 0;
-   EINA_LIST_FOREACH(sd->icons, l, ic)
+   _e_fm2_grid_metrics_get(sd, &gw, &gh, &cols);
+   if (_e_fm2_grid_move_enabled(sd)) cells = eina_hash_int32_new(NULL);
+
+   /* icons with a saved position claim their cell first. if the cell is
+    * already taken the icon goes to the next free cell */
+   if (cells)
      {
-        if (ic->w > gw) gw = ic->w;
-        if (ic->h > gh) gh = ic->h;
-     }
-   if (gw > 0) cols = sd->w / gw;
-   if (cols < 1) cols = 1;
-   x = 0; y = 0; col = 0;
-   EINA_LIST_FOREACH(sd->icons, l, ic)
-     {
-        ic->x = x + ((gw - ic->w) / 2);
-        ic->y = y + (gh - ic->h);
-        x += gw;
-        col++;
-        if (col >= cols)
+        EINA_LIST_FOREACH(sd->icons, l, ic)
           {
-             col = 0;
-             x = 0;
-             y += gh;
+             if (!_e_fm2_grid_saved_cell_get(ic, gw, gh, cols, &col, &row))
+               continue;
+             key = (row * cols) + col;
+             while (eina_hash_find(cells, &key)) key++;
+             eina_hash_add(cells, &key, ic);
+             _e_fm2_grid_icon_cell_set(ic, gw, gh, key % cols, key / cols);
           }
+     }
+
+   /* all other icons fill the remaining free cells in order */
+   EINA_LIST_FOREACH(sd->icons, l, ic)
+     {
+        if ((!cells) || (!_e_fm2_grid_saved_cell_get(ic, gw, gh, cols, &col, &row)))
+          {
+             while (cells && eina_hash_find(cells, &next)) next++;
+             _e_fm2_grid_icon_cell_set(ic, gw, gh, next % cols, next / cols);
+             next++;
+          }
+     }
+   if (cells) eina_hash_free(cells);
+
+   EINA_LIST_FOREACH(sd->icons, l, ic)
+     {
         if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
         if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
         sd->min.w = MAX(ic->min_w, sd->min.w);
@@ -4141,27 +4216,6 @@ _e_fm2_icons_place_custom_icons(E_Fm2_Smart_Data *sd)
 }
 
 static void
-_e_fm2_icons_place_custom_grid_icons(E_Fm2_Smart_Data *sd)
-{
-   /* FIXME: not going to implement this at this stage */
-   Eina_List *l;
-   E_Fm2_Icon *ic;
-
-   EINA_LIST_FOREACH(sd->icons, l, ic)
-     {
-        if (!ic->saved_pos)
-          {
-             /* FIXME: place using grid fn */
-          }
-
-        if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
-        if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
-        sd->min.w = MAX(ic->min_w, sd->min.w);
-        sd->min.h = MAX(ic->min_h, sd->min.h);
-     }
-}
-
-static void
 _e_fm2_icons_place_custom_smart_grid_icons(E_Fm2_Smart_Data *sd)
 {
    /* FIXME: not going to implement this at this stage */
@@ -4242,9 +4296,8 @@ _e_fm2_icons_place(Evas_Object *obj)
         break;
 
       case E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS:
-        /* FIXME: not going to implement this at this stage */
-        _e_fm2_icons_place_custom_grid_icons(sd);
-//	sd->max.h += ICON_BOTTOM_SPACE;
+        /* "Grid Move": grid layout honouring saved cells */
+        _e_fm2_icons_place_grid_icons(sd);
         break;
 
       case E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS:
@@ -4599,6 +4652,8 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
              ic->saved_pos = EINA_TRUE;
              ic->x = cf->geom.x;
              ic->y = cf->geom.y;
+             ic->saved_x = cf->geom.x;
+             ic->saved_y = cf->geom.y;
              if (cf->geom.w > 0) ic->w = cf->geom.w;
              if (cf->geom.h > 0) ic->h = cf->geom.h;
              _e_fm2_icon_geom_adjust(ic, cf->geom.x, cf->geom.y, cf->geom.w, cf->geom.h, cf->geom.res_w, cf->geom.res_h);
@@ -6521,7 +6576,7 @@ _e_fm_file_reorder(const char *file, const char *dst, const char *relative, int 
 }
 
 static void
-_e_fm_icon_save_position(const char *file, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
+_e_fm_icon_position_set(const char *file, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
 {
    E_Fm2_Custom_File *cf, new;
 
@@ -6541,7 +6596,122 @@ _e_fm_icon_save_position(const char *file, Evas_Coord x, Evas_Coord y, Evas_Coor
 
    cf->geom.valid = 1;
    e_fm2_custom_file_set(file, cf);
+}
+
+static void
+_e_fm_icon_save_position(const char *file, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
+{
+   if (!file) return;
+   _e_fm_icon_position_set(file, x, y, w, h);
    e_fm2_custom_file_flush();
+}
+
+/* grid view: pin every icon that is still auto-placed to the cell it
+ * currently occupies, so that moving one icon doesn't reflow all others */
+static void
+_e_fm2_grid_freeze(E_Fm2_Smart_Data *sd)
+{
+   Eina_List *l;
+   E_Fm2_Icon *ic;
+   Evas_Coord gw, gh;
+   char buf[PATH_MAX];
+   int cols, col, row;
+   Eina_Bool changed = EINA_FALSE;
+
+   _e_fm2_grid_metrics_get(sd, &gw, &gh, &cols);
+   EINA_LIST_FOREACH(sd->icons, l, ic)
+     {
+        if (ic->saved_pos) continue;
+        _e_fm2_grid_cell_get(ic, gw, gh, &col, &row);
+        ic->saved_x = col * gw;
+        ic->saved_y = row * gh;
+        ic->saved_pos = EINA_TRUE;
+        if (!_e_fm2_icon_realpath(ic, buf, sizeof(buf))) continue;
+        _e_fm_icon_position_set(buf, ic->saved_x, ic->saved_y, sd->w, sd->h);
+        changed = EINA_TRUE;
+     }
+   if (changed) e_fm2_custom_file_flush();
+}
+
+static Eina_Bool
+_e_fm2_grid_cell_taken(E_Fm2_Smart_Data *sd, const Eina_List *ignore, Evas_Coord gw, Evas_Coord gh, int col, int row)
+{
+   Eina_List *l;
+   E_Fm2_Icon *ic;
+   int c, r;
+
+   EINA_LIST_FOREACH(sd->icons, l, ic)
+     {
+        if (eina_list_data_find(ignore, ic)) continue;
+        _e_fm2_grid_cell_get(ic, gw, gh, &c, &r);
+        if ((c == col) && (r == row)) return EINA_TRUE;
+     }
+   return EINA_FALSE;
+}
+
+/* find the cell for a dropped icon (x,y = its dropped top-left corner). the
+ * dropped cell if free, otherwise swap with the icon sitting there (single
+ * icon moved inside this view), otherwise the next free cell. */
+static void
+_e_fm2_grid_drop_cell(E_Fm2_Smart_Data *sd, E_Fm2_Icon *ic, Eina_List **ignore, Evas_Coord x, Evas_Coord y, Evas_Coord *sx, Evas_Coord *sy)
+{
+   Eina_List *l;
+   E_Fm2_Icon *ic2;
+   Evas_Coord gw, gh;
+   int cols, col, row, ocol = -1, orow = -1, c, r;
+
+   _e_fm2_grid_metrics_get(sd, &gw, &gh, &cols);
+   if (gw < 1) gw = 1;
+   if (gh < 1) gh = 1;
+   col = (x + (ic->w / 2)) / gw;
+   row = (y + (ic->h / 2)) / gh;
+   if (col < 0) col = 0;
+   if (col >= cols) col = cols - 1;
+   if (row < 0) row = 0;
+   if (row > 100000) row = 100000;
+
+   if (ic->sd == sd) _e_fm2_grid_cell_get(ic, gw, gh, &ocol, &orow);
+
+   if (_e_fm2_grid_cell_taken(sd, *ignore, gw, gh, col, row))
+     {
+        ic2 = NULL;
+        /* single icon moved inside this view: look for the occupant */
+        if ((ocol >= 0) && (eina_list_count(*ignore) <= 1))
+          {
+             EINA_LIST_FOREACH(sd->icons, l, ic2)
+               {
+                  if (ic2 == ic) continue;
+                  _e_fm2_grid_cell_get(ic2, gw, gh, &c, &r);
+                  if ((c == col) && (r == row)) break;
+               }
+          }
+        if (ic2)
+          {
+             char buf[PATH_MAX];
+
+             /* swap: the icon that was there takes our old cell */
+             ic2->saved_x = ocol * gw;
+             ic2->saved_y = orow * gh;
+             ic2->saved_pos = EINA_TRUE;
+             _e_fm2_grid_icon_cell_set(ic2, gw, gh, ocol, orow);
+             if (_e_fm2_icon_realpath(ic2, buf, sizeof(buf)))
+               _e_fm_icon_save_position(buf, ic2->saved_x, ic2->saved_y, sd->w, sd->h);
+          }
+        else
+          {
+             /* next free cell */
+             int key = (row * cols) + col;
+
+             while (_e_fm2_grid_cell_taken(sd, *ignore, gw, gh, key % cols, key / cols))
+               key++;
+             col = key % cols;
+             row = key / cols;
+          }
+     }
+   _e_fm2_grid_icon_cell_set(ic, gw, gh, col, row);
+   *ignore = eina_list_remove(*ignore, ic);
+   *sx = col * gw;
+   *sy = row * gh;
 }
 
 static Eina_Bool
@@ -6734,6 +6904,8 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
    size_t size = 0;
    size_t length = 0;
    Eina_Bool lnk = EINA_FALSE, memerr = EINA_FALSE, mnt = EINA_FALSE;
+   Eina_Bool grid = EINA_FALSE, frozen = EINA_FALSE;
+   Eina_List *pending = NULL;
    E_Fm2_Device_Mount_Op *mop = NULL;
 
    sd = data;
@@ -6780,7 +6952,8 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
              if ((e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_MOVE) || (sd->config->view.link_drop))
                {
                   lnk = EINA_TRUE;
-                  if (_e_fm2_view_mode_get(sd) != E_FM2_VIEW_MODE_CUSTOM_ICONS)
+                  if ((_e_fm2_view_mode_get(sd) != E_FM2_VIEW_MODE_CUSTOM_ICONS) &&
+                      (!_e_fm2_grid_move_enabled(sd)))
                     goto end;
                   memerr = EINA_TRUE; // prevent actual file move op
                }
@@ -6788,6 +6961,8 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
      }
 
    isel = _e_fm2_uri_icon_list_get(fsel);
+   grid = _e_fm2_grid_move_enabled(sd);
+   if (grid) pending = eina_list_clone(isel);
 
    ox = 0; oy = 0;
    EINA_LIST_FOREACH(isel, l, ic)
@@ -6817,7 +6992,30 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
              fp = eina_list_data_get(ll);
              if (!fp) continue;
 
-             if ((ic) && (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_CUSTOM_ICONS))
+             if ((ic) && (grid) &&
+                 (!((ic->sd == sd) && (!memerr))))
+               {
+                  /* grid view: snap the dropped icon to a cell */
+                  x = ev->x + (ic->x - ox) - ic->drag.x + sd->pos.x - sd->x;
+                  y = ev->y + (ic->y - oy) - ic->drag.y + sd->pos.y - sd->y;
+                  if (!frozen)
+                    {
+                       _e_fm2_grid_freeze(sd);
+                       frozen = EINA_TRUE;
+                    }
+                  _e_fm2_grid_drop_cell(sd, ic, &pending, x, y, &x, &y);
+                  if (ic->sd == sd)
+                    {
+                       ic->saved_x = x;
+                       ic->saved_y = y;
+                       ic->saved_pos = EINA_TRUE;
+                       adjust_icons = 1;
+                    }
+                  snprintf(buf, sizeof(buf), "%s/%s",
+                           sd->realpath, ecore_file_file_get(fp));
+                  _e_fm_icon_save_position(buf, x, y, sd->w, sd->h);
+               }
+             else if ((ic) && (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_CUSTOM_ICONS))
                {
                   /* dnd doesn't tell me all the co-ords of the icons being dragged so i can't place them accurately.
                    * need to fix this. ev->data probably needs to become more compelx than a list of url's
@@ -6861,7 +7059,14 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                }
              eina_stringshare_del(fp);
           }
-        if (adjust_icons)
+        if ((adjust_icons) && (grid))
+          {
+             /* re-run the grid layout with the new cells */
+             _e_fm2_regions_free(sd->obj);
+             _e_fm2_icons_place(sd->obj);
+             _e_fm2_regions_populate(sd->obj);
+          }
+        else if (adjust_icons)
           {
              sd->max.w = 0;
              sd->max.h = 0;
@@ -7090,6 +7295,7 @@ end:
           }
      }
    eina_list_free(fsel);
+   eina_list_free(pending);
    EINA_LIST_FREE(isel, ic)
      if (ic->drag.dnd_end_timer && (!lnk))
        {
@@ -8598,7 +8804,8 @@ _e_fm2_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 
    /* for automatic layout - do this - NB; we could put this on a timer delay */
    if ((_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST) ||
-       (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_GRID_ICONS))
+       (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_GRID_ICONS) ||
+       (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS))
      {
         if (wch)
           {
@@ -9517,6 +9724,14 @@ _e_fm2_view_menu_common(E_Menu *subm, E_Fm2_Smart_Data *sd)
         e_menu_item_callback_set(mi, _e_fm2_view_menu_grid_icons_cb, sd);
 
         mi = e_menu_item_new(subm);
+        e_menu_item_label_set(mi, _("Custom Grid Icons"));
+        e_menu_item_radio_group_set(mi, 1);
+        e_menu_item_radio_set(mi, 1);
+        if (view_mode == E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS)
+          e_menu_item_toggle_set(mi, 1);
+        e_menu_item_callback_set(mi, _e_fm2_view_menu_grid_move_cb, sd);
+
+        mi = e_menu_item_new(subm);
         e_menu_item_label_set(mi, _("Custom Icons"));
         e_menu_item_radio_group_set(mi, 1);
         e_menu_item_radio_set(mi, 1);
@@ -9967,6 +10182,21 @@ _e_fm2_view_menu_grid_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    sd->view_mode = E_FM2_VIEW_MODE_GRID_ICONS;
    sd->inherited_dir_props = EINA_FALSE;
    if (old == E_FM2_VIEW_MODE_GRID_ICONS)
+     return;
+
+   _e_fm2_refresh(sd, m, mi);
+}
+
+static void
+_e_fm2_view_menu_grid_move_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+   char old;
+
+   old = _e_fm2_view_mode_get(sd);
+   sd->view_mode = E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS;
+   sd->inherited_dir_props = EINA_FALSE;
+   if (old == E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS)
      return;
 
    _e_fm2_refresh(sd, m, mi);
@@ -11028,10 +11258,19 @@ _e_fm2_refresh_job_cb(void *data)
 {
    E_Fm2_Smart_Data *sd;
 
+   char mode;
+
    sd = evas_object_smart_data_get(data);
    if (!sd) return;
    e_fm2_refresh(data);
    sd->refresh_job = NULL;
+   /* tell the owner (e.g. the desktop) which view mode was chosen explicitly,
+    * so that it can remember it */
+   if (sd->view_mode > -1)
+     {
+        mode = sd->view_mode;
+        evas_object_smart_callback_call(data, "view_mode_changed", &mode);
+     }
 }
 
 static void
