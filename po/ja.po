@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2026-07-27 17:18+0200\n"
+"POT-Creation-Date: 2026-10-09 17:05+0200\n"
 "PO-Revision-Date: 2024-12-04 23:41+0100\n"
 "Last-Translator: Green <usergreen@users.osdn.me>\n"
 "Language-Team: Japan\n"
@@ -28,14 +28,14 @@ msgid "About Moksha"
 msgstr "Moksha について"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2164 src/bin/e_actions.c:3163
-#: src/bin/e_bodhi_about.c:57 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
+#: src/bin/e_bodhi_about.c:57 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1076
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:157 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:113
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2587
+#: src/modules/fileman/e_fwin.c:2608
 msgid "Close"
 msgstr "閉じる"
 
@@ -87,7 +87,7 @@ msgstr "強制終了"
 #: src/bin/e_actions.c:447 src/bin/e_actions.c:2284 src/bin/e_actions.c:2378
 #: src/bin/e_actions.c:2438 src/bin/e_actions.c:2498 src/bin/e_actions.c:2563
 #: src/bin/e_actions.c:2628 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10518 src/bin/e_fm.c:10884
+#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10748 src/bin/e_fm.c:11114
 #: src/bin/e_screensaver.c:195 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "いいえ"
@@ -107,7 +107,7 @@ msgstr "本当に Moksha を終了しますか？"
 
 #: src/bin/e_actions.c:2282 src/bin/e_actions.c:2376 src/bin/e_actions.c:2436
 #: src/bin/e_actions.c:2496 src/bin/e_actions.c:2561 src/bin/e_actions.c:2626
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10521
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10751
 #: src/bin/e_screensaver.c:193 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "Yes"
 msgstr "はい"
@@ -161,7 +161,7 @@ msgstr "本当にシステムを休止しますか？"
 msgid "Window : Actions"
 msgstr "ウィンドウ: 動作"
 
-#: src/bin/e_actions.c:3123 src/bin/e_fm.c:11655
+#: src/bin/e_actions.c:3123 src/bin/e_fm.c:11894
 msgid "Move"
 msgstr "移動"
 
@@ -873,7 +873,7 @@ msgid "Select"
 msgstr "選択"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:863
-#: src/bin/e_eap_editor.c:926 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10059
+#: src/bin/e_eap_editor.c:926 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10289
 #: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:196
 #: src/bin/e_import_config_dialog.c:541
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:637
@@ -883,7 +883,7 @@ msgstr "選択"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:144
+#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:146
 #: src/modules/shot/e_mod_share.c:288 src/modules/shot/e_mod_share.c:347
 #: src/modules/xkbswitch/e_mod_config.c:587
 msgid "Cancel"
@@ -1026,7 +1026,7 @@ msgstr "基本設定"
 
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
-#: src/bin/e_fm.c:10058 src/bin/e_fm.c:10790 src/bin/e_fm_prop.c:624
+#: src/bin/e_fm.c:10288 src/bin/e_fm.c:11020 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
 #: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:519
 #: src/bin/e_module.c:839 src/bin/e_sys.c:634 src/bin/e_sys.c:675
@@ -1227,7 +1227,7 @@ msgstr "端末内で実行"
 msgid "Show in Menus"
 msgstr "メニューに表示する"
 
-#: src/bin/e_eap_editor.c:792 src/bin/e_fm.c:8853 src/bin/e_fm.c:9013
+#: src/bin/e_eap_editor.c:792 src/bin/e_fm.c:9060 src/bin/e_fm.c:9220
 #: src/bin/e_int_border_remember.c:784 src/modules/xkbswitch/e_mod_config.c:374
 #: src/modules/clipboard/e_mod_config.c:226
 msgid "Options"
@@ -1242,7 +1242,7 @@ msgstr "アイコンを選択する"
 msgid "Select an Executable"
 msgstr "プログラムの選択"
 
-#: src/bin/e_entry.c:495 src/bin/e_fm.c:9198 src/bin/e_fm.c:10883
+#: src/bin/e_entry.c:495 src/bin/e_fm.c:9405 src/bin/e_fm.c:11113
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:269
@@ -1262,16 +1262,16 @@ msgstr "プログラムの選択"
 msgid "Delete"
 msgstr "削除"
 
-#: src/bin/e_entry.c:505 src/bin/e_fm.c:9109
+#: src/bin/e_entry.c:505 src/bin/e_fm.c:9316
 msgid "Cut"
 msgstr "カット"
 
-#: src/bin/e_entry.c:514 src/bin/e_fm.c:9123 src/bin/e_fm.c:11650
-#: src/modules/shot/e_mod_preview.c:135
+#: src/bin/e_entry.c:514 src/bin/e_fm.c:9330 src/bin/e_fm.c:11889
+#: src/modules/shot/e_mod_preview.c:137
 msgid "Copy"
 msgstr "コピー"
 
-#: src/bin/e_entry.c:524 src/bin/e_fm.c:8914 src/bin/e_fm.c:9136
+#: src/bin/e_entry.c:524 src/bin/e_fm.c:9121 src/bin/e_fm.c:9343
 msgid "Paste"
 msgstr "貼り付け"
 
@@ -1422,114 +1422,114 @@ msgstr "出力データ"
 msgid "There was no output."
 msgstr "出力はありませんでした"
 
-#: src/bin/e_fm.c:1069
+#: src/bin/e_fm.c:1078
 msgid "Nonexistent path"
 msgstr "存在しないパス"
 
-#: src/bin/e_fm.c:1072
+#: src/bin/e_fm.c:1081
 #, c-format
 msgid "%s doesn't exist."
 msgstr "%s が存在しません"
 
-#: src/bin/e_fm.c:2847 src/bin/e_fm.c:3806
+#: src/bin/e_fm.c:2856 src/bin/e_fm.c:3815
 #, fuzzy, c-format
 msgid "%u file"
 msgid_plural "%u files"
 msgstr[0] "%1.0f 個"
 msgstr[1] "%1.0f 個"
 
-#: src/bin/e_fm.c:3068
+#: src/bin/e_fm.c:3077
 msgid "Mount Error"
 msgstr "マウントエラー"
 
-#: src/bin/e_fm.c:3068
+#: src/bin/e_fm.c:3077
 msgid "Can't mount device"
 msgstr "デバイスをマウントできません"
 
-#: src/bin/e_fm.c:3084
+#: src/bin/e_fm.c:3093
 msgid "Unmount Error"
 msgstr "アンマウントエラー"
 
-#: src/bin/e_fm.c:3084
+#: src/bin/e_fm.c:3093
 msgid "Can't unmount device"
 msgstr "デバイスをアンマウントできません"
 
 #
-#: src/bin/e_fm.c:3099
+#: src/bin/e_fm.c:3108
 msgid "Eject Error"
 msgstr "イジェクトエラー"
 
-#: src/bin/e_fm.c:3099
+#: src/bin/e_fm.c:3108
 msgid "Can't eject device"
 msgstr "デバイスをイジェクトできません"
 
 #
-#: src/bin/e_fm.c:6652 src/bin/e_fm.c:6685 src/bin/e_fm.c:9585
-#: src/bin/e_fm.c:9600 src/bin/e_fm.c:9709 src/bin/e_fm.c:9714
-#: src/bin/e_fm.c:9730 src/bin/e_fm.c:9735 src/bin/e_fm.c:10368
-#: src/bin/e_fm.c:10371 src/bin/e_fm.c:10374 src/bin/e_fm.c:10401
-#: src/bin/e_fm.c:10405 src/bin/e_fm.c:10408 src/bin/e_fm.c:10466
-#: src/bin/e_fm.c:10691 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2382
+#: src/bin/e_fm.c:6822 src/bin/e_fm.c:6855 src/bin/e_fm.c:9800
+#: src/bin/e_fm.c:9815 src/bin/e_fm.c:9924 src/bin/e_fm.c:9929
+#: src/bin/e_fm.c:9945 src/bin/e_fm.c:9950 src/bin/e_fm.c:10598
+#: src/bin/e_fm.c:10601 src/bin/e_fm.c:10604 src/bin/e_fm.c:10631
+#: src/bin/e_fm.c:10635 src/bin/e_fm.c:10638 src/bin/e_fm.c:10696
+#: src/bin/e_fm.c:10921 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2382
 msgid "Error"
 msgstr "エラー"
 
-#: src/bin/e_fm.c:6652 src/bin/e_fm.c:6685
+#: src/bin/e_fm.c:6822 src/bin/e_fm.c:6855
 #, c-format
 msgid "The recent DND operation requested for '%s' has failed."
 msgstr "'%s' に要求した最近の DND 操作は失敗しました。"
 
-#: src/bin/e_fm.c:8771 src/modules/fileman/e_mod_config.c:369
+#: src/bin/e_fm.c:8978 src/modules/fileman/e_mod_config.c:368
 msgid "Case Sensitive"
 msgstr "大文字と小文字を区別する"
 
-#: src/bin/e_fm.c:8777 src/modules/fileman/e_mod_config.c:372
+#: src/bin/e_fm.c:8984 src/modules/fileman/e_mod_config.c:371
 msgid "Sort By Extension"
 msgstr "拡張子で並べ替え"
 
-#: src/bin/e_fm.c:8783 src/modules/fileman/e_mod_config.c:375
+#: src/bin/e_fm.c:8990 src/modules/fileman/e_mod_config.c:374
 msgid "Sort By Modification Time"
 msgstr "修正時刻で並べ替え"
 
-#: src/bin/e_fm.c:8789 src/modules/fileman/e_mod_config.c:378
+#: src/bin/e_fm.c:8996 src/modules/fileman/e_mod_config.c:377
 msgid "Sort By Size"
 msgstr "日付で並べ替え"
 
-#: src/bin/e_fm.c:8798 src/modules/fileman/e_mod_config.c:386
+#: src/bin/e_fm.c:9005 src/modules/fileman/e_mod_config.c:385
 msgid "Directories First"
 msgstr "ディレクトリを最初に"
 
-#: src/bin/e_fm.c:8804 src/modules/fileman/e_mod_config.c:390
+#: src/bin/e_fm.c:9011 src/modules/fileman/e_mod_config.c:389
 msgid "Directories Last"
 msgstr "ディレクトリを最後に"
 
-#: src/bin/e_fm.c:8837 src/bin/e_fm.c:8997
+#: src/bin/e_fm.c:9044 src/bin/e_fm.c:9204
 #: src/modules/fileman/e_mod_config.c:314
 msgid "View Mode"
 msgstr "表示モード"
 
-#: src/bin/e_fm.c:8846 src/bin/e_fm.c:9006
+#: src/bin/e_fm.c:9053 src/bin/e_fm.c:9213
 #: src/modules/everything/evry_config.c:526
-#: src/modules/fileman/e_mod_config.c:394
+#: src/modules/fileman/e_mod_config.c:393
 msgid "Sorting"
 msgstr "整列"
 
-#: src/bin/e_fm.c:8864 src/bin/e_fm.c:9024
+#: src/bin/e_fm.c:9071 src/bin/e_fm.c:9231
 msgid "Refresh View"
 msgstr "内容を更新する"
 
-#: src/bin/e_fm.c:8875 src/bin/e_fm.c:9036
+#: src/bin/e_fm.c:9082 src/bin/e_fm.c:9243
 msgid "New..."
 msgstr "新規作成..."
 
-#: src/bin/e_fm.c:8895 src/bin/e_fm.c:9057 src/bin/e_fm.c:9088
+#: src/bin/e_fm.c:9102 src/bin/e_fm.c:9264 src/bin/e_fm.c:9295
 msgid "Actions..."
 msgstr "アクション..."
 
-#: src/bin/e_fm.c:8922 src/bin/e_fm.c:9144 src/bin/e_fm.c:11663
+#: src/bin/e_fm.c:9129 src/bin/e_fm.c:9351 src/bin/e_fm.c:11902
 msgid "Link"
 msgstr "リンク"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10520 src/bin/e_shelf.c:2510
+#: src/bin/e_fm.c:9413 src/bin/e_fm.c:10750 src/bin/e_shelf.c:2510
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1537,220 +1537,225 @@ msgstr "リンク"
 msgid "Rename"
 msgstr "名前変更"
 
-#: src/bin/e_fm.c:9225
+#: src/bin/e_fm.c:9432
 msgid "Unmount"
 msgstr "アンマウント"
 
-#: src/bin/e_fm.c:9230
+#: src/bin/e_fm.c:9437
 msgid "Mount"
 msgstr "マウント"
 
-#: src/bin/e_fm.c:9235
+#: src/bin/e_fm.c:9442
 msgid "Eject"
 msgstr "イジェクト"
 
-#: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
+#: src/bin/e_fm.c:9457 src/bin/e_int_border_remember.c:763
 #: src/modules/ibar/e_mod_main.c:1822
 msgid "Properties"
 msgstr "プロパティ"
 
-#: src/bin/e_fm.c:9258
+#: src/bin/e_fm.c:9465
 msgid "Application Properties"
 msgstr "アプリケーションプロパティ"
 
-#: src/bin/e_fm.c:9266 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:9473 src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "ファイルプロパティ"
 
-#: src/bin/e_fm.c:9482
+#: src/bin/e_fm.c:9689
 msgid "Use default"
 msgstr "デフォルトを使う"
 
-#: src/bin/e_fm.c:9512 src/modules/fileman/e_mod_config.c:319
+#: src/bin/e_fm.c:9719 src/modules/fileman/e_mod_config.c:319
 msgid "Grid Icons"
 msgstr "グリッドアイコン"
 
-#: src/bin/e_fm.c:9520 src/modules/fileman/e_mod_config.c:321
+#: src/bin/e_fm.c:9727 src/modules/fileman/e_mod_config.c:323
+#, fuzzy
+msgid "Custom Grid Icons"
+msgstr "カスタムアイコン"
+
+#: src/bin/e_fm.c:9735 src/modules/fileman/e_mod_config.c:321
 msgid "Custom Icons"
 msgstr "カスタムアイコン"
 
-#: src/bin/e_fm.c:9528 src/modules/everything/evry_config.c:439
+#: src/bin/e_fm.c:9743 src/modules/everything/evry_config.c:439
 #: src/modules/everything/evry_config.c:469
-#: src/modules/fileman/e_mod_config.c:329
+#: src/modules/fileman/e_mod_config.c:328
 msgid "List"
 msgstr "リスト"
 
-#: src/bin/e_fm.c:9536 src/modules/everything/evry_config.c:467
+#: src/bin/e_fm.c:9751 src/modules/everything/evry_config.c:467
 msgid "Default View"
 msgstr "デフォルトの表示形式"
 
-#: src/bin/e_fm.c:9558
+#: src/bin/e_fm.c:9773
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "アイコンサイズ (%d)"
 
-#: src/bin/e_fm.c:9585
+#: src/bin/e_fm.c:9800
 #, fuzzy
 msgid "Could not create a directory!"
 msgstr "モジュールのロードエラー"
 
-#: src/bin/e_fm.c:9600
+#: src/bin/e_fm.c:9815
 msgid "Could not create a file!"
 msgstr "ファイルを作成できません！"
 
-#: src/bin/e_fm.c:9615 src/bin/e_fm.c:9642
+#: src/bin/e_fm.c:9830 src/bin/e_fm.c:9857
 #: src/modules/conf_paths/e_int_config_paths.c:206
 msgid "New Directory"
 msgstr "新しいディレクトリ"
 
-#: src/bin/e_fm.c:9615 src/bin/e_fm.c:9642
+#: src/bin/e_fm.c:9830 src/bin/e_fm.c:9857
 msgid "New File"
 msgstr "新規ファイル"
 
-#: src/bin/e_fm.c:9709 src/bin/e_fm.c:9730
+#: src/bin/e_fm.c:9924 src/bin/e_fm.c:9945
 msgid "Already creating a new file for this directory!"
 msgstr "すでにこのディレクトリに新規ファイルを作成中です！"
 
-#: src/bin/e_fm.c:9714 src/bin/e_fm.c:9735
+#: src/bin/e_fm.c:9929 src/bin/e_fm.c:9950
 #, c-format
 msgid "%s can't be written to!"
 msgstr "%s には書き込めません!"
 
-#: src/bin/e_fm.c:9754
+#: src/bin/e_fm.c:9969
 msgid "Directory"
 msgstr "ディレクトリ"
 
-#: src/bin/e_fm.c:9759 src/modules/conf_applications/e_int_config_defapps.c:312
+#: src/bin/e_fm.c:9974 src/modules/conf_applications/e_int_config_defapps.c:312
 msgid "File"
 msgstr "ファイル"
 
-#: src/bin/e_fm.c:9790
+#: src/bin/e_fm.c:10005
 msgid "Inherit parent settings"
 msgstr "親の設定を継承する"
 
-#: src/bin/e_fm.c:9799
+#: src/bin/e_fm.c:10014
 msgid "Show Hidden Files"
 msgstr "隠しファイルを表示する"
 
-#: src/bin/e_fm.c:9811
+#: src/bin/e_fm.c:10026
 msgid "Remember Ordering"
 msgstr "順序をを記憶する"
 
-#: src/bin/e_fm.c:9820
+#: src/bin/e_fm.c:10035
 msgid "Sort Now"
 msgstr "ただちにソートする"
 
-#: src/bin/e_fm.c:9828
+#: src/bin/e_fm.c:10043
 msgid "Single Click Activation"
 msgstr "シングルクリックで開く"
 
-#: src/bin/e_fm.c:9839 src/modules/fileman/e_mod_config.c:406
+#: src/bin/e_fm.c:10054 src/modules/fileman/e_mod_config.c:405
 msgid "Secure Deletion"
 msgstr "安全な削除"
 
-#: src/bin/e_fm.c:9852
+#: src/bin/e_fm.c:10067
 msgid "File Manager Settings"
 msgstr "ファイルマネージャの設定"
 
-#: src/bin/e_fm.c:9857
+#: src/bin/e_fm.c:10072
 msgid "File Icon Settings"
 msgstr "ファイルアイコンの設定"
 
-#: src/bin/e_fm.c:9935 src/bin/e_fm.c:10151
+#: src/bin/e_fm.c:10150 src/bin/e_fm.c:10381
 msgid "Set background..."
 msgstr "背景を設定する"
 
-#: src/bin/e_fm.c:9943
+#: src/bin/e_fm.c:10158
 msgid "Clear background"
 msgstr "背景をクリアする"
 
-#: src/bin/e_fm.c:9950 src/bin/e_fm.c:10179
+#: src/bin/e_fm.c:10165 src/bin/e_fm.c:10409
 msgid "Set overlay..."
 msgstr "オーバーレイを設定する"
 
-#: src/bin/e_fm.c:9956
+#: src/bin/e_fm.c:10171
 msgid "Clear overlay"
 msgstr "オーバーレイをクリアする"
 
-#: src/bin/e_fm.c:10273 src/bin/e_fm.c:10616
+#: src/bin/e_fm.c:10503 src/bin/e_fm.c:10846
 #, c-format
 msgid "Rename %s to:"
 msgstr "名前を %s から変更:"
 
-#: src/bin/e_fm.c:10275 src/bin/e_fm.c:10617
+#: src/bin/e_fm.c:10505 src/bin/e_fm.c:10847
 msgid "Rename File"
 msgstr "ファイル名を変更する"
 
-#: src/bin/e_fm.c:10368 src/bin/e_fm.c:10401
+#: src/bin/e_fm.c:10598 src/bin/e_fm.c:10631
 #, c-format
 msgid "%s already exists!"
 msgstr "%s はすでに存在します!"
 
-#: src/bin/e_fm.c:10371 src/bin/e_fm.c:10405
+#: src/bin/e_fm.c:10601 src/bin/e_fm.c:10635
 #, c-format
 msgid "%s could not be renamed because it is protected"
 msgstr "%s は保護されているので、名前を変更できません。"
 
-#: src/bin/e_fm.c:10374 src/bin/e_fm.c:10408
+#: src/bin/e_fm.c:10604 src/bin/e_fm.c:10638
 msgid "Internal filemanager error :("
 msgstr "ファイルマネージャの内部エラー :("
 
-#: src/bin/e_fm.c:10462 src/bin/e_fm.c:10683
+#: src/bin/e_fm.c:10692 src/bin/e_fm.c:10913
 msgid "Retry"
 msgstr "再実行"
 
-#: src/bin/e_fm.c:10463 src/bin/e_fm.c:10684 src/bin/e_fm.c:11671
+#: src/bin/e_fm.c:10693 src/bin/e_fm.c:10914 src/bin/e_fm.c:11910
 msgid "Abort"
 msgstr "中止"
 
-#: src/bin/e_fm.c:10519
+#: src/bin/e_fm.c:10749
 msgid "No to all"
 msgstr "すべて拒否"
 
-#: src/bin/e_fm.c:10522
+#: src/bin/e_fm.c:10752
 msgid "Yes to all"
 msgstr "すべて了承"
 
-#: src/bin/e_fm.c:10525 src/modules/xkbswitch/e_mod_config.c:402
+#: src/bin/e_fm.c:10755 src/modules/xkbswitch/e_mod_config.c:402
 #: src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:633
 msgid "Warning"
 msgstr "警告"
 
-#: src/bin/e_fm.c:10528
+#: src/bin/e_fm.c:10758
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "ファイルが存在します. 上書きしますか？<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:10686
+#: src/bin/e_fm.c:10916
 #, fuzzy
 msgid "Move Source"
 msgstr "移動先"
 
-#: src/bin/e_fm.c:10687
+#: src/bin/e_fm.c:10917
 msgid "Ignore this"
 msgstr "これを無視"
 
-#: src/bin/e_fm.c:10688
+#: src/bin/e_fm.c:10918
 msgid "Ignore all"
 msgstr "すべて無視"
 
-#: src/bin/e_fm.c:10693
+#: src/bin/e_fm.c:10923
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr "操作中にエラーが起きました.<br>%s"
 
 #
-#: src/bin/e_fm.c:10886
+#: src/bin/e_fm.c:11116
 msgid "Confirm Delete"
 msgstr "削除確認"
 
-#: src/bin/e_fm.c:10896
+#: src/bin/e_fm.c:11126
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "本当に<br><hilight>%s</hilight>を削除しますか?"
 
-#: src/bin/e_fm.c:10901
+#: src/bin/e_fm.c:11131
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
@@ -1759,7 +1764,7 @@ msgstr ""
 "以下にある %d 個のファイルが選択されました.<br><hilight>%s</hilight><br>これ"
 "らを本当に削除しますか？"
 
-#: src/bin/e_fm.c:10911
+#: src/bin/e_fm.c:11141
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -3952,7 +3957,7 @@ msgstr ""
 "ハイバネート中です。<br>ハイバネートが完了しないと他のシステム·アクションを"
 "<br>実行することはできません。"
 
-#: src/bin/e_sys.c:631
+#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
 #, fuzzy
 msgid "EEK! This should not happen."
 msgstr "あれれ、これはまずいですよ！"
@@ -3973,10 +3978,6 @@ msgstr "サスペンドが失敗しました"
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "ハイバネートに失敗しました"
-
-#: src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
-msgstr "あれれ、これはまずいですよ！"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -4701,11 +4702,11 @@ msgstr "プレゼンテーション"
 msgid "Offline"
 msgstr "オフライン"
 
-#: src/modules/conf/e_mod_main.c:460 src/modules/fileman/e_mod_config.c:437
-#: src/modules/fileman/e_mod_config.c:440
-#: src/modules/fileman/e_mod_config.c:443
-#: src/modules/fileman/e_mod_config.c:446
-#: src/modules/fileman/e_mod_config.c:449 src/modules/gadman/e_mod_config.c:208
+#: src/modules/conf/e_mod_main.c:460 src/modules/fileman/e_mod_config.c:436
+#: src/modules/fileman/e_mod_config.c:439
+#: src/modules/fileman/e_mod_config.c:442
+#: src/modules/fileman/e_mod_config.c:445
+#: src/modules/fileman/e_mod_config.c:448 src/modules/gadman/e_mod_config.c:208
 msgid "Mode"
 msgstr "モード"
 
@@ -4946,7 +4947,7 @@ msgstr "壁紙の交換"
 #: src/modules/everything/evry_config.c:603
 #: src/modules/everything/evry_config.c:610
 #: src/modules/everything/evry_config.c:620
-#: src/modules/fileman/e_mod_config.c:335
+#: src/modules/fileman/e_mod_config.c:334
 #: src/modules/syscon/e_int_config_syscon.c:148
 #: src/modules/syscon/e_int_config_syscon.c:153
 #: src/modules/syscon/e_int_config_syscon.c:158
@@ -5095,7 +5096,7 @@ msgstr "X スクリーンセーバーが起動したらロックする"
 #: src/modules/conf_display/e_int_config_desklock.c:340
 #: src/modules/conf_display/e_int_config_screensaver.c:183
 #: src/modules/conf_display/e_int_config_screensaver.c:200
-#: src/modules/fileman/e_mod_config.c:424
+#: src/modules/fileman/e_mod_config.c:423
 #, c-format
 msgid "%1.0f seconds"
 msgstr "%1.0f 秒"
@@ -5535,7 +5536,7 @@ msgstr "マウスの加速"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:339
 #: src/modules/conf_interaction/e_int_config_mouse.c:380
-#: src/modules/fileman/e_mod_config.c:482
+#: src/modules/fileman/e_mod_config.c:481
 #: src/modules/syscon/e_int_config_syscon.c:169
 #, c-format
 msgid "%1.1f"
@@ -6345,7 +6346,7 @@ msgid "Image cache size"
 msgstr "画像キャッシュサイズ"
 
 #: src/modules/conf_performance/e_int_config_performance.c:140
-#: src/modules/fileman/e_mod_config.c:418
+#: src/modules/fileman/e_mod_config.c:417
 #, c-format
 msgid "%1.0f MiB"
 msgstr "%1.0f MiB"
@@ -7315,7 +7316,7 @@ msgid "Resize Geometry"
 msgstr "サイズ変更情報"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:158
-#: src/modules/fileman/e_mod_config.c:364
+#: src/modules/fileman/e_mod_config.c:363
 #: src/modules/winlist/e_int_config_winlist.c:216
 #: src/modules/tasks/e_mod_config.c:90
 msgid "Display"
@@ -8126,7 +8127,7 @@ msgstr "Exebuf"
 
 #: src/modules/everything/evry_plug_apps.c:1225
 #: src/modules/everything/evry_plug_apps.c:1272
-#: src/modules/fileman/e_fwin.c:2192 src/modules/fileman/e_fwin.c:2584
+#: src/modules/fileman/e_fwin.c:2213 src/modules/fileman/e_fwin.c:2605
 msgid "Open with..."
 msgstr "開く..."
 
@@ -8147,7 +8148,7 @@ msgid "Run with Sudo"
 msgstr "sudoで実行する"
 
 #: src/modules/everything/evry_plug_apps.c:1279
-#: src/modules/fileman/e_fwin.c:252
+#: src/modules/fileman/e_fwin.c:255
 msgid "Open Terminal here"
 msgstr "ここで端末を開く"
 
@@ -8316,121 +8317,121 @@ msgstr ""
 msgid "Back"
 msgstr "戻る"
 
-#: src/modules/fileman/e_fwin.c:2083
+#: src/modules/fileman/e_fwin.c:2104
 msgid "Other application..."
 msgstr "その他のアプリケーション..."
 
-#: src/modules/fileman/e_fwin.c:2146
+#: src/modules/fileman/e_fwin.c:2167
 msgid "Go To Parent Directory"
 msgstr "上のディレクトリへ移動"
 
-#: src/modules/fileman/e_fwin.c:2156
+#: src/modules/fileman/e_fwin.c:2177
 msgid "Clone Window"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2162
+#: src/modules/fileman/e_fwin.c:2183
 msgid "Copy Path"
 msgstr "Path をコピー"
 
-#: src/modules/fileman/e_fwin.c:2178
+#: src/modules/fileman/e_fwin.c:2199
 msgid "Run"
 msgstr "起動"
 
-#: src/modules/fileman/e_fwin.c:2185 src/modules/fileman/e_fwin.c:2585
+#: src/modules/fileman/e_fwin.c:2206 src/modules/fileman/e_fwin.c:2606
 msgid "Open"
 msgstr "開く"
 
-#: src/modules/fileman/e_fwin.c:2614 src/modules/fileman/e_fwin.c:2639
+#: src/modules/fileman/e_fwin.c:2635 src/modules/fileman/e_fwin.c:2660
 #, c-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d 個"
 msgstr[1] "%d 個"
 
-#: src/modules/fileman/e_fwin.c:2657
+#: src/modules/fileman/e_fwin.c:2678
 msgid "Known Applications"
 msgstr "既知のアプリケーション"
 
-#: src/modules/fileman/e_fwin.c:2667
+#: src/modules/fileman/e_fwin.c:2688
 msgid "Suggested Applications"
 msgstr "お推めのアプリケーション"
 
-#: src/modules/fileman/e_fwin.c:2702
+#: src/modules/fileman/e_fwin.c:2723
 msgid "All Applications"
 msgstr "全アプリケーション"
 
-#: src/modules/fileman/e_fwin.c:2725
+#: src/modules/fileman/e_fwin.c:2746
 msgid "Custom Command"
 msgstr "カスタムコマンド"
 
-#: src/modules/fileman/e_fwin.c:3016
+#: src/modules/fileman/e_fwin.c:3037
 #, c-format
 msgid "Copying is aborted"
 msgstr "コピーが異常終了しました"
 
-#: src/modules/fileman/e_fwin.c:3020
+#: src/modules/fileman/e_fwin.c:3041
 #, c-format
 msgid "Moving is aborted"
 msgstr "移動が異常終了しました"
 
-#: src/modules/fileman/e_fwin.c:3024
+#: src/modules/fileman/e_fwin.c:3045
 #, c-format
 msgid "Deleting is aborted"
 msgstr "削除が異常終了しました"
 
-#: src/modules/fileman/e_fwin.c:3028
+#: src/modules/fileman/e_fwin.c:3049
 #, c-format
 msgid "Secure deletion is aborted"
 msgstr "安全な削除を中止しました"
 
-#: src/modules/fileman/e_fwin.c:3032
+#: src/modules/fileman/e_fwin.c:3053
 #, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "スレーブからの未知の操作が異常終了しました"
 
-#: src/modules/fileman/e_fwin.c:3042
+#: src/modules/fileman/e_fwin.c:3063
 #, c-format
 msgid "Copy of %s done"
 msgstr "%s のコピー終了"
 
-#: src/modules/fileman/e_fwin.c:3044
+#: src/modules/fileman/e_fwin.c:3065
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr "%s コピー中 (所要時間: %s)"
 
-#: src/modules/fileman/e_fwin.c:3049
+#: src/modules/fileman/e_fwin.c:3070
 #, c-format
 msgid "Move of %s done"
 msgstr "%s の移動終了"
 
-#: src/modules/fileman/e_fwin.c:3051
+#: src/modules/fileman/e_fwin.c:3072
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr "%s 移動中 (所要時間: %s)"
 
-#: src/modules/fileman/e_fwin.c:3056
+#: src/modules/fileman/e_fwin.c:3077
 #, c-format
 msgid "Delete done"
 msgstr "削除終了"
 
 #
-#: src/modules/fileman/e_fwin.c:3058
+#: src/modules/fileman/e_fwin.c:3079
 #, c-format
 msgid "Deleting files..."
 msgstr "ファイルを削除中..."
 
-#: src/modules/fileman/e_fwin.c:3063
+#: src/modules/fileman/e_fwin.c:3084
 #, c-format
 msgid "Secure delete done"
 msgstr "安全な削除が完了しました"
 
 #
-#: src/modules/fileman/e_fwin.c:3065
+#: src/modules/fileman/e_fwin.c:3086
 #, c-format
 msgid "Securely deleting files..."
 msgstr "ファイルを安全に削除中..."
 
-#: src/modules/fileman/e_fwin.c:3069
+#: src/modules/fileman/e_fwin.c:3090
 #, c-format
 msgid "Unknown operation from slave %d"
 msgstr "スレーブ %d からの不明な操作です"
@@ -8492,102 +8493,102 @@ msgstr "画像を選択する"
 msgid "Fileman Settings"
 msgstr "ファイルマネージャの設定"
 
-#: src/modules/fileman/e_mod_config.c:333
+#: src/modules/fileman/e_mod_config.c:332
 msgid "Icon Size"
 msgstr "アイコンサイズ"
 
-#: src/modules/fileman/e_mod_config.c:339
+#: src/modules/fileman/e_mod_config.c:338
 msgid "View"
 msgstr "閲覧"
 
-#: src/modules/fileman/e_mod_config.c:344
+#: src/modules/fileman/e_mod_config.c:343
 msgid "File Extensions"
 msgstr "ファイルの拡張機能"
 
-#: src/modules/fileman/e_mod_config.c:347
+#: src/modules/fileman/e_mod_config.c:346
 msgid "Full Path In Title"
 msgstr "タイトルのフルパス"
 
-#: src/modules/fileman/e_mod_config.c:350
+#: src/modules/fileman/e_mod_config.c:349
 msgid "Icons On Desktop"
 msgstr "デスクトップのアイコン"
 
-#: src/modules/fileman/e_mod_config.c:353
+#: src/modules/fileman/e_mod_config.c:352
 msgid "Toolbar"
 msgstr "ツールバー"
 
-#: src/modules/fileman/e_mod_config.c:356
+#: src/modules/fileman/e_mod_config.c:355
 msgid "Sidebar"
 msgstr "サイドバー"
 
-#: src/modules/fileman/e_mod_config.c:397
+#: src/modules/fileman/e_mod_config.c:396
 msgid "Open Dirs In Place"
 msgstr "開くウィンドウは変えない"
 
-#: src/modules/fileman/e_mod_config.c:400
+#: src/modules/fileman/e_mod_config.c:399
 msgid "Use Single Click"
 msgstr "シングルクリックで開く"
 
-#: src/modules/fileman/e_mod_config.c:403
+#: src/modules/fileman/e_mod_config.c:402
 msgid "'cp+rm' instead of 'mv'"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:409
+#: src/modules/fileman/e_mod_config.c:408
 msgid "Use Alternate Selection Modifiers"
 msgstr "代替選択修飾子を使用する"
 
-#: src/modules/fileman/e_mod_config.c:412
+#: src/modules/fileman/e_mod_config.c:411
 msgid "Allow Navigation On Desktop"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:416
+#: src/modules/fileman/e_mod_config.c:415
 msgid "Max File Size For Thumbnailing"
 msgstr "サムネイルの最大ファイルサイズ"
 
-#: src/modules/fileman/e_mod_config.c:422
+#: src/modules/fileman/e_mod_config.c:421
 msgid "Spring Delay"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:428
+#: src/modules/fileman/e_mod_config.c:427
 #: src/modules/quickaccess/e_mod_config.c:252
 #: src/modules/quickaccess/e_mod_config.c:348
 msgid "Behavior"
 msgstr "動作"
 
-#: src/modules/fileman/e_mod_config.c:455
+#: src/modules/fileman/e_mod_config.c:454
 msgid "Show device icons on desktop"
 msgstr "デスクトップにデバイスアイコンを表示"
 
-#: src/modules/fileman/e_mod_config.c:458 src/modules/places/e_mod_config.c:205
+#: src/modules/fileman/e_mod_config.c:457 src/modules/places/e_mod_config.c:205
 msgid "Mount volumes on insert"
 msgstr "インサート時にボリュームをマウントする"
 
-#: src/modules/fileman/e_mod_config.c:461
+#: src/modules/fileman/e_mod_config.c:460
 msgid "Open filemanager on mount"
 msgstr "マウント時にファイルマネージャを開く"
 
-#: src/modules/fileman/e_mod_config.c:467 src/modules/places/e_mod_config.c:216
+#: src/modules/fileman/e_mod_config.c:466 src/modules/places/e_mod_config.c:216
 #, fuzzy
 msgid "Use a custom file manager"
 msgstr "ファイルマネージャ"
 
-#: src/modules/fileman/e_mod_config.c:472
+#: src/modules/fileman/e_mod_config.c:471
 msgid "Device"
 msgstr "デバイス"
 
-#: src/modules/fileman/e_mod_config.c:476
+#: src/modules/fileman/e_mod_config.c:475
 msgid "Show tooltip"
 msgstr "ツールチップを表示"
 
-#: src/modules/fileman/e_mod_config.c:480
+#: src/modules/fileman/e_mod_config.c:479
 msgid "Tooltip delay"
 msgstr "ツールチップの遅延"
 
-#: src/modules/fileman/e_mod_config.c:486
+#: src/modules/fileman/e_mod_config.c:485
 msgid "Tooltip size (Screen percentage)"
 msgstr "ツールチップの大きさ（画面の割合）"
 
-#: src/modules/fileman/e_mod_config.c:488
+#: src/modules/fileman/e_mod_config.c:487
 #: src/modules/notification/e_mod_config.c:196
 #: src/modules/notification/e_mod_config.c:204
 #: src/modules/notification/e_mod_config.c:212
@@ -8595,7 +8596,7 @@ msgstr "ツールチップの大きさ（画面の割合）"
 msgid "%2.0f"
 msgstr "%2.0f"
 
-#: src/modules/fileman/e_mod_config.c:492
+#: src/modules/fileman/e_mod_config.c:491
 msgid "Tooltips"
 msgstr "ツールチップ"
 
@@ -9558,35 +9559,35 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:952
+#: src/modules/systray/e_mod_main.c:574 src/modules/systray/e_mod_main.c:990
 msgid "Systray Error"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:537
+#: src/modules/systray/e_mod_main.c:575
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
+#: src/modules/systray/e_mod_main.c:981 src/modules/systray/e_mod_main.c:1217
 msgid "Another systray exists"
 msgstr "別の systray があります"
 
-#: src/modules/systray/e_mod_main.c:944 src/modules/systray/e_mod_main.c:1170
+#: src/modules/systray/e_mod_main.c:982 src/modules/systray/e_mod_main.c:1218
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "使える systray ガジェットは１つだけですが、すでに存在します"
 
-#: src/modules/systray/e_mod_main.c:953
+#: src/modules/systray/e_mod_main.c:991
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Systrayはに至るまでの下に設定されている棚で作業することはできません。"
 
-#: src/modules/systray/e_mod_main.c:1148
+#: src/modules/systray/e_mod_main.c:1196
 msgid "Systray"
 msgstr "システムトレイ"
 
-#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:93
+#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:95
 msgid "Select action to take with screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:140
+#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:142
 msgid "Delay"
 msgstr ""
 
@@ -9740,15 +9741,15 @@ msgstr "ネットワークを初期化できません"
 msgid "Take Screenshot with Delay"
 msgstr "遅延して撮影する"
 
-#: src/modules/shot/e_mod_preview.c:113
+#: src/modules/shot/e_mod_preview.c:115
 msgid "Quality"
 msgstr "品質"
 
-#: src/modules/shot/e_mod_preview.c:129
+#: src/modules/shot/e_mod_preview.c:131
 msgid "Save"
 msgstr "保存する"
 
-#: src/modules/shot/e_mod_preview.c:132
+#: src/modules/shot/e_mod_preview.c:134
 msgid "Share"
 msgstr "共有"
 
@@ -10516,6 +10517,9 @@ msgstr "解像度の変更"
 #, fuzzy
 msgid "Separator"
 msgstr "別グループとする"
+
+#~ msgid "EEK! This should not happen"
+#~ msgstr "あれれ、これはまずいですよ！"
 
 #~ msgid ""
 #~ "This image will be uploaded<br>to enlightenment.org. It will be publicly "

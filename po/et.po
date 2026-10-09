@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2026-07-27 17:18+0200\n"
+"POT-Creation-Date: 2026-10-09 17:05+0200\n"
 "PO-Revision-Date: 2010-01-07 07:56+0000\n"
 "Last-Translator: René Pärts <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -23,14 +23,14 @@ msgid "About Moksha"
 msgstr "Teave Enlightment'ist"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2164 src/bin/e_actions.c:3163
-#: src/bin/e_bodhi_about.c:57 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
+#: src/bin/e_bodhi_about.c:57 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1076
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:157 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:113
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2587
+#: src/modules/fileman/e_fwin.c:2608
 msgid "Close"
 msgstr "Sulge"
 
@@ -83,7 +83,7 @@ msgstr "tapma"
 #: src/bin/e_actions.c:447 src/bin/e_actions.c:2284 src/bin/e_actions.c:2378
 #: src/bin/e_actions.c:2438 src/bin/e_actions.c:2498 src/bin/e_actions.c:2563
 #: src/bin/e_actions.c:2628 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10518 src/bin/e_fm.c:10884
+#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10748 src/bin/e_fm.c:11114
 #: src/bin/e_screensaver.c:195 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "Ei"
@@ -105,7 +105,7 @@ msgstr "Kas olete kindel, et soovite väljuda?"
 
 #: src/bin/e_actions.c:2282 src/bin/e_actions.c:2376 src/bin/e_actions.c:2436
 #: src/bin/e_actions.c:2496 src/bin/e_actions.c:2561 src/bin/e_actions.c:2626
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10521
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10751
 #: src/bin/e_screensaver.c:193 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "Yes"
 msgstr "Jah"
@@ -170,7 +170,7 @@ msgstr "Oled sa kindel, et soovid hibernate."
 msgid "Window : Actions"
 msgstr "Window; tegevused"
 
-#: src/bin/e_actions.c:3123 src/bin/e_fm.c:11655
+#: src/bin/e_actions.c:3123 src/bin/e_fm.c:11894
 #, fuzzy
 msgid "Move"
 msgstr "liikuma"
@@ -1004,7 +1004,7 @@ msgid "Select"
 msgstr "valimine"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:863
-#: src/bin/e_eap_editor.c:926 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10059
+#: src/bin/e_eap_editor.c:926 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10289
 #: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:196
 #: src/bin/e_import_config_dialog.c:541
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:637
@@ -1014,7 +1014,7 @@ msgstr "valimine"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:144
+#: src/modules/shot/e_mod_delay.c:86 src/modules/shot/e_mod_preview.c:146
 #: src/modules/shot/e_mod_share.c:288 src/modules/shot/e_mod_share.c:347
 #: src/modules/xkbswitch/e_mod_config.c:587
 #, fuzzy
@@ -1164,7 +1164,7 @@ msgstr "põhi-"
 
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
-#: src/bin/e_fm.c:10058 src/bin/e_fm.c:10790 src/bin/e_fm_prop.c:624
+#: src/bin/e_fm.c:10288 src/bin/e_fm.c:11020 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
 #: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:519
 #: src/bin/e_module.c:839 src/bin/e_sys.c:634 src/bin/e_sys.c:675
@@ -1388,7 +1388,7 @@ msgstr "Käivita Terminal"
 msgid "Show in Menus"
 msgstr "Kuva menüüd"
 
-#: src/bin/e_eap_editor.c:792 src/bin/e_fm.c:8853 src/bin/e_fm.c:9013
+#: src/bin/e_eap_editor.c:792 src/bin/e_fm.c:9060 src/bin/e_fm.c:9220
 #: src/bin/e_int_border_remember.c:784 src/modules/xkbswitch/e_mod_config.c:374
 #: src/modules/clipboard/e_mod_config.c:226
 #, fuzzy
@@ -1405,7 +1405,7 @@ msgstr "ValiIcon"
 msgid "Select an Executable"
 msgstr "ValiTeostatavad"
 
-#: src/bin/e_entry.c:495 src/bin/e_fm.c:9198 src/bin/e_fm.c:10883
+#: src/bin/e_entry.c:495 src/bin/e_fm.c:9405 src/bin/e_fm.c:11113
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:269
@@ -1426,18 +1426,18 @@ msgstr "ValiTeostatavad"
 msgid "Delete"
 msgstr "kustutama"
 
-#: src/bin/e_entry.c:505 src/bin/e_fm.c:9109
+#: src/bin/e_entry.c:505 src/bin/e_fm.c:9316
 #, fuzzy
 msgid "Cut"
 msgstr "lõigatud"
 
-#: src/bin/e_entry.c:514 src/bin/e_fm.c:9123 src/bin/e_fm.c:11650
-#: src/modules/shot/e_mod_preview.c:135
+#: src/bin/e_entry.c:514 src/bin/e_fm.c:9330 src/bin/e_fm.c:11889
+#: src/modules/shot/e_mod_preview.c:137
 #, fuzzy
 msgid "Copy"
 msgstr "Kopeeri"
 
-#: src/bin/e_entry.c:524 src/bin/e_fm.c:8914 src/bin/e_fm.c:9136
+#: src/bin/e_entry.c:524 src/bin/e_fm.c:9121 src/bin/e_fm.c:9343
 #, fuzzy
 msgid "Paste"
 msgstr "pasta"
@@ -1597,129 +1597,129 @@ msgstr "väljundandmed"
 msgid "There was no output."
 msgstr "Ei olnud toodangut."
 
-#: src/bin/e_fm.c:1069
+#: src/bin/e_fm.c:1078
 #, fuzzy
 msgid "Nonexistent path"
 msgstr "olematu tee"
 
-#: src/bin/e_fm.c:1072
+#: src/bin/e_fm.c:1081
 #, c-format
 msgid "%s doesn't exist."
 msgstr ""
 
-#: src/bin/e_fm.c:2847 src/bin/e_fm.c:3806
+#: src/bin/e_fm.c:2856 src/bin/e_fm.c:3815
 #, c-format
 msgid "%u file"
 msgid_plural "%u files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_fm.c:3068
+#: src/bin/e_fm.c:3077
 #, fuzzy
 msgid "Mount Error"
 msgstr "Mount viga"
 
-#: src/bin/e_fm.c:3068
+#: src/bin/e_fm.c:3077
 #, fuzzy
 msgid "Can't mount device"
 msgstr "Ei saa paigaldada seade"
 
-#: src/bin/e_fm.c:3084
+#: src/bin/e_fm.c:3093
 #, fuzzy
 msgid "Unmount Error"
 msgstr "lahutada viga"
 
-#: src/bin/e_fm.c:3084
+#: src/bin/e_fm.c:3093
 #, fuzzy
 msgid "Can't unmount device"
 msgstr "Ei saa lahutada seade"
 
-#: src/bin/e_fm.c:3099
+#: src/bin/e_fm.c:3108
 #, fuzzy
 msgid "Eject Error"
 msgstr "Eject viga"
 
-#: src/bin/e_fm.c:3099
+#: src/bin/e_fm.c:3108
 #, fuzzy
 msgid "Can't eject device"
 msgstr "Ei saa väljastada seade"
 
-#: src/bin/e_fm.c:6652 src/bin/e_fm.c:6685 src/bin/e_fm.c:9585
-#: src/bin/e_fm.c:9600 src/bin/e_fm.c:9709 src/bin/e_fm.c:9714
-#: src/bin/e_fm.c:9730 src/bin/e_fm.c:9735 src/bin/e_fm.c:10368
-#: src/bin/e_fm.c:10371 src/bin/e_fm.c:10374 src/bin/e_fm.c:10401
-#: src/bin/e_fm.c:10405 src/bin/e_fm.c:10408 src/bin/e_fm.c:10466
-#: src/bin/e_fm.c:10691 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2382
+#: src/bin/e_fm.c:6822 src/bin/e_fm.c:6855 src/bin/e_fm.c:9800
+#: src/bin/e_fm.c:9815 src/bin/e_fm.c:9924 src/bin/e_fm.c:9929
+#: src/bin/e_fm.c:9945 src/bin/e_fm.c:9950 src/bin/e_fm.c:10598
+#: src/bin/e_fm.c:10601 src/bin/e_fm.c:10604 src/bin/e_fm.c:10631
+#: src/bin/e_fm.c:10635 src/bin/e_fm.c:10638 src/bin/e_fm.c:10696
+#: src/bin/e_fm.c:10921 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2382
 #, fuzzy
 msgid "Error"
 msgstr "viga"
 
-#: src/bin/e_fm.c:6652 src/bin/e_fm.c:6685
+#: src/bin/e_fm.c:6822 src/bin/e_fm.c:6855
 #, c-format
 msgid "The recent DND operation requested for '%s' has failed."
 msgstr ""
 
-#: src/bin/e_fm.c:8771 src/modules/fileman/e_mod_config.c:369
+#: src/bin/e_fm.c:8978 src/modules/fileman/e_mod_config.c:368
 #, fuzzy
 msgid "Case Sensitive"
 msgstr "Case Sensitive"
 
-#: src/bin/e_fm.c:8777 src/modules/fileman/e_mod_config.c:372
+#: src/bin/e_fm.c:8984 src/modules/fileman/e_mod_config.c:371
 #, fuzzy
 msgid "Sort By Extension"
 msgstr "Show Icon pikendamine"
 
-#: src/bin/e_fm.c:8783 src/modules/fileman/e_mod_config.c:375
+#: src/bin/e_fm.c:8990 src/modules/fileman/e_mod_config.c:374
 msgid "Sort By Modification Time"
 msgstr ""
 
-#: src/bin/e_fm.c:8789 src/modules/fileman/e_mod_config.c:378
+#: src/bin/e_fm.c:8996 src/modules/fileman/e_mod_config.c:377
 msgid "Sort By Size"
 msgstr ""
 
-#: src/bin/e_fm.c:8798 src/modules/fileman/e_mod_config.c:386
+#: src/bin/e_fm.c:9005 src/modules/fileman/e_mod_config.c:385
 #, fuzzy
 msgid "Directories First"
 msgstr "otsing"
 
-#: src/bin/e_fm.c:8804 src/modules/fileman/e_mod_config.c:390
+#: src/bin/e_fm.c:9011 src/modules/fileman/e_mod_config.c:389
 #, fuzzy
 msgid "Directories Last"
 msgstr "otsing"
 
-#: src/bin/e_fm.c:8837 src/bin/e_fm.c:8997
+#: src/bin/e_fm.c:9044 src/bin/e_fm.c:9204
 #: src/modules/fileman/e_mod_config.c:314
 #, fuzzy
 msgid "View Mode"
 msgstr "Vaata režiim"
 
-#: src/bin/e_fm.c:8846 src/bin/e_fm.c:9006
+#: src/bin/e_fm.c:9053 src/bin/e_fm.c:9213
 #: src/modules/everything/evry_config.c:526
-#: src/modules/fileman/e_mod_config.c:394
+#: src/modules/fileman/e_mod_config.c:393
 #, fuzzy
 msgid "Sorting"
 msgstr "sortimine"
 
-#: src/bin/e_fm.c:8864 src/bin/e_fm.c:9024
+#: src/bin/e_fm.c:9071 src/bin/e_fm.c:9231
 #, fuzzy
 msgid "Refresh View"
 msgstr "värskenda vaadet"
 
-#: src/bin/e_fm.c:8875 src/bin/e_fm.c:9036
+#: src/bin/e_fm.c:9082 src/bin/e_fm.c:9243
 msgid "New..."
 msgstr ""
 
-#: src/bin/e_fm.c:8895 src/bin/e_fm.c:9057 src/bin/e_fm.c:9088
+#: src/bin/e_fm.c:9102 src/bin/e_fm.c:9264 src/bin/e_fm.c:9295
 #, fuzzy
 msgid "Actions..."
 msgstr "tegevus"
 
-#: src/bin/e_fm.c:8922 src/bin/e_fm.c:9144 src/bin/e_fm.c:11663
+#: src/bin/e_fm.c:9129 src/bin/e_fm.c:9351 src/bin/e_fm.c:11902
 #, fuzzy
 msgid "Link"
 msgstr "link"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10520 src/bin/e_shelf.c:2510
+#: src/bin/e_fm.c:9413 src/bin/e_fm.c:10750 src/bin/e_shelf.c:2510
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1728,264 +1728,269 @@ msgstr "link"
 msgid "Rename"
 msgstr "Nimeta"
 
-#: src/bin/e_fm.c:9225
+#: src/bin/e_fm.c:9432
 #, fuzzy
 msgid "Unmount"
 msgstr "lahutada"
 
-#: src/bin/e_fm.c:9230
+#: src/bin/e_fm.c:9437
 #, fuzzy
 msgid "Mount"
 msgstr "Paigaldage"
 
-#: src/bin/e_fm.c:9235
+#: src/bin/e_fm.c:9442
 #, fuzzy
 msgid "Eject"
 msgstr "Eject"
 
-#: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
+#: src/bin/e_fm.c:9457 src/bin/e_int_border_remember.c:763
 #: src/modules/ibar/e_mod_main.c:1822
 #, fuzzy
 msgid "Properties"
 msgstr "omadused"
 
-#: src/bin/e_fm.c:9258
+#: src/bin/e_fm.c:9465
 #, fuzzy
 msgid "Application Properties"
 msgstr "taotlus omadused"
 
-#: src/bin/e_fm.c:9266 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:9473 src/bin/e_fm_prop.c:115
 #, fuzzy
 msgid "File Properties"
 msgstr "file Properties"
 
-#: src/bin/e_fm.c:9482
+#: src/bin/e_fm.c:9689
 #, fuzzy
 msgid "Use default"
 msgstr "Kasuta vaikimisi"
 
-#: src/bin/e_fm.c:9512 src/modules/fileman/e_mod_config.c:319
+#: src/bin/e_fm.c:9719 src/modules/fileman/e_mod_config.c:319
 #, fuzzy
 msgid "Grid Icons"
 msgstr "Grid Icons"
 
-#: src/bin/e_fm.c:9520 src/modules/fileman/e_mod_config.c:321
+#: src/bin/e_fm.c:9727 src/modules/fileman/e_mod_config.c:323
+#, fuzzy
+msgid "Custom Grid Icons"
+msgstr "ikoone"
+
+#: src/bin/e_fm.c:9735 src/modules/fileman/e_mod_config.c:321
 #, fuzzy
 msgid "Custom Icons"
 msgstr "ikoone"
 
-#: src/bin/e_fm.c:9528 src/modules/everything/evry_config.c:439
+#: src/bin/e_fm.c:9743 src/modules/everything/evry_config.c:439
 #: src/modules/everything/evry_config.c:469
-#: src/modules/fileman/e_mod_config.c:329
+#: src/modules/fileman/e_mod_config.c:328
 #, fuzzy
 msgid "List"
 msgstr "nimekiri"
 
-#: src/bin/e_fm.c:9536 src/modules/everything/evry_config.c:467
+#: src/bin/e_fm.c:9751 src/modules/everything/evry_config.c:467
 #, fuzzy
 msgid "Default View"
 msgstr "vaikimisi View"
 
-#: src/bin/e_fm.c:9558
+#: src/bin/e_fm.c:9773
 #, c-format
 msgid "Icon Size (%d)"
 msgstr ""
 
-#: src/bin/e_fm.c:9585
+#: src/bin/e_fm.c:9800
 #, fuzzy
 msgid "Could not create a directory!"
 msgstr "Viga laadimise moodul"
 
-#: src/bin/e_fm.c:9600
+#: src/bin/e_fm.c:9815
 #, fuzzy
 msgid "Could not create a file!"
 msgstr "Viga laadimise moodul"
 
-#: src/bin/e_fm.c:9615 src/bin/e_fm.c:9642
+#: src/bin/e_fm.c:9830 src/bin/e_fm.c:9857
 #: src/modules/conf_paths/e_int_config_paths.c:206
 #, fuzzy
 msgid "New Directory"
 msgstr "New Directory"
 
-#: src/bin/e_fm.c:9615 src/bin/e_fm.c:9642
+#: src/bin/e_fm.c:9830 src/bin/e_fm.c:9857
 #, fuzzy
 msgid "New File"
 msgstr "Faili:"
 
-#: src/bin/e_fm.c:9709 src/bin/e_fm.c:9730
+#: src/bin/e_fm.c:9924 src/bin/e_fm.c:9945
 msgid "Already creating a new file for this directory!"
 msgstr ""
 
-#: src/bin/e_fm.c:9714 src/bin/e_fm.c:9735
+#: src/bin/e_fm.c:9929 src/bin/e_fm.c:9950
 #, c-format
 msgid "%s can't be written to!"
 msgstr ""
 
-#: src/bin/e_fm.c:9754
+#: src/bin/e_fm.c:9969
 #, fuzzy
 msgid "Directory"
 msgstr "New Directory"
 
-#: src/bin/e_fm.c:9759 src/modules/conf_applications/e_int_config_defapps.c:312
+#: src/bin/e_fm.c:9974 src/modules/conf_applications/e_int_config_defapps.c:312
 #, fuzzy
 msgid "File"
 msgstr "Faili:"
 
-#: src/bin/e_fm.c:9790
+#: src/bin/e_fm.c:10005
 #, fuzzy
 msgid "Inherit parent settings"
 msgstr "Pärivad vanema seaded"
 
-#: src/bin/e_fm.c:9799
+#: src/bin/e_fm.c:10014
 #, fuzzy
 msgid "Show Hidden Files"
 msgstr "Näita peidetud faile"
 
-#: src/bin/e_fm.c:9811
+#: src/bin/e_fm.c:10026
 #, fuzzy
 msgid "Remember Ordering"
 msgstr "Pea meeles Tellimise"
 
-#: src/bin/e_fm.c:9820
+#: src/bin/e_fm.c:10035
 #, fuzzy
 msgid "Sort Now"
 msgstr "Sorteeri Now"
 
-#: src/bin/e_fm.c:9828
+#: src/bin/e_fm.c:10043
 #, fuzzy
 msgid "Single Click Activation"
 msgstr "Kasuta Single Click"
 
-#: src/bin/e_fm.c:9839 src/modules/fileman/e_mod_config.c:406
+#: src/bin/e_fm.c:10054 src/modules/fileman/e_mod_config.c:405
 #, fuzzy
 msgid "Secure Deletion"
 msgstr "Screen Resolution"
 
-#: src/bin/e_fm.c:9852
+#: src/bin/e_fm.c:10067
 #, fuzzy
 msgid "File Manager Settings"
 msgstr "piipar Settings"
 
-#: src/bin/e_fm.c:9857
+#: src/bin/e_fm.c:10072
 #, fuzzy
 msgid "File Icon Settings"
 msgstr "fondiseadistused"
 
-#: src/bin/e_fm.c:9935 src/bin/e_fm.c:10151
+#: src/bin/e_fm.c:10150 src/bin/e_fm.c:10381
 #, fuzzy
 msgid "Set background..."
 msgstr "Taust ..."
 
-#: src/bin/e_fm.c:9943
+#: src/bin/e_fm.c:10158
 #, fuzzy
 msgid "Clear background"
 msgstr "Taust ..."
 
-#: src/bin/e_fm.c:9950 src/bin/e_fm.c:10179
+#: src/bin/e_fm.c:10165 src/bin/e_fm.c:10409
 #, fuzzy
 msgid "Set overlay..."
 msgstr "Seadke kate ..."
 
-#: src/bin/e_fm.c:9956
+#: src/bin/e_fm.c:10171
 #, fuzzy
 msgid "Clear overlay"
 msgstr "Seadke kate ..."
 
-#: src/bin/e_fm.c:10273 src/bin/e_fm.c:10616
+#: src/bin/e_fm.c:10503 src/bin/e_fm.c:10846
 #, c-format
 msgid "Rename %s to:"
 msgstr ""
 
-#: src/bin/e_fm.c:10275 src/bin/e_fm.c:10617
+#: src/bin/e_fm.c:10505 src/bin/e_fm.c:10847
 #, fuzzy
 msgid "Rename File"
 msgstr "Nimeta fail"
 
-#: src/bin/e_fm.c:10368 src/bin/e_fm.c:10401
+#: src/bin/e_fm.c:10598 src/bin/e_fm.c:10631
 #, c-format
 msgid "%s already exists!"
 msgstr ""
 
-#: src/bin/e_fm.c:10371 src/bin/e_fm.c:10405
+#: src/bin/e_fm.c:10601 src/bin/e_fm.c:10635
 #, c-format
 msgid "%s could not be renamed because it is protected"
 msgstr ""
 
-#: src/bin/e_fm.c:10374 src/bin/e_fm.c:10408
+#: src/bin/e_fm.c:10604 src/bin/e_fm.c:10638
 #, fuzzy
 msgid "Internal filemanager error :("
 msgstr "Open failihaldaja mäel"
 
-#: src/bin/e_fm.c:10462 src/bin/e_fm.c:10683
+#: src/bin/e_fm.c:10692 src/bin/e_fm.c:10913
 #, fuzzy
 msgid "Retry"
 msgstr "Uuesti"
 
-#: src/bin/e_fm.c:10463 src/bin/e_fm.c:10684 src/bin/e_fm.c:11671
+#: src/bin/e_fm.c:10693 src/bin/e_fm.c:10914 src/bin/e_fm.c:11910
 #, fuzzy
 msgid "Abort"
 msgstr "Abort"
 
-#: src/bin/e_fm.c:10519
+#: src/bin/e_fm.c:10749
 #, fuzzy
 msgid "No to all"
 msgstr "Ei, kõik"
 
-#: src/bin/e_fm.c:10522
+#: src/bin/e_fm.c:10752
 #, fuzzy
 msgid "Yes to all"
 msgstr "Jah, kõik"
 
-#: src/bin/e_fm.c:10525 src/modules/xkbswitch/e_mod_config.c:402
+#: src/bin/e_fm.c:10755 src/modules/xkbswitch/e_mod_config.c:402
 #: src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:633
 #, fuzzy
 msgid "Warning"
 msgstr "hoiatus"
 
-#: src/bin/e_fm.c:10528
+#: src/bin/e_fm.c:10758
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr ""
 
-#: src/bin/e_fm.c:10686
+#: src/bin/e_fm.c:10916
 #, fuzzy
 msgid "Move Source"
 msgstr "Minna"
 
-#: src/bin/e_fm.c:10687
+#: src/bin/e_fm.c:10917
 #, fuzzy
 msgid "Ignore this"
 msgstr "ignoreerib seda"
 
-#: src/bin/e_fm.c:10688
+#: src/bin/e_fm.c:10918
 #, fuzzy
 msgid "Ignore all"
 msgstr "eirata kõiki"
 
-#: src/bin/e_fm.c:10693
+#: src/bin/e_fm.c:10923
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr ""
 
-#: src/bin/e_fm.c:10886
+#: src/bin/e_fm.c:11116
 #, fuzzy
 msgid "Confirm Delete"
 msgstr "Kinnita kustutamine"
 
-#: src/bin/e_fm.c:10896
+#: src/bin/e_fm.c:11126
 #, fuzzy, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "Oled sa kindel, et soovite kustutada selle riiuli."
 
-#: src/bin/e_fm.c:10901
+#: src/bin/e_fm.c:11131
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
 
-#: src/bin/e_fm.c:10911
+#: src/bin/e_fm.c:11141
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -4284,7 +4289,7 @@ msgstr ""
 "Talveuneks.<br>Sa ei saa teha ühegi teise süsteemi tegevuse<br>kuni see on "
 "lõpule viidud."
 
-#: src/bin/e_sys.c:631
+#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
 #, fuzzy
 msgid "EEK! This should not happen."
 msgstr "EEK! See ei tohiks juhtuda"
@@ -4308,11 +4313,6 @@ msgstr "Peatada ei suutnud."
 #, fuzzy
 msgid "Hibernate failed."
 msgstr "Hibernate ebaõnnestus."
-
-#: src/bin/e_sys.c:672
-#, fuzzy
-msgid "EEK! This should not happen"
-msgstr "EEK! See ei tohiks juhtuda"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -5097,11 +5097,11 @@ msgstr "esitlus"
 msgid "Offline"
 msgstr "Offline"
 
-#: src/modules/conf/e_mod_main.c:460 src/modules/fileman/e_mod_config.c:437
-#: src/modules/fileman/e_mod_config.c:440
-#: src/modules/fileman/e_mod_config.c:443
-#: src/modules/fileman/e_mod_config.c:446
-#: src/modules/fileman/e_mod_config.c:449 src/modules/gadman/e_mod_config.c:208
+#: src/modules/conf/e_mod_main.c:460 src/modules/fileman/e_mod_config.c:436
+#: src/modules/fileman/e_mod_config.c:439
+#: src/modules/fileman/e_mod_config.c:442
+#: src/modules/fileman/e_mod_config.c:445
+#: src/modules/fileman/e_mod_config.c:448 src/modules/gadman/e_mod_config.c:208
 #, fuzzy
 msgid "Mode"
 msgstr "režiim"
@@ -5385,7 +5385,7 @@ msgstr "Exchange taustapildid"
 #: src/modules/everything/evry_config.c:603
 #: src/modules/everything/evry_config.c:610
 #: src/modules/everything/evry_config.c:620
-#: src/modules/fileman/e_mod_config.c:335
+#: src/modules/fileman/e_mod_config.c:334
 #: src/modules/syscon/e_int_config_syscon.c:148
 #: src/modules/syscon/e_int_config_syscon.c:153
 #: src/modules/syscon/e_int_config_syscon.c:158
@@ -5556,7 +5556,7 @@ msgstr "Lukustage pärast X screensaver aktiveerub"
 #: src/modules/conf_display/e_int_config_desklock.c:340
 #: src/modules/conf_display/e_int_config_screensaver.c:183
 #: src/modules/conf_display/e_int_config_screensaver.c:200
-#: src/modules/fileman/e_mod_config.c:424
+#: src/modules/fileman/e_mod_config.c:423
 #, c-format
 msgid "%1.0f seconds"
 msgstr ""
@@ -6052,7 +6052,7 @@ msgstr "kiirendus"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:339
 #: src/modules/conf_interaction/e_int_config_mouse.c:380
-#: src/modules/fileman/e_mod_config.c:482
+#: src/modules/fileman/e_mod_config.c:481
 #: src/modules/syscon/e_int_config_syscon.c:169
 #, c-format
 msgid "%1.1f"
@@ -6973,7 +6973,7 @@ msgid "Image cache size"
 msgstr "Vahemälu suurus"
 
 #: src/modules/conf_performance/e_int_config_performance.c:140
-#: src/modules/fileman/e_mod_config.c:418
+#: src/modules/fileman/e_mod_config.c:417
 #, c-format
 msgid "%1.0f MiB"
 msgstr ""
@@ -8128,7 +8128,7 @@ msgid "Resize Geometry"
 msgstr "resize Geometry"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:158
-#: src/modules/fileman/e_mod_config.c:364
+#: src/modules/fileman/e_mod_config.c:363
 #: src/modules/winlist/e_int_config_winlist.c:216
 #: src/modules/tasks/e_mod_config.c:90
 #, fuzzy
@@ -9100,7 +9100,7 @@ msgstr "Typebuf"
 
 #: src/modules/everything/evry_plug_apps.c:1225
 #: src/modules/everything/evry_plug_apps.c:1272
-#: src/modules/fileman/e_fwin.c:2192 src/modules/fileman/e_fwin.c:2584
+#: src/modules/fileman/e_fwin.c:2213 src/modules/fileman/e_fwin.c:2605
 #, fuzzy
 msgid "Open with..."
 msgstr "Ava ..."
@@ -9125,7 +9125,7 @@ msgid "Run with Sudo"
 msgstr ""
 
 #: src/modules/everything/evry_plug_apps.c:1279
-#: src/modules/fileman/e_fwin.c:252
+#: src/modules/fileman/e_fwin.c:255
 #, fuzzy
 msgid "Open Terminal here"
 msgstr "Käivita Terminal"
@@ -9300,128 +9300,128 @@ msgstr ""
 msgid "Back"
 msgstr "Backlight"
 
-#: src/modules/fileman/e_fwin.c:2083
+#: src/modules/fileman/e_fwin.c:2104
 #, fuzzy
 msgid "Other application..."
 msgstr "Muud rakendustega ..."
 
-#: src/modules/fileman/e_fwin.c:2146
+#: src/modules/fileman/e_fwin.c:2167
 #, fuzzy
 msgid "Go To Parent Directory"
 msgstr "Mine Parent Directory"
 
-#: src/modules/fileman/e_fwin.c:2156
+#: src/modules/fileman/e_fwin.c:2177
 #, fuzzy
 msgid "Clone Window"
 msgstr "Cleanup Windows"
 
-#: src/modules/fileman/e_fwin.c:2162
+#: src/modules/fileman/e_fwin.c:2183
 #, fuzzy
 msgid "Copy Path"
 msgstr "E Paths"
 
-#: src/modules/fileman/e_fwin.c:2178
+#: src/modules/fileman/e_fwin.c:2199
 msgid "Run"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2185 src/modules/fileman/e_fwin.c:2585
+#: src/modules/fileman/e_fwin.c:2206 src/modules/fileman/e_fwin.c:2606
 #, fuzzy
 msgid "Open"
 msgstr "avatud"
 
-#: src/modules/fileman/e_fwin.c:2614 src/modules/fileman/e_fwin.c:2639
+#: src/modules/fileman/e_fwin.c:2635 src/modules/fileman/e_fwin.c:2660
 #, c-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/modules/fileman/e_fwin.c:2657
+#: src/modules/fileman/e_fwin.c:2678
 #, fuzzy
 msgid "Known Applications"
 msgstr "tuntud rakendused"
 
-#: src/modules/fileman/e_fwin.c:2667
+#: src/modules/fileman/e_fwin.c:2688
 #, fuzzy
 msgid "Suggested Applications"
 msgstr "vaikerakendused"
 
-#: src/modules/fileman/e_fwin.c:2702
+#: src/modules/fileman/e_fwin.c:2723
 #, fuzzy
 msgid "All Applications"
 msgstr "Kõik taotlused"
 
-#: src/modules/fileman/e_fwin.c:2725
+#: src/modules/fileman/e_fwin.c:2746
 #, fuzzy
 msgid "Custom Command"
 msgstr "Custom Command"
 
-#: src/modules/fileman/e_fwin.c:3016
+#: src/modules/fileman/e_fwin.c:3037
 #, fuzzy, c-format
 msgid "Copying is aborted"
 msgstr "Kopeerimine on katkestatud"
 
-#: src/modules/fileman/e_fwin.c:3020
+#: src/modules/fileman/e_fwin.c:3041
 #, fuzzy, c-format
 msgid "Moving is aborted"
 msgstr "Liikumine on katkestatud"
 
-#: src/modules/fileman/e_fwin.c:3024
+#: src/modules/fileman/e_fwin.c:3045
 #, fuzzy, c-format
 msgid "Deleting is aborted"
 msgstr "Kustutamine on katkestatud"
 
-#: src/modules/fileman/e_fwin.c:3028
+#: src/modules/fileman/e_fwin.c:3049
 #, fuzzy, c-format
 msgid "Secure deletion is aborted"
 msgstr "Kustutamine on katkestatud"
 
-#: src/modules/fileman/e_fwin.c:3032
+#: src/modules/fileman/e_fwin.c:3053
 #, fuzzy, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "Tundmatu tehing ori on katkestatud"
 
-#: src/modules/fileman/e_fwin.c:3042
+#: src/modules/fileman/e_fwin.c:3063
 #, c-format
 msgid "Copy of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:3044
+#: src/modules/fileman/e_fwin.c:3065
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:3049
+#: src/modules/fileman/e_fwin.c:3070
 #, c-format
 msgid "Move of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:3051
+#: src/modules/fileman/e_fwin.c:3072
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:3056
+#: src/modules/fileman/e_fwin.c:3077
 #, fuzzy, c-format
 msgid "Delete done"
 msgstr "Kustuta teha"
 
-#: src/modules/fileman/e_fwin.c:3058
+#: src/modules/fileman/e_fwin.c:3079
 #, fuzzy, c-format
 msgid "Deleting files..."
 msgstr "Failide kustutamine ..."
 
-#: src/modules/fileman/e_fwin.c:3063
+#: src/modules/fileman/e_fwin.c:3084
 #, fuzzy, c-format
 msgid "Secure delete done"
 msgstr "Screen Resolution"
 
-#: src/modules/fileman/e_fwin.c:3065
+#: src/modules/fileman/e_fwin.c:3086
 #, fuzzy, c-format
 msgid "Securely deleting files..."
 msgstr "Failide kustutamine ..."
 
-#: src/modules/fileman/e_fwin.c:3069
+#: src/modules/fileman/e_fwin.c:3090
 #, fuzzy, c-format
 msgid "Unknown operation from slave %d"
 msgstr "Tundmatu tehing ori on katkestatud"
@@ -9496,119 +9496,119 @@ msgstr "Valige pilt"
 msgid "Fileman Settings"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:333
+#: src/modules/fileman/e_mod_config.c:332
 #, fuzzy
 msgid "Icon Size"
 msgstr "Icon Size"
 
-#: src/modules/fileman/e_mod_config.c:339
+#: src/modules/fileman/e_mod_config.c:338
 #, fuzzy
 msgid "View"
 msgstr "Vaata"
 
-#: src/modules/fileman/e_mod_config.c:344
+#: src/modules/fileman/e_mod_config.c:343
 #, fuzzy
 msgid "File Extensions"
 msgstr "Extensions"
 
-#: src/modules/fileman/e_mod_config.c:347
+#: src/modules/fileman/e_mod_config.c:346
 #, fuzzy
 msgid "Full Path In Title"
 msgstr "splash Pealkiri"
 
-#: src/modules/fileman/e_mod_config.c:350
+#: src/modules/fileman/e_mod_config.c:349
 #, fuzzy
 msgid "Icons On Desktop"
 msgstr "Pin to Desktop"
 
-#: src/modules/fileman/e_mod_config.c:353
+#: src/modules/fileman/e_mod_config.c:352
 #, fuzzy
 msgid "Toolbar"
 msgstr "Näita tööriistariba"
 
-#: src/modules/fileman/e_mod_config.c:356
+#: src/modules/fileman/e_mod_config.c:355
 msgid "Sidebar"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:397
+#: src/modules/fileman/e_mod_config.c:396
 #, fuzzy
 msgid "Open Dirs In Place"
 msgstr "Open dirs In Place"
 
-#: src/modules/fileman/e_mod_config.c:400
+#: src/modules/fileman/e_mod_config.c:399
 #, fuzzy
 msgid "Use Single Click"
 msgstr "Kasuta Single Click"
 
-#: src/modules/fileman/e_mod_config.c:403
+#: src/modules/fileman/e_mod_config.c:402
 msgid "'cp+rm' instead of 'mv'"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:409
+#: src/modules/fileman/e_mod_config.c:408
 #, fuzzy
 msgid "Use Alternate Selection Modifiers"
 msgstr "Kasuta Alternatiivne valik modifitseerijad"
 
-#: src/modules/fileman/e_mod_config.c:412
+#: src/modules/fileman/e_mod_config.c:411
 #, fuzzy
 msgid "Allow Navigation On Desktop"
 msgstr "Näita seade ikoonid töölaual"
 
-#: src/modules/fileman/e_mod_config.c:416
+#: src/modules/fileman/e_mod_config.c:415
 msgid "Max File Size For Thumbnailing"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:422
+#: src/modules/fileman/e_mod_config.c:421
 #, fuzzy
 msgid "Spring Delay"
 msgstr "peatada aeg"
 
-#: src/modules/fileman/e_mod_config.c:428
+#: src/modules/fileman/e_mod_config.c:427
 #: src/modules/quickaccess/e_mod_config.c:252
 #: src/modules/quickaccess/e_mod_config.c:348
 #, fuzzy
 msgid "Behavior"
 msgstr "käitumine"
 
-#: src/modules/fileman/e_mod_config.c:455
+#: src/modules/fileman/e_mod_config.c:454
 #, fuzzy
 msgid "Show device icons on desktop"
 msgstr "Näita seade ikoonid töölaual"
 
-#: src/modules/fileman/e_mod_config.c:458 src/modules/places/e_mod_config.c:205
+#: src/modules/fileman/e_mod_config.c:457 src/modules/places/e_mod_config.c:205
 #, fuzzy
 msgid "Mount volumes on insert"
 msgstr "Mount köidet lisada"
 
-#: src/modules/fileman/e_mod_config.c:461
+#: src/modules/fileman/e_mod_config.c:460
 #, fuzzy
 msgid "Open filemanager on mount"
 msgstr "Open failihaldaja mäel"
 
-#: src/modules/fileman/e_mod_config.c:467 src/modules/places/e_mod_config.c:216
+#: src/modules/fileman/e_mod_config.c:466 src/modules/places/e_mod_config.c:216
 #, fuzzy
 msgid "Use a custom file manager"
 msgstr "Setup failihalduri"
 
-#: src/modules/fileman/e_mod_config.c:472
+#: src/modules/fileman/e_mod_config.c:471
 #, fuzzy
 msgid "Device"
 msgstr "seade"
 
-#: src/modules/fileman/e_mod_config.c:476
+#: src/modules/fileman/e_mod_config.c:475
 #, fuzzy
 msgid "Show tooltip"
 msgstr "Näita tööriistariba"
 
-#: src/modules/fileman/e_mod_config.c:480
+#: src/modules/fileman/e_mod_config.c:479
 msgid "Tooltip delay"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:486
+#: src/modules/fileman/e_mod_config.c:485
 msgid "Tooltip size (Screen percentage)"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:488
+#: src/modules/fileman/e_mod_config.c:487
 #: src/modules/notification/e_mod_config.c:196
 #: src/modules/notification/e_mod_config.c:204
 #: src/modules/notification/e_mod_config.c:212
@@ -9616,7 +9616,7 @@ msgstr ""
 msgid "%2.0f"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:492
+#: src/modules/fileman/e_mod_config.c:491
 msgid "Tooltips"
 msgstr ""
 
@@ -10702,40 +10702,40 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:952
+#: src/modules/systray/e_mod_main.c:574 src/modules/systray/e_mod_main.c:990
 #, fuzzy
 msgid "Systray Error"
 msgstr "salve viga"
 
-#: src/modules/systray/e_mod_main.c:537
+#: src/modules/systray/e_mod_main.c:575
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
+#: src/modules/systray/e_mod_main.c:981 src/modules/systray/e_mod_main.c:1217
 #, fuzzy
 msgid "Another systray exists"
 msgstr "Teine salve olemas"
 
-#: src/modules/systray/e_mod_main.c:944 src/modules/systray/e_mod_main.c:1170
+#: src/modules/systray/e_mod_main.c:982 src/modules/systray/e_mod_main.c:1218
 #, fuzzy
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Ei saa olla ainult ühe salve vidin ja teine ​​juba olemas."
 
-#: src/modules/systray/e_mod_main.c:953
+#: src/modules/systray/e_mod_main.c:991
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Salve ei saa töötadariiul , mis on määratud allpool kõike."
 
-#: src/modules/systray/e_mod_main.c:1148
+#: src/modules/systray/e_mod_main.c:1196
 #, fuzzy
 msgid "Systray"
 msgstr "salve"
 
-#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:93
+#: src/modules/shot/e_mod_delay.c:47 src/modules/shot/e_mod_preview.c:95
 msgid "Select action to take with screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:140
+#: src/modules/shot/e_mod_delay.c:59 src/modules/shot/e_mod_preview.c:142
 msgid "Delay"
 msgstr ""
 
@@ -10898,17 +10898,17 @@ msgstr ""
 msgid "Take Screenshot with Delay"
 msgstr "Setup ekraanid"
 
-#: src/modules/shot/e_mod_preview.c:113
+#: src/modules/shot/e_mod_preview.c:115
 #, fuzzy
 msgid "Quality"
 msgstr "kvaliteet"
 
-#: src/modules/shot/e_mod_preview.c:129
+#: src/modules/shot/e_mod_preview.c:131
 #, fuzzy
 msgid "Save"
 msgstr "välja arvatud"
 
-#: src/modules/shot/e_mod_preview.c:132
+#: src/modules/shot/e_mod_preview.c:134
 #, fuzzy
 msgid "Share"
 msgstr "terav"
@@ -11731,6 +11731,10 @@ msgstr "mahu muutus"
 #, fuzzy
 msgid "Separator"
 msgstr "omaette rühma"
+
+#, fuzzy
+#~ msgid "EEK! This should not happen"
+#~ msgstr "EEK! See ei tohiks juhtuda"
 
 #, fuzzy
 #~ msgid "Screenshot"
