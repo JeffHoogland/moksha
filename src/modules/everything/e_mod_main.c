@@ -125,6 +125,7 @@ e_modapi_init(E_Module *m)
    evry_plug_files_init(m);
    evry_plug_windows_init(m);
    evry_plug_settings_init(m);
+   evry_plug_system_init(m);
    evry_plug_calc_init(m);
    e_datastore_set("evry_api", evry);
 
@@ -166,6 +167,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    evry_plug_apps_shutdown();
    evry_plug_files_shutdown();
    evry_plug_settings_shutdown();
+   evry_plug_system_shutdown();
    evry_plug_windows_shutdown();
    evry_plug_calc_shutdown();
    evry_plug_clipboard_shutdown();
@@ -236,6 +238,7 @@ e_modapi_save(E_Module *m __UNUSED__)
    evry_plug_apps_save();
    evry_plug_files_save();
    evry_plug_settings_save();
+   evry_plug_system_save();
    evry_plug_windows_save();
    evry_plug_calc_save();
 
@@ -466,6 +469,18 @@ _config_init()
 
         pc = E_NEW(Plugin_Config, 1);
         pc->name = eina_stringshare_add("Applications");
+        pc->enabled = EINA_TRUE;
+        pc->view_mode = VIEW_MODE_NONE;
+        pcc->plugins = eina_list_append(pcc->plugins, pc);
+
+        pc = E_NEW(Plugin_Config, 1);
+        pc->name = eina_stringshare_add("Categories");
+        pc->enabled = EINA_TRUE;
+        pc->view_mode = VIEW_MODE_NONE;
+        pcc->plugins = eina_list_append(pcc->plugins, pc);
+
+        pc = E_NEW(Plugin_Config, 1);
+        pc->name = eina_stringshare_add("System");
         pc->enabled = EINA_TRUE;
         pc->view_mode = VIEW_MODE_NONE;
         pcc->plugins = eina_list_append(pcc->plugins, pc);

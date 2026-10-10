@@ -304,44 +304,53 @@ static void
 _gadget_popup_show(Instance *inst)
 {
    Evas_Coord x, y, w, h;
-   int cx, cy, pw, ph;
+   int cx, cy, pw, ph, gh, gw;
    E_Win *ewin = inst->win->ewin;
+   int gap_x = 0, gap_y = 0;
+   E_Shelf *es;
 
    pw = ewin->w;
    ph = ewin->h;
 
    evas_object_geometry_get(inst->o_button, &x, &y, &w, &h);
    e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, NULL, NULL);
+   e_gadcon_client_geometry_get(inst->gcc, NULL, NULL, &gw, &gh);
    x += cx;
    y += cy;
+
+   if ((es = inst->gcc->gadcon->shelf))
+     {
+       gap_x = (es->w - gw) / 2;
+       gap_y = (es->h - gh) / 2;
+     }
 
    switch (inst->gcc->gadcon->orient)
      {
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_CORNER_TL:
       case E_GADCON_ORIENT_CORNER_TR:
-        e_win_move(ewin, x, y + h);
+        e_win_move(ewin, x, y + h + gap_y);
         inst->hide_y = -1;
         break;
 
       case E_GADCON_ORIENT_BOTTOM:
       case E_GADCON_ORIENT_CORNER_BR:
       case E_GADCON_ORIENT_CORNER_BL:
-        e_win_move(ewin, x, y - ph);
+        e_win_move(ewin, x, y - ph - gap_y);
         inst->hide_y = 1;
         break;
 
       case E_GADCON_ORIENT_LEFT:
       case E_GADCON_ORIENT_CORNER_LT:
       case E_GADCON_ORIENT_CORNER_LB:
-        e_win_move(ewin, x + w, y);
+        e_win_move(ewin, x + w + gap_x, y);
         inst->hide_x = -1;
         break;
 
       case E_GADCON_ORIENT_RIGHT:
       case E_GADCON_ORIENT_CORNER_RT:
       case E_GADCON_ORIENT_CORNER_RB:
-        e_win_move(ewin, x - pw, y);
+        e_win_move(ewin, x - pw - gap_x, y);
         inst->hide_x = 1;
         break;
 

@@ -343,6 +343,10 @@ Eina_Bool evry_plug_settings_init(E_Module *m);
 void evry_plug_settings_shutdown(void);
 void evry_plug_settings_save(void);
 
+Eina_Bool evry_plug_system_init(E_Module *m);
+void evry_plug_system_shutdown(void);
+void evry_plug_system_save(void);
+
 Eina_Bool evry_plug_calc_init(E_Module *m);
 void evry_plug_calc_shutdown(void);
 void evry_plug_calc_save(void);

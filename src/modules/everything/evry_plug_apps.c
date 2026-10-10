@@ -27,6 +27,7 @@ struct _Plugin
 {
    Evry_Plugin    base;
    Eina_Bool      browse;
+   Eina_Bool      cats_only;
    const char    *input;
    Eina_List     *apps_mime;
    Eina_List     *apps_all;
@@ -555,6 +556,24 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
    return EVRY_PLUGIN(p);
 }
 
+/* "Categories" plugin: only lists the folders of the application menu
+ * (Accessories, Internet, Office, Programming, ...) like the main menu.
+ * Browsing a folder is handled by _browse. */
+static Evry_Plugin *
+_begin_cat(Evry_Plugin *plugin, const Evry_Item *item)
+{
+   Plugin *p;
+
+   if (item) return NULL;
+
+   EVRY_PLUGIN_INSTANCE(p, plugin);
+   p->added = eina_hash_string_small_new(_hash_free);
+   p->menu = efreet_menu_get();
+   p->cats_only = EINA_TRUE;
+
+   return EVRY_PLUGIN(p);
+}
+
 static Evry_Plugin *
 _browse(Evry_Plugin *plugin, const Evry_Item *item)
 {
@@ -620,7 +639,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
-   if (!p->browse)
+   if ((!p->browse) && (!p->cats_only))
      {
         if (input)
           {
@@ -1206,6 +1225,15 @@ _plugins_init(const Evry_API *api)
    p->config_path = eina_stringshare_ref(config_path);
    evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 1);
    _plugins = eina_list_append(_plugins, p);
+
+   p = EVRY_PLUGIN_BASE("Categories", "applications-other", EVRY_TYPE_APP,
+                        _begin_cat, _finish, _fetch);
+   p->browse = &_browse;
+   p->config_path = eina_stringshare_ref(config_path);
+   _plugins = eina_list_append(_plugins, p);
+   /* folders are already offered by "Applications" when searching */
+   if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 2))
+     p->config->aggregate = EINA_FALSE;
 
    p = EVRY_PLUGIN_BASE("Exebuf", _module_icon, EVRY_TYPE_APP,
                         _begin_exe, _finish_exe, _fetch_exe);
