@@ -1586,9 +1586,8 @@ msgid "Grid Icons"
 msgstr "Gitter-Symbole"
 
 #: src/bin/e_fm.c:9727 src/modules/fileman/e_mod_config.c:323
-#, fuzzy
 msgid "Custom Grid Icons"
-msgstr "Benutzerdefinierte Icons"
+msgstr "Benutzerdefinierte Raster Icons"
 
 #: src/bin/e_fm.c:9735 src/modules/fileman/e_mod_config.c:321
 msgid "Custom Icons"
@@ -7023,14 +7022,12 @@ msgid "%1.2f x"
 msgstr "%1.2f x"
 
 #: src/modules/conf_theme/e_int_config_scale.c:327
-#, fuzzy
 msgid "Set Application DPI"
-msgstr "Ausgewählte Anwendung"
+msgstr "DPI für Anwendung einstellen"
 
 #: src/modules/conf_theme/e_int_config_scale.c:331
-#, fuzzy
 msgid "Application Base DPI"
-msgstr "Anwendungen"
+msgstr "Basis-DPI von Anwendungen"
 
 #: src/modules/conf_theme/e_int_config_scale.c:337
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:209
