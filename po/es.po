@@ -1561,12 +1561,11 @@ msgstr "Usar por defecto"
 
 #: src/bin/e_fm.c:9719 src/modules/fileman/e_mod_config.c:319
 msgid "Grid Icons"
-msgstr "Iconos de malla"
+msgstr "Iconos en cuadrícula"
 
 #: src/bin/e_fm.c:9727 src/modules/fileman/e_mod_config.c:323
-#, fuzzy
 msgid "Custom Grid Icons"
-msgstr "Iconos personalizados"
+msgstr "Iconos personalizados en cuadrícula"
 
 #: src/bin/e_fm.c:9735 src/modules/fileman/e_mod_config.c:321
 msgid "Custom Icons"
