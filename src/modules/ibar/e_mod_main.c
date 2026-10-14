@@ -1445,8 +1445,7 @@ _ibar_icon_menu_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
    if (ic->hide_timer)
      ecore_timer_loop_reset(ic->hide_timer);
    else
-     if (!ic->img_timer_out)
-       ic->hide_timer = ecore_timer_loop_add(0.5, _ibar_cb_out_hide_delay, ic);
+     ic->hide_timer = ecore_timer_loop_add(0.5, _ibar_cb_out_hide_delay, ic);
 }
 
 static void
