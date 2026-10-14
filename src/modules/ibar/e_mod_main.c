@@ -89,6 +89,7 @@ struct _IBar_Icon
    int              mouse_down;
    int              menu_mouse_up;
    int              menu_mouse_in;
+   int              menu_mouse_out;
    E_Desk          *current_desk;
    struct
    {
@@ -1369,8 +1370,7 @@ _ibar_img_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, voi
 
    ic = evas_object_data_get(obj, "ibar_icon");
    if (!ic) return;
-   if (ic->menu_mouse_up) return;
-
+   ic->menu_mouse_out = 0;
    evas_object_data_set(bd->bg_object, "ibar_icon", ic);
    E_FREE_FUNC(ic->img_timer_out, ecore_timer_del);
    ic->img_timer_in = ecore_timer_loop_add(0.4, _ibar_img_menu_mouse_in_delay, bd);
@@ -1432,8 +1432,10 @@ _ibar_img_menu_mouse_out_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __U
 {
    IBar_Icon *ic = data;
    if (!ic) return;
+
    E_FREE_FUNC(ic->img_timer_in, ecore_timer_del);
    ic->img_timer_out = ecore_timer_loop_add(0.4, _ibar_img_menu_mouse_out_delay, ic);
+   ic->menu_mouse_out = 1;
 }
 
 static void
@@ -1442,10 +1444,12 @@ _ibar_icon_menu_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
    IBar_Icon *ic = data;
 
    if (e_menu_grab_window_get()) return;
+
    if (ic->hide_timer)
      ecore_timer_loop_reset(ic->hide_timer);
    else
-     ic->hide_timer = ecore_timer_loop_add(0.5, _ibar_cb_out_hide_delay, ic);
+     if (ic->menu_mouse_out == 0)
+       ic->hide_timer = ecore_timer_loop_add(0.5, _ibar_cb_out_hide_delay, ic);
 }
 
 static void
