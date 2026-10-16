@@ -1660,9 +1660,28 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
 }
 
 static Eina_Bool
+_ibar_menu_pointer_inside(IBar_Icon *ic)
+{
+   E_Zone *zone;
+   int px, py;
+
+   if (!ic->menu || !ic->menu->win) return EINA_FALSE;
+   zone = ic->menu->win->zone;
+   ecore_x_pointer_xy_get(zone->container->win, &px, &py);
+
+   return E_INSIDE(px - zone->x, py - zone->y,
+                   ic->menu->win->x, ic->menu->win->y,
+                   ic->menu->w, ic->menu->h);
+}
+
+static Eina_Bool
 _ibar_cb_out_hide_delay(void *data)
 {
    IBar_Icon *ic = data;
+
+   /* cursor is still on menu: hide after mouse out */
+   if (ic->menu && !ic->menu_grabbed && _ibar_menu_pointer_inside(ic))
+     return EINA_TRUE;
 
    ic->hide_timer = NULL;
 
