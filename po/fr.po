@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2026-10-09 17:05+0200\n"
-"PO-Revision-Date: 2026-09-10 14:34+0200\n"
+"POT-Creation-Date: 2026-10-22 08:33+0200\n"
+"PO-Revision-Date: 2026-10-22 08:51+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.10\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_about.c:18
@@ -711,7 +711,7 @@ msgstr "Afficher le menu…"
 
 #: src/bin/e_actions.c:3537 src/bin/e_actions.c:3542 src/bin/e_actions.c:3547
 #: src/modules/conf/e_mod_main.c:273
-#: src/modules/everything/evry_plug_apps.c:1231
+#: src/modules/everything/evry_plug_apps.c:1259
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
 msgstr "Lancer"
@@ -1189,7 +1189,8 @@ msgstr "Nom générique"
 msgid "Window Class"
 msgstr "Classe de fenêtre"
 
-#: src/bin/e_eap_editor.c:758 src/modules/fileman/e_int_config_mime.c:170
+#: src/bin/e_eap_editor.c:758 src/modules/everything/evry_plug_apps.c:1229
+#: src/modules/fileman/e_int_config_mime.c:170
 msgid "Categories"
 msgstr "Catégories"
 
@@ -1218,7 +1219,7 @@ msgstr "Paramètres généraux"
 msgid "Startup Notify"
 msgstr "Notification de démarrage"
 
-#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1245
+#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1273
 msgid "Run in Terminal"
 msgstr "Exécuter dans un terminal"
 
@@ -1386,8 +1387,8 @@ msgstr "%s a été interrompu par le signal numéro %i."
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
-"***Le reste de la sortie a été tronqué. Enregistrez la sortie pour tout voir."
-"***\n"
+"***Le reste de la sortie a été tronqué. Enregistrez la sortie pour tout "
+"voir.***\n"
 
 #: src/bin/e_exec.c:1049 src/bin/e_exec.c:1127 src/bin/e_exec.c:1134
 msgid "Error Logs"
@@ -1549,7 +1550,7 @@ msgid "Eject"
 msgstr "Éjecter"
 
 #: src/bin/e_fm.c:9457 src/bin/e_int_border_remember.c:763
-#: src/modules/ibar/e_mod_main.c:1822
+#: src/modules/ibar/e_mod_main.c:1841
 msgid "Properties"
 msgstr "Propriétés"
 
@@ -1570,9 +1571,8 @@ msgid "Grid Icons"
 msgstr "Icônes en grille"
 
 #: src/bin/e_fm.c:9727 src/modules/fileman/e_mod_config.c:323
-#, fuzzy
 msgid "Custom Grid Icons"
-msgstr "Icônes personnalisées"
+msgstr "Icônes en grille personnalisées"
 
 #: src/bin/e_fm.c:9735 src/modules/fileman/e_mod_config.c:321
 msgid "Custom Icons"
@@ -2551,10 +2551,10 @@ msgstr "Demande de position"
 #: src/modules/conf_interaction/e_int_config_mouse.c:371
 #: src/modules/conf_shelves/e_int_config_shelf.c:149
 #: src/modules/cpufreq/e_mod_main.c:447
-#: src/modules/everything/evry_gadget.c:511
-#: src/modules/everything/evry_gadget.c:695
+#: src/modules/everything/evry_gadget.c:520
+#: src/modules/everything/evry_gadget.c:704
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:474 src/modules/ibar/e_mod_main.c:1815
+#: src/modules/ibar/e_mod_main.c:474 src/modules/ibar/e_mod_main.c:1834
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
 #: src/modules/connman/e_mod_main.c:459 src/modules/tasks/e_mod_main.c:848
@@ -2651,7 +2651,7 @@ msgid "Size, Position and Locks"
 msgstr "Taille, position et verrous"
 
 #: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
-#: src/modules/everything/evry_gadget.c:644
+#: src/modules/everything/evry_gadget.c:653
 #: src/modules/everything/evry_plug_aggregator.c:313
 #: src/modules/everything/evry_view.c:1628
 msgid "All"
@@ -2835,9 +2835,9 @@ msgstr "Applications favorites"
 #: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:213
-#: src/modules/everything/evry_plug_apps.c:1202
-#: src/modules/everything/evry_plug_apps.c:1218
-#: src/modules/everything/evry_plug_apps.c:1472
+#: src/modules/everything/evry_plug_apps.c:1221
+#: src/modules/everything/evry_plug_apps.c:1246
+#: src/modules/everything/evry_plug_apps.c:1500
 #: src/modules/notification/e_mod_config.c:217
 msgid "Applications"
 msgstr "Applications"
@@ -3817,7 +3817,7 @@ msgid "Rename Shelf"
 msgstr "Renommer le rayon"
 
 #: src/bin/e_shelf.c:2476 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:468 src/modules/ibar/e_mod_main.c:1809
+#: src/modules/ibar/e_mod_main.c:468 src/modules/ibar/e_mod_main.c:1828
 msgid "Contents"
 msgstr "Contenu"
 
@@ -5916,7 +5916,7 @@ msgid "MISCELLANEOUS"
 msgstr "DIVERS"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:302
-#: src/modules/everything/e_mod_main.c:605
+#: src/modules/everything/e_mod_main.c:620
 msgid "Quick Launcher"
 msgstr "Lanceur rapide"
 
@@ -7865,7 +7865,7 @@ msgstr "Afficher Omni"
 msgid "Everything Configuration"
 msgstr "Lanceur Omni"
 
-#: src/modules/everything/e_mod_main.c:411
+#: src/modules/everything/e_mod_main.c:414
 msgid "Everything Module"
 msgstr "Module Omni"
 
@@ -8049,11 +8049,11 @@ msgstr "Collections Omni"
 msgid "Everything Starter"
 msgstr "Starter Omni"
 
-#: src/modules/everything/evry_gadget.c:587
+#: src/modules/everything/evry_gadget.c:596
 msgid "Everything Gadgets"
 msgstr "Gadgets Omni"
 
-#: src/modules/everything/evry_gadget.c:685
+#: src/modules/everything/evry_gadget.c:694
 msgid "Plugin"
 msgstr "Greffon"
 
@@ -8072,59 +8072,59 @@ msgstr[1] "%d éléments"
 msgid "No plugins loaded"
 msgstr "Aucun greffon activé"
 
-#: src/modules/everything/evry_plug_apps.c:1210
+#: src/modules/everything/evry_plug_apps.c:1238
 msgid "Exebuf"
 msgstr "Exebuf"
 
-#: src/modules/everything/evry_plug_apps.c:1225
-#: src/modules/everything/evry_plug_apps.c:1272
+#: src/modules/everything/evry_plug_apps.c:1253
+#: src/modules/everything/evry_plug_apps.c:1300
 #: src/modules/fileman/e_fwin.c:2213 src/modules/fileman/e_fwin.c:2605
 msgid "Open with..."
 msgstr "Ouvrir avec…"
 
-#: src/modules/everything/evry_plug_apps.c:1238
+#: src/modules/everything/evry_plug_apps.c:1266
 msgid "Open File..."
 msgstr "Ouvrir le fichier…"
 
-#: src/modules/everything/evry_plug_apps.c:1252
+#: src/modules/everything/evry_plug_apps.c:1280
 msgid "Edit Application Entry"
 msgstr "Éditer le fichier d'application"
 
-#: src/modules/everything/evry_plug_apps.c:1259
+#: src/modules/everything/evry_plug_apps.c:1287
 msgid "New Application Entry"
 msgstr "Nouveau fichier d'application"
 
-#: src/modules/everything/evry_plug_apps.c:1266
+#: src/modules/everything/evry_plug_apps.c:1294
 msgid "Run with Sudo"
 msgstr "Exécuter avec sudo"
 
-#: src/modules/everything/evry_plug_apps.c:1279
+#: src/modules/everything/evry_plug_apps.c:1307
 #: src/modules/fileman/e_fwin.c:255
 msgid "Open Terminal here"
 msgstr "Ouvrir un terminal ici"
 
-#: src/modules/everything/evry_plug_apps.c:1285
+#: src/modules/everything/evry_plug_apps.c:1313
 msgid "Run Executable"
 msgstr "Lancer l'exécutable"
 
-#: src/modules/everything/evry_plug_apps.c:1363
-#: src/modules/everything/evry_plug_apps.c:1491
+#: src/modules/everything/evry_plug_apps.c:1391
+#: src/modules/everything/evry_plug_apps.c:1519
 msgid "Everything Applications"
 msgstr "Applications Omni"
 
-#: src/modules/everything/evry_plug_apps.c:1394
+#: src/modules/everything/evry_plug_apps.c:1422
 msgid "Commands"
 msgstr "Commandes"
 
-#: src/modules/everything/evry_plug_apps.c:1395
+#: src/modules/everything/evry_plug_apps.c:1423
 msgid "Terminal Command"
 msgstr "Commande du terminal"
 
-#: src/modules/everything/evry_plug_apps.c:1400
+#: src/modules/everything/evry_plug_apps.c:1428
 msgid "Sudo GUI"
 msgstr "Interface graphique sudo"
 
-#: src/modules/everything/evry_plug_apps.c:1472
+#: src/modules/everything/evry_plug_apps.c:1500
 #: src/modules/everything/evry_plug_collection.c:146
 #: src/modules/everything/evry_plug_files.c:1566
 msgid "Everything Plugin"
@@ -8233,16 +8233,16 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
-"right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
-"down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
-"hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
-"</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
-"toggle thumb view modes"
+"<hilight>&lt;return&gt;</hilight> run action<br>    "
+"<hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>    "
+"<hilight>&lt;tab&gt;</hilight> toggle between selectors<br>    "
+"<hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on "
+"plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning "
+"with 'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through "
+"plugins<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> go to first/last "
+"item<br>    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this "
+"page ;)<br>    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view "
+"modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
 msgstr ""
 "  L'omnipotence selon <hilight>Omni</hilight>...<br>  Tapez juste les "
 "premières lettres de ce que vous recherchez. <br>  Utilisez les touches "
@@ -8252,18 +8252,18 @@ msgstr ""
 "s'affichera pas lors de la prochaine utilisation d'<hilight>Omni</hilight>."
 "<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de "
 "dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    "
-"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;"
-"Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
-"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;"
-"Ctrl+Tabulation&gt;</hilight> complète la saisie (ça dépend du "
+"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    "
+"<hilight>&lt;Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    "
+"<hilight>&lt;tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    "
+"<hilight>&lt;Ctrl+Tabulation&gt;</hilight> complète la saisie (ça dépend du "
 "greffon)<br>    <hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon "
 "commençant par la lettre « ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / "
-"droite&gt;</hilight> circule parmi les greffons<br>    <hilight>&lt;"
-"ctrl+Flèche haut / bas&gt;</hilight> va au premier / dernier élément<br>    "
-"<hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage (quitter cette "
-"page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage "
-"de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode "
-"d'affichage des vignettes"
+"droite&gt;</hilight> circule parmi les greffons<br>    "
+"<hilight>&lt;ctrl+Flèche haut / bas&gt;</hilight> va au premier / dernier "
+"élément<br>    <hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage "
+"(quitter cette page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le "
+"mode d'affichage de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> "
+"commute le mode d'affichage des vignettes"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -8877,29 +8877,29 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Voulez-vous vraiment supprimer cette source ?"
 
-#: src/modules/ibar/e_mod_main.c:341 src/modules/ibar/e_mod_main.c:3267
-#: src/modules/ibar/e_mod_main.c:3305
+#: src/modules/ibar/e_mod_main.c:341 src/modules/ibar/e_mod_main.c:3286
+#: src/modules/ibar/e_mod_main.c:3324
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:457 src/modules/ibar/e_mod_main.c:1798
+#: src/modules/ibar/e_mod_main.c:457 src/modules/ibar/e_mod_main.c:1817
 msgid "Create new Icon"
 msgstr "Créer une nouvelle icône"
 
-#: src/modules/ibar/e_mod_main.c:1829
+#: src/modules/ibar/e_mod_main.c:1848
 msgid "Add to bar"
 msgstr "Ajouter à la barre"
 
-#: src/modules/ibar/e_mod_main.c:1835
+#: src/modules/ibar/e_mod_main.c:1854
 msgid "Remove from bar"
 msgstr "Retirer de la barre"
 
-#: src/modules/ibar/e_mod_main.c:1841
+#: src/modules/ibar/e_mod_main.c:1860
 #, c-format
 msgid "Icon %s"
 msgstr "Icône %s"
 
-#: src/modules/ibar/e_mod_main.c:3305
+#: src/modules/ibar/e_mod_main.c:3324
 msgid "Focus IBar"
 msgstr "Focaliser l'IBar"
 
@@ -9549,33 +9549,33 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "nom / identifiant de l'accès rapide"
 
-#: src/modules/systray/e_mod_main.c:574 src/modules/systray/e_mod_main.c:990
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:952
 msgid "Systray Error"
 msgstr "Erreur : Zone de notification"
 
-#: src/modules/systray/e_mod_main.c:575
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "Zone de notification ne peut rendre son arrière-plan invisible pour "
 "correspondre à son rayon."
 
-#: src/modules/systray/e_mod_main.c:981 src/modules/systray/e_mod_main.c:1217
+#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
 msgid "Another systray exists"
 msgstr "Il y a déjà une zone de notification"
 
-#: src/modules/systray/e_mod_main.c:982 src/modules/systray/e_mod_main.c:1218
+#: src/modules/systray/e_mod_main.c:944 src/modules/systray/e_mod_main.c:1170
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 "Il y a déjà une zone de notification active et seule une instance de ce "
 "gadget est autorisée."
 
-#: src/modules/systray/e_mod_main.c:991
+#: src/modules/systray/e_mod_main.c:953
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Zone de notification ne peut fonctionner dans un rayon configuré en dessous "
 "de tout."
 
-#: src/modules/systray/e_mod_main.c:1196
+#: src/modules/systray/e_mod_main.c:1148
 msgid "Systray"
 msgstr "Zone de notification"
 
@@ -10506,8 +10506,8 @@ msgstr "Séparateur"
 #~ "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 #~ "extensions<br>only as other formats are not<br>supported currently."
 #~ msgstr ""
-#~ "L'extension du fichier n'est pas spécifiée.<br>Utilisez « .jpg » ou « ."
-#~ "png »<br>car les autres formats ne sont<br>pas pris en charge."
+#~ "L'extension du fichier n'est pas spécifiée.<br>Utilisez « .jpg » ou "
+#~ "« .png »<br>car les autres formats ne sont<br>pas pris en charge."
 
 #~ msgid "Select screenshot save location"
 #~ msgstr "Sélection de l'emplacement d'enregistrement"
