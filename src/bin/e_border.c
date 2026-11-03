@@ -2676,10 +2676,10 @@ _e_border_client_inset_calc(E_Border *bd)
         edje_object_message_signal_process(bd->bg_object);
         edje_object_calc_force(bd->bg_object);
         edje_object_part_geometry_get(bd->bg_object, "e.swallow.client", &cx, &cy, &cw, &ch);
-        bd->client_inset.l = cx;
-        bd->client_inset.r = MAX(bd->w, 500) - (cx + cw);
-        bd->client_inset.t = cy;
-        bd->client_inset.b = MAX(bd->h, 500) - (cy + ch);
+        bd->client_inset.l = MAX(0, cx);
+        bd->client_inset.r = MAX(0, MAX(bd->w, 500) - (cx + cw));
+        bd->client_inset.t = MAX(0, cy);
+        bd->client_inset.b = MAX(0, MAX(bd->h, 500) - (cy + ch));
      }
    else
      {
@@ -4208,6 +4208,79 @@ e_border_act_kill_begin(E_Border *bd)
      }
 }
 
+static const Ecore_X_Icon *
+_e_border_netwm_best_icon_get(const E_Border *bd)
+{
+   int i, best_ge = -1, best_lt = -1;
+   unsigned int best_ge_area = UINT_MAX, best_lt_area = 0;
+
+   if ((!bd->client.netwm.icons) || (bd->client.netwm.num_icons <= 0))
+     return NULL;
+
+   for (i = 0; i < bd->client.netwm.num_icons; i++)
+     {
+        const Ecore_X_Icon *ic = &bd->client.netwm.icons[i];
+        unsigned int area;
+
+        if ((!ic->data) || (ic->width == 0) || (ic->height == 0)) continue;
+        area = ic->width * ic->height;
+        if ((ic->width >= 64) && (ic->height >= 64))
+          {
+             if (area < best_ge_area)
+               {
+                  best_ge = i;
+                  best_ge_area = area;
+               }
+          }
+        else if (area > best_lt_area)
+          {
+             best_lt = i;
+             best_lt_area = area;
+          }
+     }
+   if (best_ge >= 0) return &bd->client.netwm.icons[best_ge];
+   if (best_lt >= 0) return &bd->client.netwm.icons[best_lt];
+   return &bd->client.netwm.icons[0];
+}
+
+static Evas_Object *
+_e_border_appimage_diricon_add(const E_Border *bd, Evas *evas)
+{
+#ifdef __linux__
+   char proc_path[64], exe_path[PATH_MAX], icon_path[PATH_MAX];
+   const char *slash;
+   ssize_t len;
+   size_t mount_len;
+
+   if (bd->client.netwm.pid <= 0) return NULL;
+   snprintf(proc_path, sizeof(proc_path), "/proc/%d/exe", (int)bd->client.netwm.pid);
+   len = readlink(proc_path, exe_path, sizeof(exe_path) - 1);
+   if (len <= 0) return NULL;
+   exe_path[len] = '\0';
+   if (strncmp(exe_path, "/tmp/.mount_", 12) != 0) return NULL;
+   slash = strchr(exe_path + 12, '/');
+   if (!slash) return NULL;
+   mount_len = (size_t)(slash - exe_path);
+   if (mount_len + sizeof("/.DirIcon") > sizeof(icon_path)) return NULL;
+   memcpy(icon_path, exe_path, mount_len);
+   memcpy(icon_path + mount_len, "/.DirIcon", sizeof("/.DirIcon"));
+   if (ecore_file_exists(icon_path))
+     {
+        Evas_Object *o = e_icon_add(evas);
+        if (e_icon_file_set(o, icon_path))
+          {
+             e_icon_alpha_set(o, 1);
+             return o;
+          }
+        evas_object_del(o);
+     }
+#else
+   (void)bd;
+   (void)evas;
+#endif
+   return NULL;
+}
+
 EAPI Evas_Object *
 e_border_icon_add(E_Border *bd,
                   Evas *evas)
@@ -4261,12 +4334,11 @@ e_border_icon_add(E_Border *bd,
      }
    if ((e_config->use_app_icon) && (bd->icon_preference != E_ICON_PREF_USER))
      {
-        if (bd->client.netwm.icons)
+        const Ecore_X_Icon *ic = _e_border_netwm_best_icon_get(bd);
+        if (ic)
           {
              o = e_icon_add(evas);
-             e_icon_data_set(o, bd->client.netwm.icons[0].data,
-                             bd->client.netwm.icons[0].width,
-                             bd->client.netwm.icons[0].height);
+             e_icon_data_set(o, ic->data, ic->width, ic->height);
              e_icon_alpha_set(o, 1);
              return o;
           }
@@ -4281,14 +4353,19 @@ e_border_icon_add(E_Border *bd,
           }
         else if (bd->client.netwm.icons)
           {
-             o = e_icon_add(evas);
-             e_icon_data_set(o, bd->client.netwm.icons[0].data,
-                             bd->client.netwm.icons[0].width,
-                             bd->client.netwm.icons[0].height);
-             e_icon_alpha_set(o, 1);
-             return o;
+             const Ecore_X_Icon *ic = _e_border_netwm_best_icon_get(bd);
+             if (ic)
+               {
+                  o = e_icon_add(evas);
+                  e_icon_data_set(o, ic->data, ic->width, ic->height);
+                  e_icon_alpha_set(o, 1);
+                  return o;
+               }
           }
      }
+
+   o = _e_border_appimage_diricon_add(bd, evas);
+   if (o) return o;
 
    o = e_icon_add(evas);
    e_util_icon_theme_set(o, "unknown");
@@ -9403,6 +9480,37 @@ _e_border_eval(E_Border *bd)
                        eina_str_tolower(&s);
                        if (strcmp(s, bd->client.icccm.class))
                          bd->desktop = efreet_util_desktop_exec_find(s);
+                    }
+                  if (!bd->desktop)
+                    {
+                       const char *dot = strrchr(bd->client.icccm.class, '.');
+                       if ((dot) && (dot[1]))
+                         {
+                            const char *seg = dot + 1;
+                            char *s;
+
+                            bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name, seg);
+                            if (!bd->desktop)
+                              {
+                                 snprintf(buf, sizeof(buf), "%s.desktop", seg);
+                                 bd->desktop = efreet_util_desktop_file_id_find(buf);
+                              }
+                            if (!bd->desktop)
+                              {
+                                 snprintf(buf, sizeof(buf), "%s", seg);
+                                 s = buf;
+                                 eina_str_tolower(&s);
+                                 bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name, s);
+                                 if (!bd->desktop)
+                                   {
+                                      char id_buf[140];
+                                      snprintf(id_buf, sizeof(id_buf), "%s.desktop", s);
+                                      bd->desktop = efreet_util_desktop_file_id_find(id_buf);
+                                   }
+                                 if (!bd->desktop)
+                                   bd->desktop = efreet_util_desktop_exec_find(s);
+                              }
+                         }
                     }
                }
           }
