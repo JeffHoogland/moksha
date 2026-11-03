@@ -74,6 +74,7 @@ e_desktop_border_create(E_Border *bd)
    char path[PATH_MAX + PATH_MAX + 2];
 
    bname = bd->client.icccm.name;
+   if (bname) bname = ecore_file_file_get(bname);
    if ((bname) && (bname[0] == 0)) bname = NULL;
    bclass = bd->client.icccm.class;
    if ((bclass) && (bclass[0] == 0)) bclass = NULL;
@@ -135,18 +136,27 @@ e_desktop_border_create(E_Border *bd)
 
 // disable this
 //   if (bd->client.netwm.startup_id > 0) desktop->startup_notify = 1;
-   if (bd->client.netwm.icons)
+   if ((bd->client.netwm.icons) && (bd->client.netwm.num_icons > 0))
      {
-        /* FIXME
-         * - Find the icon with the best size
-         * - Should use mkstemp
-         */
         char file[PATH_MAX];
+        int i, best = 0;
+        unsigned int best_area = 0;
 
-        snprintf(file, sizeof(file), "%s-%.6f.png", bname ?: "", ecore_time_get());
+        for (i = 0; i < bd->client.netwm.num_icons; i++)
+          {
+             unsigned int area = bd->client.netwm.icons[i].width *
+                                 bd->client.netwm.icons[i].height;
+             if ((bd->client.netwm.icons[i].data) && (area > best_area))
+               {
+                  best = i;
+                  best_area = area;
+               }
+          }
+
+        snprintf(file, sizeof(file), "%s-%.6f.png", bname ?: "app", ecore_time_get());
         snprintf(path, sizeof(path), "%s/%s", icon_dir, file);
-        if (e_util_icon_save(&(bd->client.netwm.icons[0]), path))
-          desktop->icon = strdup(file);
+        if (e_util_icon_save(&(bd->client.netwm.icons[best]), path))
+          desktop->icon = strdup(path);
         else
           fprintf(stderr, "Could not save file from ARGB: %s\n", path);
      }
