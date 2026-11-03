@@ -696,45 +696,91 @@ ACT_FN_GO(window_maximized_toggle, )
                e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
              else
                {
-                  E_Maximize max;
+                  E_Maximize max, cur, pol, dir;
 
                   max = _e_actions_maximize_parse(params);
-                  max &= E_MAXIMIZE_DIRECTION;
-                  if (max == E_MAXIMIZE_VERTICAL)
+                  pol = (max & E_MAXIMIZE_TYPE);
+                  dir = (max & E_MAXIMIZE_DIRECTION);
+                  cur = (bd->maximized & E_MAXIMIZE_DIRECTION);
+                  if (dir == E_MAXIMIZE_VERTICAL)
                     {
-                       if (bd->maximized & E_MAXIMIZE_VERTICAL)
+                       if ((cur == E_MAXIMIZE_VERTICAL) || (cur == E_MAXIMIZE_BOTH))
                          e_border_unmaximize(bd, E_MAXIMIZE_VERTICAL);
                        else
-                         goto maximize;
+                         e_border_maximize(bd, pol | E_MAXIMIZE_VERTICAL);
                     }
-                  else if (max == E_MAXIMIZE_HORIZONTAL)
+                  else if (dir == E_MAXIMIZE_HORIZONTAL)
                     {
-                       if (bd->maximized & E_MAXIMIZE_HORIZONTAL)
+                       if ((cur == E_MAXIMIZE_HORIZONTAL) || (cur == E_MAXIMIZE_BOTH))
                          e_border_unmaximize(bd, E_MAXIMIZE_HORIZONTAL);
                        else
-                         goto maximize;
+                         e_border_maximize(bd, pol | E_MAXIMIZE_HORIZONTAL);
                     }
-                  else if (max == E_MAXIMIZE_LEFT)
+                  else if (dir == E_MAXIMIZE_LEFT)
                     {
-                       if (bd->maximized & E_MAXIMIZE_LEFT)
-                         e_border_unmaximize(bd, E_MAXIMIZE_LEFT);
+                       if ((cur == E_MAXIMIZE_LEFT) || (cur == E_MAXIMIZE_RIGHT))
+                         e_border_unmaximize(bd, cur);
+                       else if ((cur == E_MAXIMIZE_TOP) || (cur == E_MAXIMIZE_RIGHT_TOP))
+                         e_border_maximize(bd, pol | E_MAXIMIZE_LEFT_TOP);
+                       else if ((cur == E_MAXIMIZE_BOTTOM) || (cur == E_MAXIMIZE_RIGHT_BOTTOM))
+                         e_border_maximize(bd, pol | E_MAXIMIZE_LEFT_BOTTOM);
                        else
-                         goto maximize;
+                         e_border_maximize(bd, pol | E_MAXIMIZE_LEFT);
                     }
-                  else if (max == E_MAXIMIZE_RIGHT)
+                  else if (dir == E_MAXIMIZE_RIGHT)
                     {
-                       if (bd->maximized & E_MAXIMIZE_RIGHT)
-                         e_border_unmaximize(bd, E_MAXIMIZE_RIGHT);
+                       if ((cur == E_MAXIMIZE_RIGHT) || (cur == E_MAXIMIZE_LEFT))
+                         e_border_unmaximize(bd, cur);
+                       else if ((cur == E_MAXIMIZE_TOP) || (cur == E_MAXIMIZE_LEFT_TOP))
+                         e_border_maximize(bd, pol | E_MAXIMIZE_RIGHT_TOP);
+                       else if ((cur == E_MAXIMIZE_BOTTOM) || (cur == E_MAXIMIZE_LEFT_BOTTOM))
+                         e_border_maximize(bd, pol | E_MAXIMIZE_RIGHT_BOTTOM);
                        else
-                         goto maximize;
+                         e_border_maximize(bd, pol | E_MAXIMIZE_RIGHT);
+                    }
+                  else if (dir == E_MAXIMIZE_TOP)
+                    {
+                       if (cur == E_MAXIMIZE_TOP)
+                         e_border_maximize(bd, pol | E_MAXIMIZE_BOTH);
+                       else if ((cur == E_MAXIMIZE_BOTH) || (cur == E_MAXIMIZE_BOTTOM))
+                         e_border_unmaximize(bd, cur);
+                       else if ((cur == E_MAXIMIZE_LEFT) || (cur == E_MAXIMIZE_LEFT_BOTTOM))
+                         e_border_maximize(bd, pol | E_MAXIMIZE_LEFT_TOP);
+                       else if ((cur == E_MAXIMIZE_RIGHT) || (cur == E_MAXIMIZE_RIGHT_BOTTOM))
+                         e_border_maximize(bd, pol | E_MAXIMIZE_RIGHT_TOP);
+                       else
+                         e_border_maximize(bd, pol | E_MAXIMIZE_TOP);
+                    }
+                  else if (dir == E_MAXIMIZE_BOTTOM)
+                    {
+                       if ((cur == E_MAXIMIZE_BOTTOM) || (cur == E_MAXIMIZE_TOP) ||
+                           (cur == E_MAXIMIZE_BOTH))
+                         e_border_unmaximize(bd, cur);
+                       else if ((cur == E_MAXIMIZE_LEFT) || (cur == E_MAXIMIZE_LEFT_TOP))
+                         e_border_maximize(bd, pol | E_MAXIMIZE_LEFT_BOTTOM);
+                       else if ((cur == E_MAXIMIZE_RIGHT) || (cur == E_MAXIMIZE_RIGHT_TOP))
+                         e_border_maximize(bd, pol | E_MAXIMIZE_RIGHT_BOTTOM);
+                       else
+                         e_border_maximize(bd, pol | E_MAXIMIZE_BOTTOM);
+                    }
+                  else if (dir > E_MAXIMIZE_BOTH)
+                    {
+                       if (cur == dir)
+                         e_border_unmaximize(bd, cur);
+                       else
+                         e_border_maximize(bd, pol | dir);
                     }
                   else
-                    e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+                    {
+                       if (cur == E_MAXIMIZE_BOTH)
+                         e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+                       else
+                         e_border_maximize(bd, pol | E_MAXIMIZE_BOTH);
+                    }
                }
           }
         else
           {
-maximize:
              e_border_maximize(bd, _e_actions_maximize_parse(params));
           }
      }
@@ -772,6 +818,18 @@ ACT_FN_GO(window_maximized, )
                     max = E_MAXIMIZE_LEFT;
                   else if (!strcmp(s2, "right"))
                     max = E_MAXIMIZE_RIGHT;
+                  else if (!strcmp(s2, "top"))
+                    max = E_MAXIMIZE_TOP;
+                  else if (!strcmp(s2, "bottom"))
+                    max = E_MAXIMIZE_BOTTOM;
+                  else if ((!strcmp(s2, "left_top")) || (!strcmp(s2, "top_left")))
+                    max = E_MAXIMIZE_LEFT_TOP;
+                  else if ((!strcmp(s2, "right_top")) || (!strcmp(s2, "top_right")))
+                    max = E_MAXIMIZE_RIGHT_TOP;
+                  else if ((!strcmp(s2, "left_bottom")) || (!strcmp(s2, "bottom_left")))
+                    max = E_MAXIMIZE_LEFT_BOTTOM;
+                  else if ((!strcmp(s2, "right_bottom")) || (!strcmp(s2, "bottom_right")))
+                    max = E_MAXIMIZE_RIGHT_BOTTOM;
                   else
                     max = E_MAXIMIZE_BOTH;
                }
@@ -3225,6 +3283,24 @@ e_actions_init(void)
    e_action_predef_name_set(N_("Window : State"), N_("Maximize Right"),
                             "window_maximized_toggle", "default right",
                             NULL, 0);
+   e_action_predef_name_set(N_("Window : State"), N_("Maximize Top"),
+                            "window_maximized_toggle", "default top",
+                            NULL, 0);
+   e_action_predef_name_set(N_("Window : State"), N_("Maximize Bottom"),
+                            "window_maximized_toggle", "default bottom",
+                            NULL, 0);
+   e_action_predef_name_set(N_("Window : State"), N_("Maximize Top-Left"),
+                            "window_maximized_toggle", "default left_top",
+                            NULL, 0);
+   e_action_predef_name_set(N_("Window : State"), N_("Maximize Top-Right"),
+                            "window_maximized_toggle", "default right_top",
+                            NULL, 0);
+   e_action_predef_name_set(N_("Window : State"), N_("Maximize Bottom-Left"),
+                            "window_maximized_toggle", "default left_bottom",
+                            NULL, 0);
+   e_action_predef_name_set(N_("Window : State"), N_("Maximize Bottom-Right"),
+                            "window_maximized_toggle", "default right_bottom",
+                            NULL, 0);
    e_action_predef_name_set(N_("Window : State"), N_("Maximize Fullscreen"),
                             "window_maximized_toggle", "fullscreen", NULL, 0);
    e_action_predef_name_set(N_("Window : State"), N_("Maximize Mode \"Smart\""),
@@ -3897,6 +3973,18 @@ _e_actions_maximize_parse(const char *params)
           max = E_MAXIMIZE_LEFT;
         else if (!strcmp(s2, "right"))
           max = E_MAXIMIZE_RIGHT;
+        else if (!strcmp(s2, "top"))
+          max = E_MAXIMIZE_TOP;
+        else if (!strcmp(s2, "bottom"))
+          max = E_MAXIMIZE_BOTTOM;
+        else if ((!strcmp(s2, "left_top")) || (!strcmp(s2, "top_left")))
+          max = E_MAXIMIZE_LEFT_TOP;
+        else if ((!strcmp(s2, "right_top")) || (!strcmp(s2, "top_right")))
+          max = E_MAXIMIZE_RIGHT_TOP;
+        else if ((!strcmp(s2, "left_bottom")) || (!strcmp(s2, "bottom_left")))
+          max = E_MAXIMIZE_LEFT_BOTTOM;
+        else if ((!strcmp(s2, "right_bottom")) || (!strcmp(s2, "bottom_right")))
+          max = E_MAXIMIZE_RIGHT_BOTTOM;
         else
           max = E_MAXIMIZE_BOTH;
      }

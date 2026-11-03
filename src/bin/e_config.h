@@ -140,6 +140,7 @@ struct _E_Config
    int         border_fix_on_shelf_toggle; // GUI
    int         allow_above_fullscreen; // GUI
    int         max_top_edge; // GUI
+   int         snap_top_edge_maximize; // GUI
    int         kill_if_close_not_possible; // GUI
    int         kill_process; // GUI
    double      kill_timer_wait; // GUI

@@ -15,6 +15,8 @@ static void _e_border_menu_cb_maximize_vertically(void *data, E_Menu *m, E_Menu_
 static void _e_border_menu_cb_maximize_horizontally(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_maximize_left(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_maximize_right(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_maximize_top(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_maximize_bottom(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_unmaximize(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_resistance(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -471,6 +473,28 @@ _e_border_menu_cb_maximize_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi
                                   "e/widgets/border/default/maximize");
 
         submi = e_menu_item_new(subm);
+        e_menu_item_label_set(submi, _("Maximize Top"));
+        e_menu_item_radio_set(submi, 1);
+        e_menu_item_radio_group_set(submi, 3);
+        e_menu_item_toggle_set(submi, (bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_TOP);
+        e_menu_item_callback_set(submi, _e_border_menu_cb_maximize_top, bd);
+        e_menu_item_icon_edje_set(submi,
+                                  e_theme_edje_file_get("base/theme/borders",
+                                                        "e/widgets/border/default/maximize"),
+                                  "e/widgets/border/default/maximize");
+
+        submi = e_menu_item_new(subm);
+        e_menu_item_label_set(submi, _("Maximize Bottom"));
+        e_menu_item_radio_set(submi, 1);
+        e_menu_item_radio_group_set(submi, 3);
+        e_menu_item_toggle_set(submi, (bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTTOM);
+        e_menu_item_callback_set(submi, _e_border_menu_cb_maximize_bottom, bd);
+        e_menu_item_icon_edje_set(submi,
+                                  e_theme_edje_file_get("base/theme/borders",
+                                                        "e/widgets/border/default/maximize"),
+                                  "e/widgets/border/default/maximize");
+
+        submi = e_menu_item_new(subm);
         e_menu_item_label_set(submi, _("Unmaximize"));
         e_menu_item_radio_set(submi, 1);
         e_menu_item_radio_group_set(submi, 3);
@@ -551,6 +575,36 @@ _e_border_menu_cb_maximize_right(void *data, E_Menu *m __UNUSED__, E_Menu_Item *
           e_border_unmaximize(bd, bd->maximized & E_MAXIMIZE_DIRECTION);
         e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) |
                           E_MAXIMIZE_RIGHT);
+     }
+}
+
+static void
+_e_border_menu_cb_maximize_top(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Border *bd;
+
+   bd = data;
+   if (!bd->lock_user_maximize)
+     {
+        if ((bd->maximized & E_MAXIMIZE_DIRECTION))
+          e_border_unmaximize(bd, bd->maximized & E_MAXIMIZE_DIRECTION);
+        e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) |
+                          E_MAXIMIZE_TOP);
+     }
+}
+
+static void
+_e_border_menu_cb_maximize_bottom(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Border *bd;
+
+   bd = data;
+   if (!bd->lock_user_maximize)
+     {
+        if ((bd->maximized & E_MAXIMIZE_DIRECTION))
+          e_border_unmaximize(bd, bd->maximized & E_MAXIMIZE_DIRECTION);
+        e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) |
+                          E_MAXIMIZE_BOTTOM);
      }
 }
 
