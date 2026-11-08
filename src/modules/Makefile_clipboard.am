@@ -12,12 +12,15 @@ clipboard_module_la_SOURCES  = clipboard/e_mod_main.h \
 			     clipboard/e_mod_main.c \
 			     clipboard/e_mod_config.h \
 			     clipboard/e_mod_config.c \
+			     clipboard/e_mod_list.c \
 			     clipboard/history.h \
 			     clipboard/history.c \
 			     clipboard/x_clipboard.h \
 			     clipboard/x_clipboard.c \
 			     clipboard/utility.h \
 			     clipboard/utility.c \
+			     clipboard/image.h \
+			     clipboard/image.c \
 			     clipboard/common.h \
 			     clipboard/config_defaults.h
 

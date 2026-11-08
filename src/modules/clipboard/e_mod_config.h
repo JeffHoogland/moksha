@@ -30,7 +30,9 @@ struct _Config
   int   ignore_ws_copy; /* Should we not copy White space only             */
   int trim_ws;          /* Should we trim White space from selection       */
   int trim_nl;          /* Should we trim new lines from selection         */
-  int ignore_hist;      /* Should we trim new lines from selection         */
+  int ignore_hist;      /* Do not add new selections to the history        */
+  int store_images;     /* Keep images copied to the clipboard             */
+  double image_max_mb;  /* Images bigger than this many MB are ignored     */
 };
 
 struct _Config_Item

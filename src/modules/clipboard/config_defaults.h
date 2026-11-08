@@ -17,5 +17,7 @@
 #define  CF_DEFAULT_CONFIRM         1
 #define  CF_DEFAULT_AUTOSAVE        1
 #define  CF_DEFAULT_SAVE_TIMER      10
+#define  CF_DEFAULT_STORE_IMAGES    1
+#define  CF_DEFAULT_IMAGE_MAX_MB    MAGIC_IMG_MAX_MB
 
 #endif

@@ -12,8 +12,9 @@ char *strndup(const char *s, size_t n);
 char *strdup(const char *s);
 #endif
 
-Eina_Bool set_clip_content(char **content, char* text, int mode);
-Eina_Bool set_clip_name(char **name, char * text, int mode, int n);
+/* Both functions work on a copy, the text passed in is never modified. */
+Eina_Bool set_clip_content(char **content, const char *text, int mode);
+Eina_Bool set_clip_name(char **name, const char *text, int mode, int n);
 Eina_Bool is_empty(const char *str);
 
 #endif

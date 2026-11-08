@@ -189,7 +189,8 @@ _get_text_clipboard(Ecore_X_Event_Selection_Notify *event)
   {
     text_data = event->data;
 
-    if ((text_data->data.content == ECORE_X_SELECTION_CONTENT_TEXT) &&
+    if (text_data &&
+        (text_data->data.content == ECORE_X_SELECTION_CONTENT_TEXT) &&
         (text_data->text))
         return text_data;
   }
@@ -207,7 +208,8 @@ _get_text_primary(Ecore_X_Event_Selection_Notify *event)
   {
     text_data = event->data;
 
-    if ((text_data->data.content == ECORE_X_SELECTION_CONTENT_TEXT) &&
+    if (text_data &&
+        (text_data->data.content == ECORE_X_SELECTION_CONTENT_TEXT) &&
         (text_data->text))
       return text_data;
   }
@@ -228,7 +230,8 @@ _get_text_both(Ecore_X_Event_Selection_Notify *event)
 
     text_data = event->data;
 
-    if ((text_data->data.content == ECORE_X_SELECTION_CONTENT_TEXT) &&
+    if (text_data &&
+        (text_data->data.content == ECORE_X_SELECTION_CONTENT_TEXT) &&
         (text_data->text)) {
       /* If we are syncing clipboard
        *   Ensure both clipboards contain selection. */
@@ -274,4 +277,259 @@ init_clipboard_struct(Config *config) {
     }
     else
       clipboard.sync_mode = CLIP_SYNC_OFF;
+}
+
+/* ------------------------------------------------------------------------
+ *  Images
+ * ------------------------------------------------------------------------ */
+
+static Ecore_Exe           *_img_exe      = NULL;
+static unsigned char       *_img_buf      = NULL;
+static size_t               _img_len      = 0;
+static size_t               _img_cap      = 0;
+static size_t               _img_max      = 0;
+static Eina_Bool            _img_too_big  = EINA_FALSE;
+static Eina_Bool            _img_again    = EINA_FALSE;
+static X_Image_Cb           _img_on_image = NULL;
+static X_Retry_Cb           _img_on_retry = NULL;
+static Ecore_Event_Handler *_img_h_data   = NULL;
+static Ecore_Event_Handler *_img_h_del    = NULL;
+
+static Eina_Bool _img_cb_data(void *data, int type, void *event);
+static Eina_Bool _img_cb_del(void *data, int type, void *event);
+
+Eina_Bool
+x_clipboard_images_tracked(void)
+{
+  return (clipboard.track_mode == CLIP_SELECTION_CLIPBOARD) ||
+         (clipboard.track_mode == CLIP_SELECTION_BOTH);
+}
+
+/* Ask the owner of the CLIPBOARD which formats it can give us. The answer
+ *  arrives as an ECORE_X_EVENT_SELECTION_NOTIFY with target "TARGETS". */
+void
+x_clipboard_request_targets(Ecore_X_Window w)
+{
+  if (!x_clipboard_images_tracked()) return;
+  ecore_x_selection_clipboard_request(w, "TARGETS");
+}
+
+/* What does the owner of the CLIPBOARD offer? */
+void
+x_clipboard_targets_parse(Ecore_X_Event_Selection_Notify *event,
+                          Eina_Bool *png, Eina_Bool *text)
+{
+  Ecore_X_Selection_Data_Targets *t;
+  int i;
+
+  *png = *text = EINA_FALSE;
+  if (!event || !event->data) return;
+  t = event->data;
+  if ((t->data.content != ECORE_X_SELECTION_CONTENT_TARGETS) || !t->targets)
+    return;
+
+  for (i = 0; i < t->num_targets; i++)
+    {
+      if (!t->targets[i]) continue;
+      if (!strcmp(t->targets[i], "image/png"))
+        *png = EINA_TRUE;
+      else if (!strcmp(t->targets[i], ECORE_X_SELECTION_TARGET_UTF8_STRING) ||
+               !strcmp(t->targets[i], "text/plain;charset=utf-8"))
+        *text = EINA_TRUE;
+    }
+}
+
+void
+x_clipboard_request_text(Ecore_X_Window w)
+{
+  ecore_x_selection_clipboard_request(w, ECORE_X_SELECTION_TARGET_UTF8_STRING);
+}
+
+static void
+_img_reset(void)
+{
+  free(_img_buf);
+  _img_buf = NULL;
+  _img_len = _img_cap = 0;
+  _img_too_big = EINA_FALSE;
+}
+
+/* Reads the image from the CLIPBOARD asynchronously. 'on_image' is called
+ *  with the PNG data (valid only during the call). If another selection
+ *  change arrives while we are busy 'on_retry' is called when we are done. */
+void
+x_clipboard_image_fetch(size_t max_bytes, X_Image_Cb on_image, X_Retry_Cb on_retry)
+{
+  static Eina_Bool warned = EINA_FALSE;
+
+  EINA_SAFETY_ON_NULL_RETURN(on_image);
+
+  if (_img_exe)
+    {
+      _img_again = EINA_TRUE;
+      return;
+    }
+  if (!ecore_file_app_installed("xclip"))
+    {
+      if (!warned)
+        WRN("xclip is not installed: images can not be stored");
+      warned = EINA_TRUE;
+      return;
+    }
+  _img_reset();
+  _img_max = max_bytes;
+  _img_on_image = on_image;
+  _img_on_retry = on_retry;
+
+  if (!_img_h_data)
+    _img_h_data = ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _img_cb_data, NULL);
+  if (!_img_h_del)
+    _img_h_del = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _img_cb_del, NULL);
+
+  _img_exe = ecore_exe_pipe_run("xclip -selection clipboard -t image/png -o",
+                                ECORE_EXE_PIPE_READ, NULL);
+  if (!_img_exe)
+    ERR("Unable to run xclip");
+}
+
+static Eina_Bool
+_img_cb_data(void *data __UNUSED__, int type __UNUSED__, void *event)
+{
+  Ecore_Exe_Event_Data *ev = event;
+  size_t need;
+
+  if (!ev || !_img_exe || (ev->exe != _img_exe)) return ECORE_CALLBACK_PASS_ON;
+  if (_img_too_big || !ev->data || (ev->size <= 0)) return ECORE_CALLBACK_DONE;
+
+  need = _img_len + (size_t) ev->size;
+  if (need > _img_max)
+    {
+      /* Image bigger than configured limit: give up and forget what we have */
+      INF("Clipboard image bigger than %u bytes ignored", (unsigned int) _img_max);
+      _img_too_big = EINA_TRUE;
+      free(_img_buf);
+      _img_buf = NULL;
+      _img_len = _img_cap = 0;
+      ecore_exe_terminate(_img_exe);
+      return ECORE_CALLBACK_DONE;
+    }
+  if (need > _img_cap)
+    {
+      size_t cap = _img_cap ? _img_cap * 2 : 64 * 1024;
+      unsigned char *tmp;
+
+      if (cap < need) cap = need;
+      if (cap > _img_max) cap = _img_max;
+      tmp = realloc(_img_buf, cap);
+      if (!tmp)
+        {
+          ERR("Out of memory reading clipboard image");
+          _img_too_big = EINA_TRUE;
+          ecore_exe_terminate(_img_exe);
+          return ECORE_CALLBACK_DONE;
+        }
+      _img_buf = tmp;
+      _img_cap = cap;
+    }
+  memcpy(_img_buf + _img_len, ev->data, ev->size);
+  _img_len = need;
+  return ECORE_CALLBACK_DONE;
+}
+
+static Eina_Bool
+_img_cb_del(void *data __UNUSED__, int type __UNUSED__, void *event)
+{
+  Ecore_Exe_Event_Del *ev = event;
+  X_Retry_Cb retry;
+
+  if (!ev || !_img_exe || (ev->exe != _img_exe)) return ECORE_CALLBACK_PASS_ON;
+
+  _img_exe = NULL;
+  if (!_img_too_big && (ev->exit_code == 0) && _img_len && _img_buf && _img_on_image)
+    _img_on_image(_img_buf, _img_len);
+  _img_reset();
+
+  retry = _img_on_retry;
+  if (_img_again)
+    {
+      _img_again = EINA_FALSE;
+      if (retry) retry();
+    }
+  return ECORE_CALLBACK_DONE;
+}
+
+void
+x_clipboard_image_shutdown(void)
+{
+  if (_img_h_data) ecore_event_handler_del(_img_h_data);
+  if (_img_h_del)  ecore_event_handler_del(_img_h_del);
+  _img_h_data = _img_h_del = NULL;
+  if (_img_exe) ecore_exe_terminate(_img_exe);
+  _img_exe = NULL;
+  _img_on_image = NULL;
+  _img_on_retry = NULL;
+  _img_again = EINA_FALSE;
+  _img_reset();
+}
+
+/* Quotes a string for /bin/sh */
+static char *
+_shell_quote(const char *s)
+{
+  size_t len = 3; /* two quotes and the terminator */
+  const char *p;
+  char *ret, *q;
+
+  for (p = s; *p; p++)
+    len += (*p == '\'') ? 4 : 1;
+  ret = malloc(len);
+  if (!ret) return NULL;
+  q = ret;
+  *q++ = '\'';
+  for (p = s; *p; p++)
+    {
+      if (*p == '\'')
+        {
+          memcpy(q, "'\\''", 4);
+          q += 4;
+        }
+      else
+        *q++ = *p;
+    }
+  *q++ = '\'';
+  *q = 0;
+  return ret;
+}
+
+/* Makes the PNG in 'path' the content of the CLIPBOARD.
+ *  xclip forks into the background and keeps serving the image until some
+ *  other program takes the selection over. */
+Eina_Bool
+x_clipboard_set_image(const char *path)
+{
+  Ecore_Exe *exe;
+  char *quoted, *cmd;
+  size_t len;
+
+  EINA_SAFETY_ON_NULL_RETURN_VAL(path, EINA_FALSE);
+
+  if (!ecore_file_app_installed("xclip"))
+    {
+      ERR("xclip is not installed: can not copy images");
+      return EINA_FALSE;
+    }
+  quoted = _shell_quote(path);
+  if (!quoted) return EINA_FALSE;
+  len = strlen(quoted) + 64;
+  cmd = malloc(len);
+  if (!cmd)
+    {
+      free(quoted);
+      return EINA_FALSE;
+    }
+  snprintf(cmd, len, "xclip -selection clipboard -t image/png -i %s", quoted);
+  exe = ecore_exe_run(cmd, NULL);
+  free(cmd);
+  free(quoted);
+  return exe != NULL;
 }

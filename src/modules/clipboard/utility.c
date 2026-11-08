@@ -1,148 +1,142 @@
 #include "utility.h"
+#include <ctype.h>
 
 #define TRIM_SPACES   0
 #define TRIM_NEWLINES 1
 
-char * _sanitize_ln(char *text, const unsigned int n, const int mode);
+static char *_sanitize_ln(const char *text, const unsigned int n, const int ignore_ws);
+static char *strip_whitespace(char *str, int mode);
+static int   isnewline(const int c);
 
-char * strip_whitespace(char *str, int mode);
-int isnewline(const int c);
-
+/**
+ * @brief Makes a copy of text, optionally trimmed.
+ *
+ * mode: 0 don't trim, 1 trim new lines, 2 and 3 trim all white space
+ *       (white space includes new lines).
+ */
 Eina_Bool
-set_clip_content(char **content, char* text, int mode)
+set_clip_content(char **content, const char *text, int mode)
 {
-  Eina_Bool ret = EINA_TRUE;
   char *temp, *trim;
-  /* Sanity check */
-  if (!text) {
-    WRN("ERROR: Text is NULL\n");
-    text = "";
-  }
-  if (content) {
-    switch (mode) {
-      case 0:
-        /* Don't trim */
-        temp = strdup(text);
-        break;
-      case 1:
-        /* Trim new lines */
-        trim = strip_whitespace(text, TRIM_NEWLINES);
-        temp = strdup(trim);
-        break;
-      case 2:
-        /* Trim all white Space
-         *  since white space includes new lines
-         *  drop thru here */
-      case 3:
-        /* Trim white space and new lines */
-        trim = strip_whitespace(text, TRIM_SPACES);
-        temp = strdup(trim);
-        break;
-      default :
-        /* Error Don't trim */
-        WRN("ERROR: Invalid strip_mode %d\n", mode);
-        temp = strdup(text);
-        break;
-    }
-    if (!temp) {
-      /* This is bad, leave it to calling function */
-      CRI("ERROR: Memory allocation Failed!!");
-      ret = EINA_FALSE;
-    }
-    *content = temp;
-  } else
+
+  if (!content) {
     ERR("Error: Clip content pointer is Null!!");
-  return ret;
-}
-
-Eina_Bool
-set_clip_name(char **name, char * text, int mode, int n)
-{
-  Eina_Bool ret = EINA_TRUE;
-
+    return EINA_FALSE;
+  }
+  *content = NULL;
   /* Sanity check */
   if (!text) {
     WRN("ERROR: Text is NULL\n");
     text = "";
   }
-  /* to be continued latter */
-  if (name)
-    *name = _sanitize_ln(text, n, mode);
-  else {
-    ERR("Error: Clip name pointer is Null!!");
+  /* Always work on a copy: strip_whitespace() writes into the string and
+   * the original belongs to somebody else (X event data, dialog entry). */
+  temp = strdup(text);
+  if (!temp) {
+    /* This is bad, leave it to calling function */
+    CRI("ERROR: Memory allocation Failed!!");
     return EINA_FALSE;
   }
 
-  if (!*name) {
-      /* This is bad, leave it to calling function */
-      CRI("ERROR: Memory allocation Failed!!");
-      ret = EINA_FALSE;
-    }
-
-  return ret;
+  switch (mode) {
+    case 0:
+      break;
+    case 1:
+      trim = strip_whitespace(temp, TRIM_NEWLINES);
+      if (trim != temp) memmove(temp, trim, strlen(trim) + 1);
+      break;
+    case 2:
+    case 3:
+      trim = strip_whitespace(temp, TRIM_SPACES);
+      if (trim != temp) memmove(temp, trim, strlen(trim) + 1);
+      break;
+    default :
+      /* Error Don't trim */
+      WRN("ERROR: Invalid strip_mode %d\n", mode);
+      break;
+  }
+  *content = temp;
+  return EINA_TRUE;
 }
 
-char *
-_sanitize_ln(char *text, const unsigned int n, const int mode)
+Eina_Bool
+set_clip_name(char **name, const char *text, int mode, int n)
+{
+  if (!name) {
+    ERR("Error: Clip name pointer is Null!!");
+    return EINA_FALSE;
+  }
+  /* Sanity check */
+  if (!text) {
+    WRN("ERROR: Text is NULL\n");
+    text = "";
+  }
+  if (n < 1) n = 1;
+
+  *name = _sanitize_ln(text, (unsigned int) n, mode);
+  if (!*name) {
+    /* This is bad, leave it to calling function */
+    CRI("ERROR: Memory allocation Failed!!");
+    return EINA_FALSE;
+  }
+  return EINA_TRUE;
+}
+
+/* Builds a one line label of at most n bytes. The source is not modified. */
+static char *
+_sanitize_ln(const char *text, const unsigned int n, const int ignore_ws)
 {
   EINA_SAFETY_ON_NULL_RETURN_VAL(text, NULL);
 
+  const unsigned char *p = (const unsigned char *) text;
   char *ret = calloc(n + 1, sizeof(char));
-  char *temp = ret;
-  unsigned int chr, k, i = 0;
+  unsigned int i = 0, k;
 
   if (!ret) return NULL;
 
-  if (mode)
-    text = strip_whitespace(text, TRIM_SPACES);
+  if (ignore_ws)
+    while (*p && isspace(*p)) p++;
 
-  while (1) {
-    chr = *text;
-    if (chr == 0)
-      break;
-    if ((chr < 32)) {
-      /* is it a tab */
-      if (chr == 9){
-        // default tab
-        for (k = 0; k < 4; k++, i++){
-          if (i == n) break;
-          *temp++ = ' ';
-        }
-        text++;
-      }
-      else {
-        text++;
-      }
+  while (*p && (i < n)) {
+    if (*p == '\t') {
+      /* default tab */
+      for (k = 0; (k < 4) && (i < n); k++)
+        ret[i++] = ' ';
     }
-    else {
-
-    /* assume char is ok and add to temp buffer */
-    *temp++ = *text++;
-    i++;
+    else if (*p >= 32) {
+      /* assume char is ok and add to the label */
+      ret[i++] = (char) *p;
     }
-    if (i == n) break;
+    /* other control characters (new lines...) are dropped */
+    p++;
   }
-  *temp = 0;
+
+  /* We may have cut a multi byte UTF-8 sequence in half: drop the stub */
+  if (*p && ((*p & 0xC0) == 0x80)) {
+    while ((i > 0) && (((unsigned char) ret[i - 1] & 0xC0) == 0x80))
+      i--;
+    if (i > 0) i--;
+  }
+  if (ignore_ws)
+    while ((i > 0) && (ret[i - 1] == ' '))
+      i--;
+  ret[i] = 0;
 
   return ret;
 }
 
 
 /**
- * @brief Strips whitespace from a string.
+ * @brief Strips whitespace from both ends of a string, IN PLACE.
  *
  * @param str char pointer to a string.
  *
  * @return a char pointer to a substring of the original string..
  *
- * If the given string was allocated dynamically, the caller must not overwrite
- *  that pointer with the returned value. The original pointer must be
- *  deallocated using the same allocator with which it was allocated.  The return
- *  value must NOT be deallocated using free etc.
- *
- * You have been warned!!
+ * The returned pointer points inside str: the caller must keep the original
+ *  pointer for free() and never free the return value.
  */
-char *
+static char *
 strip_whitespace(char *str, int mode)
 {
   char *end;
@@ -151,13 +145,13 @@ strip_whitespace(char *str, int mode)
   if (mode == TRIM_SPACES) compare = isspace;
   else                     compare = isnewline;
 
-  while((*compare)(*str)) str++;
+  while (*str && (*compare)((unsigned char) *str)) str++;
 
-  if(*str == 0)  // empty string ?
+  if (*str == 0)  // empty string ?
     return str;
 
   end = str + strlen(str) - 1;
-  while(end > str && (*compare)(*end))
+  while ((end > str) && (*compare)((unsigned char) *end))
     end--;
 
   // Write new null terminator
@@ -166,10 +160,10 @@ strip_whitespace(char *str, int mode)
   return str;
 }
 
-int
+static int
 isnewline(const int c)
 {
-  return (c == '\n')||(c == '\r');
+  return (c == '\n') || (c == '\r');
 }
 
 Eina_Bool
@@ -177,6 +171,6 @@ is_empty(const char *str)
 {
   EINA_SAFETY_ON_NULL_RETURN_VAL(str, EINA_TRUE);
 
-  while (isspace((unsigned char) *str) && str++);
+  while (*str && isspace((unsigned char) *str)) str++;
   return !*str;
 }

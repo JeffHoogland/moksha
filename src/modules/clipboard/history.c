@@ -1,9 +1,13 @@
 #include "history.h"
+#include "image.h"
 
 #define CLIPBOARD_MOD_NAME "clipboard"
 #define DATA_DIR    CLIPBOARD_MOD_NAME
 #define HISTORY_NAME "history"
-#define HISTORY_VERSION     1 /* must be < 9  */
+/* 1: text only
+ * 2: adds "<n>_type" (T = text, I = image). Version 1 files are still read.
+ * must be < 9  */
+#define HISTORY_VERSION     2
 #define LOCK_DIGITS (HIST_MAX_DIGITS + 7)
 
 /* convenience macros to compress code */
@@ -105,6 +109,21 @@ _set_history_path(char *path)
    return success;
 }
 
+/* Copy of an eet string item: eet_read() does not guarantee '\0' termination
+ * in a damaged file. */
+static char *
+_item_dup(const char *data, int size)
+{
+    char *ret;
+
+    if (!data || size <= 0) return NULL;
+    ret = malloc(size + 1);
+    if (!ret) return NULL;
+    memcpy(ret, data, size);
+    ret[size] = 0;
+    return ret;
+}
+
 /**
  * @brief  Reads clipboard Instantance history  from a binary file with location
  *           specified by FreeDesktop XDG specifications
@@ -124,14 +143,14 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     Clip_Data *cd = NULL;
     Eina_List *l = NULL;
     char history_path[PATH_MAX] = {0};
-    char *ret = NULL;
-    char str[HIST_MAX_DIGITS + 1];
-    char  lock_str[LOCK_DIGITS];
-    char *lock_val = NULL;
+    char key[LOCK_DIGITS];
+    char *val = NULL;
     int size = 0;
-    unsigned int i =0;
+    unsigned int i = 0;
     unsigned int item_num = 0;
     unsigned int version = 0;
+
+    *items = NULL;
 
     /* Open history file */
     if(!_set_history_path(history_path)) {
@@ -141,65 +160,94 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     history_file = eet_open(history_path, EET_FILE_MODE_READ);
     if (!history_file) {
       ERR("Failed to open history file: %s", history_path);
-      *items = NULL;
       return EET_ERROR_BAD_OBJECT;
     }
     /* Check History Version */
-    ret = eet_read(history_file, "VERSION", &size);
-    if (!ret){
+    val = eet_read(history_file, "VERSION", &size);
+    if (!val)
       INF("No version number in history file");
-      ret = "0";
+    else {
+      version = strtol(val, NULL, 10);
+      free(val);
     }
-    version = strtol(ret, NULL, 10);
-    if (version && version != HISTORY_VERSION) {
+    if (version > HISTORY_VERSION) {
       INF("History file version mismatch, deleting history");
-      *items = NULL;
       return eet_close(history_file);
     }
     /* Read Number of items */
-    ret = eet_read(history_file, "MAX_ITEMS", &size);
-    if (!ret) {
+    val = eet_read(history_file, "MAX_ITEMS", &size);
+    if (!val) {
       ERR("History file corruption: %s", history_path);
-      *items = NULL;
       return eet_close(history_file);
     }
     /* If we have no items in history wrap it up and return. */
-    item_num = strtol(ret, NULL, 10);
+    item_num = strtol(val, NULL, 10);
+    free(val);
     if (item_num <= 0) {
       INF("History file empty or corrupt: %s", history_path);
-      *items = NULL;
       return eet_close(history_file);
     }
+    /* Keys have at most HIST_MAX_DIGITS digits */
+    if (item_num > HIST_MAX)
+      item_num = HIST_MAX;
 
     /* Read each item */
     for (i = 1; i <= item_num; i++){
-        cd = E_NEW(Clip_Data, 1);
-        eina_convert_itoa(i ,str);
-        ret = eet_read(history_file, str, &size);
-        if (!ret) {
+        char *content;
+        Eina_Bool is_image = EINA_FALSE;
+
+        snprintf(key, sizeof(key), "%u", i);
+        val = eet_read(history_file, key, &size);
+        content = _item_dup(val, size);
+        free(val);
+        if (!content) {
           ERR("History file corruption: %s", history_path);
-          *items = NULL;
-          if (l)
-            E_FREE_LIST(l, free_clip_data);
-          free(cd);
+          E_FREE_LIST(l, free_clip_data);
           return eet_close(history_file);
         }
-        snprintf(lock_str, sizeof(lock_str), "%d_lock", i);
-        lock_val = eet_read(history_file, lock_str, &size);
-          /* prevention for new eet file lock item */
-        if (!lock_val)
-          lock_val = strdup("U");
 
-        // FIXME: DATA VALIDATION
-        cd->content = strdup(ret);
-        cd->lock = strdup(lock_val);
-        set_clip_name(&cd->name, cd->content,
-                      ignore_ws, label_length);
+        /* type: missing in version 1 files, those only hold text */
+        snprintf(key, sizeof(key), "%u_type", i);
+        val = eet_read(history_file, key, &size);
+        if (val && (size > 0) && (val[0] == 'I'))
+          is_image = EINA_TRUE;
+        free(val);
+
+        cd = E_NEW(Clip_Data, 1);
+        if (!cd) {
+          free(content);
+          E_FREE_LIST(l, free_clip_data);
+          return eet_close(history_file);
+        }
+        cd->id = clip_id_next();
+        cd->content = content;
+
+        /* lock: prevention for new eet file lock item */
+        snprintf(key, sizeof(key), "%u_lock", i);
+        val = eet_read(history_file, key, &size);
+        cd->lock = strdup((val && (size > 0) && (val[0] == 'L')) ? "L" : "U");
+        free(val);
+
+        if (is_image) {
+          cd->type = CLIP_TYPE_IMAGE;
+          /* The image file might be gone: just skip the item then */
+          if (!clip_image_load_info(cd->content, &cd->w, &cd->h, &cd->size)) {
+            WRN("Image %s of history item %u is missing", cd->content, i);
+            free_clip_data(cd);
+            continue;
+          }
+          cd->name = clip_image_label_new(cd->w, cd->h, cd->size);
+        } else {
+          cd->type = CLIP_TYPE_TEXT;
+          set_clip_name(&cd->name, cd->content, ignore_ws, label_length);
+        }
+        if (!cd->lock || !cd->name) {
+          free_clip_data(cd);
+          continue;
+        }
         l = eina_list_append(l, cd);
     }
     /* and wrap it up */
-    free(ret);
-    free(lock_val);
     *items = l;
     return eet_close(history_file);
 }
@@ -216,6 +264,7 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
  * This function not only sets the history path but will also create the needed
  *    directories if they do not exist. See warnings in auxillary functions.
  *
+ * Images are not stored in the history file, only their ids.
  */
 Eet_Error
 save_history(Eina_List *items)
@@ -224,10 +273,9 @@ save_history(Eina_List *items)
     Eina_List *l = NULL;
     Clip_Data *cd = NULL;
     char history_path[PATH_MAX] = {0};
-    char str[HIST_MAX_DIGITS + 1];
-    char lock_buf[LOCK_DIGITS];
+    char str[HIST_MAX_DIGITS + 2];
+    char key[LOCK_DIGITS];
     unsigned int i = 1;
-    Eet_Error ret;
 
     /* Open history file */
     if(!_set_history_path(history_path)) {
@@ -235,32 +283,27 @@ save_history(Eina_List *items)
       return EET_ERROR_BAD_OBJECT;
     }
     history_file = eet_open(history_path, EET_FILE_MODE_WRITE);
-
-    if (history_file) {
-      /* Write history version */
-      eina_convert_itoa((HISTORY_VERSION > 9 ? 9 : HISTORY_VERSION) ,str);
-      eet_write(history_file, "VERSION",  str, 2, 0);
-      /* If we have no items in history wrap it up and return */
-      if(!items) {
-        eina_convert_itoa(0, str);
-        eet_write(history_file, "MAX_ITEMS",  str, 2, 0);
-        return eet_close(history_file);
-      }
-      /* Otherwise write each item */
-      EINA_LIST_FOREACH(items, l, cd) {
-        eina_convert_itoa(i ,str);
-        eet_write(history_file, str,  cd->content, strlen(cd->content) + 1, 0);
-        snprintf(lock_buf, LOCK_DIGITS, "%d_lock", i);
-        eet_write(history_file, lock_buf,  cd->lock, strlen(cd->lock) + 1, 0);
-        i++;
-      }
-      /* and wrap it up */
-      eina_convert_itoa(eina_list_count(items), str);
-      eet_write(history_file, "MAX_ITEMS",  str, strlen(str) + 1, 0);
-      ret = eet_close(history_file);
-    } else {
+    if (!history_file) {
       ERR("Unable to open history file: %s", history_path);
       return  EET_ERROR_BAD_OBJECT;
     }
-    return ret;
+
+    /* Write history version */
+    snprintf(str, sizeof(str), "%d", (HISTORY_VERSION > 9 ? 9 : HISTORY_VERSION));
+    eet_write(history_file, "VERSION",  str, strlen(str) + 1, 0);
+
+    /* Write each item */
+    EINA_LIST_FOREACH(items, l, cd) {
+      snprintf(key, sizeof(key), "%u", i);
+      eet_write(history_file, key, cd->content, strlen(cd->content) + 1, 0);
+      snprintf(key, sizeof(key), "%u_lock", i);
+      eet_write(history_file, key, cd->lock, strlen(cd->lock) + 1, 0);
+      snprintf(key, sizeof(key), "%u_type", i);
+      eet_write(history_file, key, (cd->type == CLIP_TYPE_IMAGE) ? "I" : "T", 2, 0);
+      i++;
+    }
+    /* and wrap it up */
+    snprintf(str, sizeof(str), "%u", i - 1);
+    eet_write(history_file, "MAX_ITEMS",  str, strlen(str) + 1, 0);
+    return eet_close(history_file);
 }

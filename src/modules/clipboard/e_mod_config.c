@@ -1,5 +1,6 @@
 #include "e_mod_main.h"
 #include "x_clipboard.h"
+#include <math.h>
 
 #define WIDGET_DISABLED_SET(condition, widget, state) if(condition)  e_widget_disabled_set(ob, state)
 struct _E_Config_Dialog_Data
@@ -38,7 +39,10 @@ struct _E_Config_Dialog_Data
   int   ignore_ws_copy; /* Should we not copy White space only             */
   int   trim_ws;        /* Should we trim White space from selection       */
   int   trim_nl;        /* Should we trim new lines from selection         */
-  int   ignore_hist;    /* Should we trim new lines from selection         */
+  int   ignore_hist;    /* Do not add new selections to the history        */
+  int   store_images;   /* Keep images copied to the clipboard             */
+  double image_max_mb;  /* Images bigger than this many MB are ignored     */
+  int   init_ignore_ws; /* Initial state of ignore_ws (labels)             */
 };
 
 static int           _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
@@ -74,7 +78,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
   cfdata->sync_state.select = clip_cfg->clip_select;
   cfdata->sync_state.sync   = clip_cfg->sync;
   cfdata->init_label_length = clip_cfg->label_length;
-  cfdata->init_save_timer   = clip_cfg->save_timer;
+  cfdata->init_save_timer   = clip_cfg->save_timer / 60; // Minutes, like the slider
   cfdata->save.state        = clip_cfg->persistence;
   cfdata->clip_copy         = clip_cfg->clip_copy;
   cfdata->clip_select       = clip_cfg->clip_select;
@@ -92,6 +96,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
   cfdata->trim_ws           = clip_cfg->trim_ws;
   cfdata->trim_nl           = clip_cfg->trim_nl;
   cfdata->ignore_hist       = clip_cfg->ignore_hist;
+  cfdata->store_images      = clip_cfg->store_images;
+  cfdata->image_max_mb      = clip_cfg->image_max_mb;
+  cfdata->init_ignore_ws    = clip_cfg->ignore_ws;
 }
 
 static int
@@ -122,36 +129,25 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
     clip_cfg->save_timer   = 60 * cfdata->save_timer; // Time in seconds
   else
     clip_cfg->save_timer   = 1;
-  /* Do we need to kill or restart save_timer */
-  if (cfdata->persistence && !cfdata->autosave)
-    {
-      if (clip_inst->save_timer)
-        {
-          clip_save(clip_inst->items, EINA_TRUE); // Save history before start timer */
-          clip_inst->save_timer = ecore_timer_loop_add(clip_cfg->save_timer, cb_clipboard_save, NULL);
-        }
-      else if (!EINA_DBL_EQ(cfdata->save_timer, cfdata->init_save_timer))
-        {
-          clip_save(clip_inst->items, EINA_TRUE); // Save history before stopping timer */
-          ecore_timer_del(clip_inst->save_timer);
-          clip_inst->save_timer = ecore_timer_loop_add(clip_cfg->save_timer, cb_clipboard_save, NULL);
-        }
-    }
-  else if (!cfdata->persistence || cfdata->autosave)
-    {
-      if (clip_inst->save_timer)
-       {
-         clip_save(clip_inst->items, EINA_TRUE); // Save history before stopping timer */
-         ecore_timer_del(clip_inst->save_timer);
-         clip_inst->save_timer = NULL;
-       }
-    }
+  cfdata->init_save_timer  = cfdata->save_timer;
 
-  /* Has clipboard label name length changed ? */
-  if (!EINA_DBL_EQ(cfdata->label_length, cfdata->init_label_length))
+  /* Stop the old save timer (saving first) and start a new one if needed */
+  if (clip_inst->save_timer)
+    {
+      clip_save(clip_inst->items, EINA_TRUE);
+      ecore_timer_del(clip_inst->save_timer);
+      clip_inst->save_timer = NULL;
+    }
+  if (clip_cfg->persistence && !clip_cfg->autosave)
+    clip_inst->save_timer = ecore_timer_loop_add(clip_cfg->save_timer, cb_clipboard_save, NULL);
+
+  /* Has clipboard label name length (or the way labels are made) changed ? */
+  if (!EINA_DBL_EQ(cfdata->label_length, cfdata->init_label_length) ||
+      (cfdata->ignore_ws != cfdata->init_ignore_ws))
     {
       clip_cfg->label_length_changed = EINA_TRUE;
       cfdata->init_label_length = cfdata->label_length;
+      cfdata->init_ignore_ws    = cfdata->ignore_ws;
     }
   clip_cfg->label_length   = cfdata->label_length;
 
@@ -159,6 +155,11 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
   clip_cfg->ignore_ws_copy = cfdata->ignore_ws_copy;
   clip_cfg->trim_ws        = cfdata->trim_ws;
   clip_cfg->trim_nl        = cfdata->trim_nl;
+  clip_cfg->store_images   = cfdata->store_images;
+  clip_cfg->image_max_mb   = cfdata->image_max_mb;
+
+  /* Show the new labels in the history window if it is open */
+  clip_list_refresh();
 
   /* Be sure we set our clipboard 'object'with new configuration */
   init_clipboard_struct(clip_cfg);
@@ -215,6 +216,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
   e_widget_framelist_object_append(of, ob);
 
   ob = e_widget_check_add(evas, _(" Trim Newlines"), &(cfdata->trim_nl));
+  e_widget_framelist_object_append(of, ob);
+  e_widget_list_object_append(o, of, 1, 0, 1.0);
+
+  /* Images Config Section */
+  of = e_widget_framelist_add(evas, _("Images"), 0);
+  ob = e_widget_check_add(evas, _(" Keep Images (needs xclip)"), &(cfdata->store_images));
+  e_widget_framelist_object_append(of, ob);
+  ob = e_widget_label_add(evas, _(" Largest Image (MB)"));
+  e_widget_framelist_object_append(of, ob);
+  ob = e_widget_slider_add(evas, 1, 0, "%2.0f", IMG_MB_MIN, IMG_MB_MAX, 1.0, 0, &(cfdata->image_max_mb), NULL, 40);
   e_widget_framelist_object_append(of, ob);
   e_widget_list_object_append(o, of, 1, 0, 1.0);
 
@@ -318,12 +329,15 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
   if (!EINA_DBL_EQ(clip_cfg->hist_items, cfdata->hist_items)) return 1;
   if (clip_cfg->confirm_clear  != cfdata->confirm_clear) return 1;
   if (clip_cfg->autosave       != cfdata->autosave) return 1;
-  if (!EINA_DBL_EQ(clip_cfg->save_timer, cfdata->save_timer)) return 1;
+  /* clip_cfg holds seconds, the dialog minutes */
+  if (fabs(clip_cfg->save_timer - 60.0 * cfdata->save_timer) > 0.5) return 1;
   if (!EINA_DBL_EQ(clip_cfg->label_length, cfdata->label_length)) return 1;
   if (clip_cfg->ignore_ws      != cfdata->ignore_ws) return 1;
   if (clip_cfg->ignore_ws_copy != cfdata->ignore_ws_copy) return 1;
   if (clip_cfg->trim_ws        != cfdata->trim_ws) return 1;
   if (clip_cfg->trim_nl        != cfdata->trim_nl) return 1;
+  if (clip_cfg->store_images   != cfdata->store_images) return 1;
+  if (!EINA_DBL_EQ(clip_cfg->image_max_mb, cfdata->image_max_mb)) return 1;
 
   return 0;
 }
@@ -401,8 +415,9 @@ truncate_history(const unsigned int n)
           last = eina_list_nth_list(clip_inst->items, n-1);
           clip_inst->items = eina_list_split_list(clip_inst->items, last, &discard);
           if (discard)
-            E_FREE_LIST(discard, free_clip_data);
+            E_FREE_LIST(discard, clip_discard);
           err = clip_save(clip_inst->items, EINA_TRUE);
+          clip_list_refresh();
         }
     }
   else
